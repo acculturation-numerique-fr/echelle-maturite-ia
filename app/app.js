@@ -271,7 +271,7 @@
         "Diffuser des standards de pratique au niveau de l'équipe."
       ],
       vigilance: "Pilotez les risques de conformité, de dépendance outil et de qualité des sorties.",
-      tools: ["Cursor", "Lovable", "Antigravity", "LangChain", "Agents connectés"],
+      tools: ["Cursor", "Lovable", "Antigravity", "LangChain", "Hugging Face", "GitHub Copilot"],
       nextStep:
         "Concevez un prototype d'agent connecté à un service métier avec règles de supervision et d'évaluation."
     }
@@ -291,7 +291,9 @@
   const LOBE_ICON_BASE_URL = "https://unpkg.com/@lobehub/icons-static-svg@latest/icons";
   const TOOL_ICON_RULES = [
     { pattern: /(chatgpt|openai|custom gpt|gpt)/i, slug: "openai" },
+    { pattern: /github\s*copilot/i, slug: "githubcopilot" },
     { pattern: /copilot/i, slug: "copilot" },
+    { pattern: /hugging\s*face/i, slug: "huggingface" },
     { pattern: /(gemini|gems?)/i, slug: "gemini" },
     { pattern: /claude/i, slug: "claude" },
     { pattern: /perplexity/i, slug: "perplexity" },
