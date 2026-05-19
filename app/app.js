@@ -157,35 +157,35 @@
       shortTitle: "Connaissances",
       title: "Comprendre les bases de l'IA",
       description:
-        "Cette première partie mesure votre compréhension générale de l'IA, de ses usages, de ses limites et de son cadre réglementaire."
+        "Compréhension générale de l'IA, de ses applications pratiques, de ses limites et de son cadre réglementaire."
     },
     {
       key: "prise_en_main",
       shortTitle: "Prise en main",
       title: "Se repérer dans les outils",
       description:
-        "Cette section évalue votre familiarité avec les chatbots et votre capacité à comparer, tester et améliorer vos demandes."
+        "Familiarité avec les chatbots et capacité à tester, comparer et affiner vos prompts."
     },
     {
       key: "usages",
       shortTitle: "Usages",
       title: "Utiliser l'IA dans son quotidien",
       description:
-        "Cette partie porte sur vos usages concrets : rédaction, image, analyse de documents, prompts et capitalisation."
+        "Usages concrets au quotidien : rédaction de contenus, génération d'images, analyse documentaire et structuration de prompts."
     },
     {
       key: "usages_avances",
       shortTitle: "Usages avancés",
       title: "Personnaliser son environnement IA",
       description:
-        "Cette section mesure votre niveau d'autonomie : abonnement, chatbot personnalisé ou outil installé localement."
+        "Niveau d'autonomie : utilisation d'abonnements Pro, de chatbots personnalisés ou d'outils installés en local."
     },
     {
       key: "usages_experts",
       shortTitle: "Usages experts",
       title: "Automatiser et connecter l'IA",
       description:
-        "Cette dernière partie concerne les usages techniques : code assisté, agents simples et agents connectés à des services externes."
+        "Usages avancés et techniques : développement assisté, agents autonomes et connexions d'APIs à des services tiers."
     }
   ];
 
@@ -731,6 +731,8 @@
       previousCategory() {
         if (this.currentCategoryIndex > 0) {
           this.currentCategoryIndex -= 1;
+        } else {
+          this.step = "intro";
         }
       },
 

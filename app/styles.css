@@ -192,7 +192,7 @@ body {
 
 .an-btn {
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: 12px;
   min-height: 46px;
   padding: 10px 22px;
   font-family: var(--an-font-body);
@@ -239,12 +239,25 @@ body {
 .an-btn-ghost {
   background: transparent;
   border-color: transparent;
-  color: var(--an-ink-muted);
+  color: var(--an-ink-soft);
+  transition: color 0.15s ease;
 }
 
 .an-btn-ghost:hover {
   color: var(--an-ink);
-  background: var(--an-surface-soft);
+  background: transparent;
+}
+
+.an-btn-ghost-primary {
+  background: transparent;
+  border-color: transparent;
+  color: var(--an-ink);
+  transition: color 0.15s ease;
+}
+
+.an-btn-ghost-primary:hover {
+  color: var(--an-primary);
+  background: transparent;
 }
 
 .an-btn:focus-visible,
@@ -535,13 +548,14 @@ body {
 }
 
 .an-stepper-badge {
-  border: 1px solid var(--an-border);
-  border-radius: 999px;
-  padding: 6px 14px;
-  background: var(--an-surface-soft);
+  padding: 0;
+  padding-right: 8px;
   color: var(--an-ink-soft);
   font-family: var(--an-font-mono);
   font-size: 0.79rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .an-step-dot {
@@ -560,7 +574,7 @@ body {
 .an-checklist {
   margin-top: 20px;
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .an-check {
@@ -580,21 +594,21 @@ body {
   grid-template-columns: 20px 1fr;
   gap: 14px;
   align-items: center;
-  padding: 14px 16px;
-  border-radius: var(--an-radius-md);
-  border: 1px solid var(--an-border);
-  background: var(--an-surface);
+  padding: 6px 4px;
+  border-bottom: none;
+  background: transparent;
   color: var(--an-ink-soft);
-  transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+  transition: color 0.15s ease;
 }
 
 .an-check > span::before {
   content: "";
-  width: 18px;
-  height: 18px;
-  border-radius: var(--an-radius-sm);
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
   border: 1px solid var(--an-border-strong);
-  background: var(--an-surface-raised);
+  background: var(--an-surface);
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .an-check > span strong {
@@ -604,21 +618,17 @@ body {
 }
 
 .an-check:hover > span {
-  transform: translateX(2px);
-  border-color: var(--an-primary);
-  background: var(--an-surface-soft);
+  color: var(--an-ink);
 }
 
 .an-check input:checked + span {
-  border-color: var(--an-primary-border-checked);
-  background: var(--an-primary-soft);
   color: var(--an-ink);
 }
 
 .an-check input:checked + span::before {
   border-color: var(--an-primary);
-  background: var(--an-primary);
-  box-shadow: inset 0 0 0 3px var(--an-white);
+  background: var(--an-white);
+  box-shadow: inset 0 0 0 3px var(--an-white), inset 0 0 0 7px var(--an-primary);
 }
 
 .an-nav {
@@ -1270,4 +1280,20 @@ body {
   .an-btn {
     width: 100%;
   }
+}
+
+/* Premium Entrance & Transition Animation */
+@keyframes an-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.an-fade-in {
+  animation: an-fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

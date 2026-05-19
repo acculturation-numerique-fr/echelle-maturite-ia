@@ -17,7 +17,7 @@
 
 <body>
   <main id="an-diagnostic" x-data="diagnosticIA()" x-init="init()" data-webhook-url="">
-    <section class="an-panel an-hero an-hero-fx" x-show="step === 'intro'" x-transition.opacity.duration.250ms>
+    <section class="an-panel an-hero an-hero-fx an-fade-in" x-show="step === 'intro'">
       <div class="an-hero-bg-icons" aria-hidden="true">
         <div class="an-hero-float an-hero-float--1" data-float-icon>
           <div class="an-hero-float-inner">
@@ -121,8 +121,7 @@
       </div>
     </section>
 
-    <section class="an-section an-panel an-card" x-show="step === 'questions'" x-cloak
-      x-transition.opacity.duration.200ms>
+    <section class="an-section an-panel an-card an-fade-in" x-show="step === 'questions'" x-cloak>
       <div class="an-stepper">
         <span class="an-stepper-badge" x-text="progressLabel"></span>
         <template x-for="(item, idx) in categories" :key="item.key">
@@ -130,11 +129,7 @@
         </template>
       </div>
 
-      <h2 class="an-card-title">
-        <span x-text="currentCategory.shortTitle"></span> ·
-        <span x-text="currentCategory.title"></span>
-      </h2>
-      <p class="an-card-subtitle" x-text="currentCategory.description"></p>
+      <h2 class="an-card-title" x-text="currentCategory.title"></h2>
 
       <div class="an-checklist" role="group" aria-label="Questions de la catégorie en cours">
         <template x-for="q in currentQuestions" :key="q.id">
@@ -142,36 +137,30 @@
             <input type="checkbox" :id="`q-${q.id}`" :checked="Boolean(answers[q.id])"
               @change="answers[q.id] = $event.target.checked" />
             <span>
-              <span>
-                <strong x-text="q.id"></strong>
-                <span x-text="` — ${q.label}`"></span>
-              </span>
+              <span x-text="q.label"></span>
             </span>
           </label>
         </template>
       </div>
 
       <div class="an-nav">
-        <button type="button" class="an-btn an-btn-secondary" @click="previousCategory()"
-          :disabled="currentCategoryIndex === 0">
+        <button type="button" class="an-btn an-btn-ghost" @click="previousCategory()">
           Précédent
         </button>
 
-        <button x-show="!isLastCategory" type="button" class="an-btn an-btn-primary" @click="nextCategory()">
+        <button x-show="!isLastCategory" type="button" class="an-btn an-btn-ghost-primary" @click="nextCategory()">
           Suivant
         </button>
 
-        <button x-show="isLastCategory" type="button" class="an-btn an-btn-primary" @click="showResults()">
+        <button x-show="isLastCategory" type="button" class="an-btn an-btn-ghost-primary" @click="showResults()">
           Voir mes résultats
         </button>
       </div>
     </section>
 
-    <section class="an-section an-results-shell" x-show="step === 'results'" x-cloak
-      x-transition.opacity.duration.250ms>
+    <section class="an-section an-results-shell an-fade-in" x-show="step === 'results'" x-cloak>
       <header class="an-panel an-card an-results-top">
         <div>
-          <p class="an-eyebrow">Restitution immédiate</p>
           <h2 class="an-card-title">Votre tableau de maturité IA</h2>
           <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.summary : ''"></p>
         </div>
@@ -189,7 +178,6 @@
         <article class="an-card an-bento-card an-bento-score">
           <div class="an-bento-head">
             <h3 class="an-bento-title">Indice global</h3>
-            <span class="an-bento-tag">Sur 20 points</span>
           </div>
           <div class="an-score-ring" :style="scoreRingStyle" role="img" :aria-label="scoreAriaLabel">
             <span x-text="scoreTotal"></span>
@@ -202,20 +190,11 @@
               <span x-text="currentLevel ? currentLevel.profile : ''"></span>
             </strong>
           </div>
-          <div class="an-badges">
-            <template x-for="row in strengths" :key="`strength-${row.name}`">
-              <span class="an-badge" x-text="`Force: ${row.name}`"></span>
-            </template>
-            <template x-for="row in focusAreas" :key="`focus-${row.name}`">
-              <span class="an-badge" x-text="`Axe: ${row.name}`"></span>
-            </template>
-          </div>
         </article>
 
         <article class="an-card an-bento-card an-bento-radar">
           <div class="an-bento-head">
             <h3 class="an-bento-title">Radar des dimensions</h3>
-            <span class="an-bento-tag">6 dimensions</span>
           </div>
           <svg class="an-radar-svg" viewBox="0 0 260 260" role="img" aria-label="Répartition des dimensions">
             <template x-for="ring in radarChart.rings" :key="`ring-${ring.scale}`">
@@ -238,7 +217,6 @@
         <article class="an-card an-bento-card an-bento-bars">
           <div class="an-bento-head">
             <h3 class="an-bento-title">Progression par dimension</h3>
-            <span class="an-bento-tag">Bar charts</span>
           </div>
           <div class="an-bars an-bars-tight">
             <template x-for="row in dimensionScores" :key="`bar-${row.name}`">
@@ -258,7 +236,6 @@
         <article class="an-card an-bento-card an-bento-line">
           <div class="an-bento-head">
             <h3 class="an-bento-title">Trajectoire d'adoption</h3>
-            <span class="an-bento-tag">Line + area</span>
           </div>
           <svg class="an-line-svg" viewBox="0 0 420 180" role="img" aria-label="Progression par catégorie">
             <path class="an-line-area" :d="trajectoryChart.area"></path>
@@ -275,7 +252,6 @@
         <article class="an-card an-bento-card an-bento-priority">
           <div class="an-bento-head">
             <h3 class="an-bento-title">Priorités recommandées</h3>
-            <span class="an-bento-tag">Plan d'action</span>
           </div>
           <ul class="an-kpi-list">
             <template x-for="item in currentLevel ? currentLevel.priorities : []" :key="item">
@@ -293,7 +269,6 @@
         <article class="an-card an-bento-card an-bento-next">
           <div class="an-bento-head">
             <h3 class="an-bento-title">Prochaine étape & stack suggérée</h3>
-            <span class="an-bento-tag">Tooling</span>
           </div>
           <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.nextStep : ''"></p>
           <ul class="an-tools-grid">
@@ -315,7 +290,7 @@
       </div>
     </section>
 
-    <section class="an-section an-grid an-grid-2" x-show="step === 'lead'" x-cloak x-transition.opacity.duration.250ms>
+    <section class="an-section an-grid an-grid-2 an-fade-in" x-show="step === 'lead'" x-cloak>
       <article class="an-panel an-card">
         <h2 class="an-card-title">Recevoir mon diagnostic complet</h2>
         <p class="an-card-subtitle">
