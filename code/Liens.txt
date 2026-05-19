@@ -1,4 +1,0 @@
-https://preline.co/blocks/data-display/pie-radial-charts/
-https://preline.co/blocks/data-display/line-and-area-charts/
-https://preline.co/blocks/data-display/bar-charts/
-https://preline.co/blocks/ui-components/progress-indicators/

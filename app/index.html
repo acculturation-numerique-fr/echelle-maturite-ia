@@ -10,19 +10,111 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css?v=4" />
+  <link rel="stylesheet" href="./styles.css?v=14" />
 </head>
 
 <body>
   <main id="an-diagnostic" x-data="diagnosticIA()" x-init="init()" data-webhook-url="">
-    <section class="an-panel an-hero" x-show="step === 'intro'" x-transition.opacity.duration.250ms>
-      <div class="an-hero-simple">
-        <p class="an-eyebrow">Échelle de maturité en intelligence artificielle</p>
-        <h1 class="an-title">Évaluez votre maturité IA en moins de 2 minutes</h1>
+    <section class="an-panel an-hero an-hero-fx" x-show="step === 'intro'" x-transition.opacity.duration.250ms>
+      <div class="an-hero-bg-icons" aria-hidden="true">
+        <div class="an-hero-float an-hero-float--1" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo" src="./assets/chatgpt.webp"
+              alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--2" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo" src="./assets/claude.webp"
+              alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--3" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo" src="./assets/ollama.webp"
+              alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--4" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo"
+              src="./assets/openclaw.webp" alt="" loading="lazy"
+              decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--5" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo" src="./assets/lovable.webp"
+              alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--6" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo"
+              src="./assets/claudecode.webp" alt="" loading="lazy"
+              decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--7" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo" src="./assets/gemini.webp"
+              alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--8" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo"
+              src="./assets/perplexity.webp" alt="" loading="lazy"
+              decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--9" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo" src="./assets/cursor.webp"
+              alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--10" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo" src="./assets/manus.webp"
+              alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--11" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo" src="./assets/n8n.webp"
+              alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+
+        <div class="an-hero-float an-hero-float--12" data-float-icon>
+          <div class="an-hero-float-inner">
+            <img class="an-hero-float-logo"
+              src="./assets/huggingface.webp" alt="" loading="lazy"
+              decoding="async" />
+          </div>
+        </div>
+      </div>
+
+      <div class="an-hero-content">
+        <h1 class="an-title an-hero-title-gradient">Échelle de maturité en intelligence artificielle</h1>
+        <p class="an-lead">
+          Mesurez votre maturité IA et priorisez vos prochains gains.
+        </p>
         <div class="an-actions an-hero-actions">
-          <button class="an-btn an-btn-primary" type="button" @click="start()">
+          <button class="an-btn an-btn-primary an-hero-cta" type="button" @click="start()">
             Lancer mon diagnostic
           </button>
         </div>
@@ -319,7 +411,7 @@
     </section>
   </main>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js"></script>
   <script src="./app.js"></script>
 </body>
 

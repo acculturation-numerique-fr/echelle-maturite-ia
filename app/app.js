@@ -309,29 +309,41 @@
 
   const LOBE_ICON_BASE_URL = "https://unpkg.com/@lobehub/icons-static-svg@latest/icons";
   const TOOL_ICON_RULES = [
+    // --- Niveau Débutant & Intermédiaire (Outils grand public et productivité) ---
     { pattern: /(chatgpt|openai|custom gpt|gpt)/i, slug: "openai" },
-    { pattern: /github\s*copilot/i, slug: "githubcopilot" },
-    { pattern: /copilot/i, slug: "copilot" },
-    { pattern: /hugging\s*face/i, slug: "huggingface" },
-    { pattern: /mcp\s*server/i, slug: "mcp" },
-    { pattern: /\bmcp\b/i, slug: "mcp" },
-    { pattern: /\bn8n\b/i, slug: "n8n" },
     { pattern: /(gemini|gems?)/i, slug: "gemini" },
-    { pattern: /claude\s*code/i, slug: "claudecode" },
-    { pattern: /claude/i, slug: "claude" },
-    { pattern: /openclaw/i, slug: "openclaw" },
-    { pattern: /manus/i, slug: "manus" },
+    { pattern: /google workspace/i, slug: "google" },
     { pattern: /perplexity/i, slug: "perplexity" },
-    { pattern: /cursor/i, slug: "cursor" },
-    { pattern: /lovable/i, slug: "lovable" },
-    { pattern: /antigravity/i, slug: "antigravity" },
-    { pattern: /langchain/i, slug: "langchain" },
     { pattern: /notebooklm/i, slug: "notebooklm" },
+    { pattern: /notion/i, slug: "notion" },
+    { pattern: /hugging\s*face/i, slug: "huggingface" },
+
+    // --- Niveau Avancé (Automatisation, No-code et Modèles alternatifs) ---
     { pattern: /make/i, slug: "make" },
     { pattern: /zapier/i, slug: "zapier" },
     { pattern: /ollama/i, slug: "ollama" },
-    { pattern: /notion/i, slug: "notion" },
-    { pattern: /google workspace/i, slug: "google" },
+    { pattern: /qwen/i, slug: "qwen" },
+    { pattern: /mistral/i, slug: "mistral" },
+    { pattern: /deepseek/i, slug: "deepseek" },
+    { pattern: /grok/i, slug: "grok" },
+
+    // --- Niveau Expert (Développement, Frameworks et Agents autonomes) ---
+    { pattern: /v0/i, slug: "v0" },
+    { pattern: /replit/i, slug: "replit" },
+    { pattern: /github\s*copilot/i, slug: "githubcopilot" }, // IMPORTANT : avant "copilot"
+    { pattern: /copilot/i, slug: "copilot" },
+    { pattern: /cursor/i, slug: "cursor" },
+    { pattern: /claude\s*code/i, slug: "claudecode" }, // IMPORTANT : avant "claude"
+    { pattern: /claude/i, slug: "claude" },
+    { pattern: /lovable/i, slug: "lovable" },
+    { pattern: /manus/i, slug: "manus" },
+    { pattern: /openclaw/i, slug: "openclaw" },
+    { pattern: /antigravity/i, slug: "antigravity" },
+    { pattern: /llamaindex/i, slug: "llamaindex" },
+    { pattern: /langchain/i, slug: "langchain" },
+    { pattern: /mcp\s*server/i, slug: "mcp" },
+    { pattern: /\bmcp\b/i, slug: "mcp" },
+    { pattern: /\bn8n\b/i, slug: "n8n" },
     { pattern: /agents? connect/i, slug: "agentvoice" }
   ];
 
@@ -414,6 +426,88 @@
     }
 
     return "";
+  }
+
+  function initFloatingHero() {
+    const hero = document.querySelector(".an-hero-fx");
+    if (!hero) {
+      return;
+    }
+
+    const icons = Array.from(hero.querySelectorAll("[data-float-icon]"));
+    if (!icons.length) {
+      return;
+    }
+
+    let pointerActive = false;
+    let pointerX = 0;
+    let pointerY = 0;
+    let frame = null;
+
+    const getRadius = () => Math.max(140, Math.min(210, hero.clientWidth * 0.17));
+    const getMaxForce = () => Math.max(34, Math.min(56, hero.clientWidth * 0.045));
+
+    const applyRepulsion = () => {
+      frame = null;
+      const radius = getRadius();
+      const maxForce = getMaxForce();
+
+      icons.forEach((icon) => {
+        if (!pointerActive) {
+          icon.style.setProperty("--an-repel-x", "0px");
+          icon.style.setProperty("--an-repel-y", "0px");
+          return;
+        }
+
+        const rect = icon.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const deltaX = pointerX - centerX;
+        const deltaY = pointerY - centerY;
+        const distance = Math.hypot(deltaX, deltaY);
+
+        if (distance >= radius) {
+          icon.style.setProperty("--an-repel-x", "0px");
+          icon.style.setProperty("--an-repel-y", "0px");
+          return;
+        }
+
+        const angle = Math.atan2(deltaY, deltaX);
+        const force = (1 - distance / radius) * maxForce;
+        const repelX = -Math.cos(angle) * force;
+        const repelY = -Math.sin(angle) * force;
+
+        icon.style.setProperty("--an-repel-x", `${repelX.toFixed(2)}px`);
+        icon.style.setProperty("--an-repel-y", `${repelY.toFixed(2)}px`);
+      });
+    };
+
+    const queueFrame = () => {
+      if (frame === null) {
+        frame = window.requestAnimationFrame(applyRepulsion);
+      }
+    };
+
+    hero.addEventListener("pointermove", (event) => {
+      pointerActive = true;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      queueFrame();
+    }, { passive: true });
+
+    hero.addEventListener("pointerleave", () => {
+      pointerActive = false;
+      queueFrame();
+    });
+
+    window.addEventListener("resize", queueFrame);
+    queueFrame();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initFloatingHero, { once: true });
+  } else {
+    initFloatingHero();
   }
 
   window.diagnosticIA = function diagnosticIA() {
