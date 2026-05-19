@@ -18,58 +18,24 @@
 <body>
   <main id="an-diagnostic" x-data="diagnosticIA()" x-init="init()" data-webhook-url="">
     <section class="an-panel an-hero" x-show="step === 'intro'" x-transition.opacity.duration.250ms>
-      <div class="an-hero-grid">
-        <div class="an-hero-copy">
-          <p class="an-eyebrow">Échelle de maturité en intelligence artificielle</p>
-          <h1 class="an-title">Évaluez votre maturité IA en moins de 2 minutes</h1>
-          <p class="an-lead">
-            Cochez les usages que vous maîtrisez déjà et découvrez votre profil, vos forces et vos
-            prochains axes de progression.
-          </p>
-          <ul class="an-meta">
-            <li>20 critères simples à cocher</li>
-            <li>Résultat immédiat</li>
-            <li>Aucun compte requis</li>
-            <li>Formulaire final optionnel</li>
-          </ul>
-          <div class="an-actions an-hero-actions">
-            <button class="an-btn an-btn-primary" type="button" @click="start()">
-              Lancer mon diagnostic
-            </button>
-          </div>
+      <div class="an-hero-simple">
+        <p class="an-eyebrow">Échelle de maturité en intelligence artificielle</p>
+        <h1 class="an-title">Évaluez votre maturité IA en moins de 2 minutes</h1>
+        <p class="an-lead">
+          Cochez les usages que vous maîtrisez déjà et obtenez immédiatement votre score, votre
+          profil et vos axes de progression.
+        </p>
+        <div class="an-hero-simple-metrics" aria-label="Points clés du diagnostic">
+          <span class="an-hero-pill">20 critères déclaratifs</span>
+          <span class="an-hero-pill">Restitution immédiate</span>
+          <span class="an-hero-pill">Sans compte requis</span>
+          <span class="an-hero-pill">Soumission optionnelle</span>
         </div>
-
-        <aside class="an-hero-preview" aria-hidden="true">
-          <article class="an-hero-widget an-hero-widget-main">
-            <p class="an-hero-widget-kicker">Exemple de restitution</p>
-            <p class="an-hero-widget-value">14<span>/20</span></p>
-            <p class="an-hero-widget-text">Profil Architecte IA</p>
-            <div class="an-hero-mini-bars">
-              <span style="--an-mini:88"></span>
-              <span style="--an-mini:74"></span>
-              <span style="--an-mini:61"></span>
-              <span style="--an-mini:92"></span>
-              <span style="--an-mini:56"></span>
-            </div>
-          </article>
-          <article class="an-hero-widget">
-            <p class="an-hero-widget-kicker">Bench opérationnel</p>
-            <ul class="an-hero-widget-list">
-              <li>
-                <span>Culture & cadre</span>
-                <strong>4/5</strong>
-              </li>
-              <li>
-                <span>Usages opérationnels</span>
-                <strong>2/3</strong>
-              </li>
-              <li>
-                <span>Automatisation</span>
-                <strong>2/3</strong>
-              </li>
-            </ul>
-          </article>
-        </aside>
+        <div class="an-actions an-hero-actions">
+          <button class="an-btn an-btn-primary" type="button" @click="start()">
+            Lancer mon diagnostic
+          </button>
+        </div>
       </div>
     </section>
 
