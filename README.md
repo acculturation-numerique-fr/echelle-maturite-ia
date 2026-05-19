@@ -1,6 +1,11 @@
 # Échelle de maturité en intelligence artificielle
 
-Ce depot contient l'implementation V1 du diagnostic interactif (nom court: diagnostic de maturite IA).
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat-square&logo=alpinejs&logoColor=white)
+![Cloudflare Workers](https://img.shields.io/badge/Cloudflare_Workers-F38020?style=flat-square&logo=cloudflare&logoColor=white)
+![Airtable](https://img.shields.io/badge/Airtable-18BFFF?style=flat-square&logo=airtable&logoColor=white)
 
 ## Structure
 
@@ -15,7 +20,7 @@ Ce depot contient l'implementation V1 du diagnostic interactif (nom court: diagn
     └── README.md
 ```
 
-## V1 implementee
+## Fonctionnalités principales
 
 - Front statique en `HTML/CSS/JS` + `Alpine.js`.
 - Questionnaire 20 criteres (Q01-Q20), score global sur 20.
