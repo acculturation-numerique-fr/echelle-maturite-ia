@@ -271,7 +271,17 @@
         "Diffuser des standards de pratique au niveau de l'équipe."
       ],
       vigilance: "Pilotez les risques de conformité, de dépendance outil et de qualité des sorties.",
-      tools: ["Cursor", "Lovable", "Antigravity", "LangChain", "Hugging Face", "GitHub Copilot"],
+      tools: [
+        "Cursor",
+        "Lovable",
+        "Antigravity",
+        "LangChain",
+        "Hugging Face",
+        "GitHub Copilot",
+        "Claude Code",
+        "OpenClaw",
+        "Manus"
+      ],
       nextStep:
         "Concevez un prototype d'agent connecté à un service métier avec règles de supervision et d'évaluation."
     }
@@ -295,7 +305,10 @@
     { pattern: /copilot/i, slug: "copilot" },
     { pattern: /hugging\s*face/i, slug: "huggingface" },
     { pattern: /(gemini|gems?)/i, slug: "gemini" },
+    { pattern: /claude\s*code/i, slug: "claudecode" },
     { pattern: /claude/i, slug: "claude" },
+    { pattern: /openclaw/i, slug: "openclaw" },
+    { pattern: /manus/i, slug: "manus" },
     { pattern: /perplexity/i, slug: "perplexity" },
     { pattern: /cursor/i, slug: "cursor" },
     { pattern: /lovable/i, slug: "lovable" },
