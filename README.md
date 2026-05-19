@@ -1,43 +1,55 @@
 # Échelle de maturité en intelligence artificielle
 
-Diagnostic interactif permettant d'évaluer en quelques minutes la maturité pratique et théorique des collaborateurs face à l'intelligence artificielle.
+Ce depot contient l'implementation V1 du diagnostic interactif (nom court: diagnostic de maturite IA).
 
-## Caractéristiques techniques et produit
-
-- **Interface minimaliste** : Mise en page de type liste épurée, dépourvue de contours ou de bordures lourdes, maximisant la clarté et le confort de lecture.
-- **Mouvement fluide** : Transitions d'écrans cinématiques utilisant une courbe de décélération naturelle (`cubic-bezier(0.16, 1, 0.3, 1)`) sur 800ms, évitant tout chevauchement ou saut de mise en page.
-- **Micro-interactions** : Points radios circulaires discrets (`14px`) avec effet d'animation de type puce au clic.
-- **Optimisation des performances** : Chargement instantané grâce à des assets visuels au format `WebP` compressés et à une architecture sans dépendances CDN lourdes.
-- **Sécurité et conformité** : Backend d'ingestion hébergé sur Cloudflare Worker assurant la transmission des leads vers Airtable (aucune clé d'API exposée côté client).
-
-## Structure du projet
+## Structure
 
 ```txt
 .
 ├── app/
-│   ├── assets/       # Assets visuels locaux optimisés (WebP)
-│   ├── app.js        # Modèle de données, règles métier et logique Alpine.js
-│   ├── index.html    # Structure HTML et tableau de bord Bento de résultats
-│   └── styles.css    # Système de design unifié, variables :root et transitions
+│   ├── app.js
+│   ├── index.html
+│   └── styles.css
 └── worker/
-    ├── index.js      # Backend Cloudflare Worker
-    └── README.md     # Guide de déploiement et tests du Worker
+    ├── index.js
+    └── README.md
 ```
 
-## Lancement local
+## V1 implementee
 
-Pour lancer l'application en local :
+- Front statique en `HTML/CSS/JS` + `Alpine.js`.
+- Questionnaire 20 criteres (Q01-Q20), score global sur 20.
+- Restitution immediate:
+  - niveau et profil;
+  - scores par dimensions;
+  - recommandations contextualisees.
+- Formulaire final optionnel (RGPD, consentement, validation e-mail).
+- Envoi securise vers webhook Cloudflare Worker.
+- Mapping Airtable cote serveur (aucune cle API exposee dans le front).
+
+## Lancer localement
+
+Option simple:
 
 ```bash
-python3 -m http.server 8080 --directory app
+cd app
+python3 -m http.server 8080
 ```
 
-L'application est ensuite accessible à l'adresse : `http://localhost:8080`
+Puis ouvrir:
 
-## Intégration CMS (WordPress / Webflow)
+- `http://localhost:8080`
 
-L'application est conçue pour être intégrée facilement :
+## Integration WordPress
 
-1. **HTML** : Copier le contenu de la balise `<main id="an-diagnostic">...</main>` depuis `app/index.html` dans un bloc HTML personnalisé.
-2. **CSS / JS** : Charger le fichier `styles.css` ainsi que `app.js` sur la page cible.
-3. **Webhook** : Configurer l'adresse de votre API Cloudflare Worker via l'attribut `data-webhook-url="https://votre-worker.workers.dev"` sur le conteneur principal.
+- Copier le contenu du `<main id="an-diagnostic">...</main>` depuis `app/index.html` dans un bloc HTML personnalise.
+- Charger `styles.css`, `app.js` et Alpine.js (CDN) sur la page.
+- Renseigner `data-webhook-url="https://votre-worker.workers.dev"` sur le conteneur principal.
+
+## Webhook Cloudflare
+
+Voir `worker/README.md` pour:
+
+- la configuration des secrets;
+- le deploiement;
+- un exemple de test `curl`.
