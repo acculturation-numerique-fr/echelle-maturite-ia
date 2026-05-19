@@ -1,75 +1,51 @@
 # Échelle de maturité en intelligence artificielle
 
-Ce depot contient la documentation canonique et l'implementation V1 du diagnostic interactif (nom court: diagnostic de maturite IA).
+Diagnostic interactif permettant d'évaluer en quelques minutes la maturité pratique et théorique des collaborateurs face à l'intelligence artificielle. Une expérience fluide, ultra-rapide et entièrement personnalisée.
 
-## Structure
+---
+
+## 🌟 Points Forts & Architecture
+
+* **Interface "Zen" Minimaliste** : Une mise en page aérée de type liste, dépourvue de fioritures ou de bordures lourdes, maximisant la clarté et le confort de lecture.
+* **Cinematic Motion (0.8s)** : Transitions d'écrans fluides et cinématiques utilisant une courbe de décélération naturelle (`cubic-bezier(0.16, 1, 0.3, 1)`), garantissant une transition sans sauts de page ni coupures visuelles.
+* **Micro-interactions Premium** : Des points radios circulaires discrets (`14px`) s'animant sur un modèle d'interaction haut de gamme (effet puce Apple).
+* **Performance Optimale** : Fichiers statiques légers, logos locaux au format `WebP` compressés, et aucune dépendance CDN superflue.
+* **Sécurité & Confidentialité** : Backend d'ingestion hébergé sur Cloudflare Worker assurant la transmission sécurisée des leads vers Airtable (aucune clé d'API n'est exposée côté client).
+
+---
+
+## 📁 Structure du Projet
 
 ```txt
 .
 ├── app/
-│   ├── app.js
-│   ├── index.html
-│   └── styles.css
-├── docs/
-│   ├── 01_specification_canonique.md
-│   ├── 02_positionnement_strategique.md
-│   ├── 03_experience_utilisateur.md
-│   ├── 04_architecture_technique.md
-│   ├── 05_modele_de_donnees.md
-│   ├── 06_references_et_benchmarks.md
-│   ├── 07_copywriting_et_microtextes.md
-│   ├── 08_roadmap_v1_v2.md
-│   └── 09_plan_livraison_technique.md
+│   ├── assets/       # Assets visuels locaux optimisés (WebP)
+│   ├── app.js        # Modèle de données, règles métier et logique Alpine.js
+│   ├── index.html    # Structure HTML & Dashboard Bento de résultats
+│   └── styles.css    # Système de design unifié, variables :root et transitions
 └── worker/
-    ├── index.js
-    └── README.md
+    ├── index.js      # Backend Cloudflare Worker
+    └── README.md     # Guide de déploiement et tests du Worker
 ```
 
-## V1 implementee
+---
 
-- Front statique en `HTML/CSS/JS` + `Alpine.js`.
-- Questionnaire 20 criteres (Q01-Q20), score global sur 20.
-- Restitution immediate:
-  - niveau et profil;
-  - scores par dimensions;
-  - recommandations contextualisees.
-- Formulaire final optionnel (RGPD, consentement, validation e-mail).
-- Envoi securise vers webhook Cloudflare Worker.
-- Mapping Airtable cote serveur (aucune cle API exposee dans le front).
+## ⚡ Lancement Local
 
-## Lancer localement
-
-Option simple:
+Pour lancer l'application instantanément sur votre machine :
 
 ```bash
-cd app
-python3 -m http.server 8080
+python3 -m http.server 8080 --directory app
 ```
 
-Puis ouvrir:
+Ouvrez ensuite votre navigateur sur : [http://localhost:8080](http://localhost:8080)
 
-- `http://localhost:8080`
+---
 
-## Integration WordPress
+## 🔧 Intégration CMS (WordPress / Webflow)
 
-- Copier le contenu du `<main id="an-diagnostic">...</main>` depuis `app/index.html` dans un bloc HTML personnalise.
-- Charger `styles.css`, `app.js` et Alpine.js (CDN) sur la page.
-- Renseigner `data-webhook-url="https://votre-worker.workers.dev"` sur le conteneur principal.
+L'application a été conçue pour être facilement intégrée sur n'importe quelle plateforme :
 
-## Webhook Cloudflare
-
-Voir `worker/README.md` pour:
-
-- la configuration des secrets;
-- le deploiement;
-- un exemple de test `curl`.
-
-## Lecture recommandee
-
-1. `docs/01_specification_canonique.md`
-2. `docs/02_positionnement_strategique.md`
-3. `docs/03_experience_utilisateur.md`
-4. `docs/04_architecture_technique.md`
-5. `docs/05_modele_de_donnees.md`
-6. `docs/08_roadmap_v1_v2.md`
-7. `docs/09_plan_livraison_technique.md`
+1. **HTML** : Copiez le contenu de la balise `<main id="an-diagnostic">...</main>` depuis `app/index.html` dans un bloc HTML personnalisé de votre CMS.
+2. **CSS / JS** : Chargez le fichier `styles.css` (contenant le design system complet) ainsi que `app.js` sur votre page.
+3. **Webhook** : Configurez l'adresse de votre API Cloudflare Worker en éditant l'attribut `data-webhook-url="https://votre-worker.workers.dev"` sur le conteneur `<main>`.
