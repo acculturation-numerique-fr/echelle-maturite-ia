@@ -199,27 +199,21 @@ body {
 
 .an-hero .an-title {
   color: var(--an-ink);
-  max-width: 20ch;
+  max-width: 18ch;
   margin: 0;
-}
-
-.an-hero .an-lead {
-  max-width: 66ch;
-  margin: 0;
-  color: var(--an-ink-soft);
 }
 
 .an-hero-simple {
-  max-width: 880px;
+  max-width: 720px;
   margin: 0;
   display: grid;
-  gap: 16px;
+  gap: 14px;
   justify-items: start;
 }
 
 .an-hero-actions {
   justify-content: flex-start;
-  margin-top: 6px;
+  margin-top: 2px;
 }
 
 .an-stepper {
