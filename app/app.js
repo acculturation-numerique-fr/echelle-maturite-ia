@@ -203,7 +203,7 @@
         "Créer un premier compte et tester des demandes simples."
       ],
       vigilance: "Ne confondez pas rapidité de réponse et fiabilité de l'information.",
-      tools: ["ChatGPT", "Microsoft Copilot", "Google Gemini"],
+      tools: ["ChatGPT", "Claude", "Google Gemini", "Microsoft Copilot", "Perplexity", "NotebookLM"],
       nextStep:
         "Créez un compte et testez trois usages simples : reformuler un e-mail, résumer un texte et générer des idées."
     },
@@ -220,7 +220,7 @@
         "Identifier les cas d'usage les plus utiles dans votre métier."
       ],
       vigilance: "Évitez de rester dans une expérimentation ponctuelle sans méthode.",
-      tools: ["ChatGPT", "Gemini", "Claude", "Perplexity"],
+      tools: ["ChatGPT", "Claude", "Gemini", "Perplexity", "NotebookLM", "Make"],
       nextStep:
         "Choisissez une tâche hebdomadaire répétitive et utilisez l'IA pour l'améliorer pendant un mois."
     },
@@ -237,7 +237,7 @@
         "Mieux gérer les risques de données sensibles."
       ],
       vigilance: "Sans capitalisation, vos gains restent limités et difficiles à reproduire.",
-      tools: ["ChatGPT Plus", "Claude Pro", "NotebookLM", "Perplexity"],
+      tools: ["ChatGPT Plus", "Claude Pro", "Gemini", "Perplexity", "Make", "Zapier"],
       nextStep:
         "Construisez une bibliothèque de 10 prompts réutilisables pour vos tâches professionnelles."
     },
@@ -254,7 +254,17 @@
         "Accompagner d'autres collaborateurs dans la montée en compétences."
       ],
       vigilance: "Gardez une supervision humaine claire sur chaque automatisation mise en place.",
-      tools: ["Custom GPTs", "Gems", "Make", "Zapier", "Ollama"],
+      tools: [
+        "Custom GPTs",
+        "Gems",
+        "Claude Skills",
+        "Claude Plugins",
+        "MCP Server",
+        "n8n",
+        "Apify",
+        "Windmill",
+        "Langflow"
+      ],
       nextStep:
         "Créez un assistant IA interne dédié à une tâche récurrente : support, documentation, reporting ou veille."
     },
@@ -273,14 +283,13 @@
       vigilance: "Pilotez les risques de conformité, de dépendance outil et de qualité des sorties.",
       tools: [
         "Cursor",
-        "Lovable",
-        "Antigravity",
+        "Claude Code",
+        "OpenClaw",
+        "Manus",
         "LangChain",
         "Hugging Face",
         "GitHub Copilot",
-        "Claude Code",
-        "OpenClaw",
-        "Manus"
+        "Antigravity"
       ],
       nextStep:
         "Concevez un prototype d'agent connecté à un service métier avec règles de supervision et d'évaluation."
@@ -304,6 +313,9 @@
     { pattern: /github\s*copilot/i, slug: "githubcopilot" },
     { pattern: /copilot/i, slug: "copilot" },
     { pattern: /hugging\s*face/i, slug: "huggingface" },
+    { pattern: /mcp\s*server/i, slug: "mcp" },
+    { pattern: /\bmcp\b/i, slug: "mcp" },
+    { pattern: /\bn8n\b/i, slug: "n8n" },
     { pattern: /(gemini|gems?)/i, slug: "gemini" },
     { pattern: /claude\s*code/i, slug: "claudecode" },
     { pattern: /claude/i, slug: "claude" },
