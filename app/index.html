@@ -1,291 +1,119 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Échelle de maturité en intelligence artificielle | Acculturation Numérique</title>
-    <meta
-      name="description"
-      content="Évaluez votre niveau de maturité en intelligence artificielle générative en moins de 2 minutes. Obtenez votre score, votre profil et vos axes de progression."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <main id="an-diagnostic" x-data="diagnosticIA()" x-init="init()" data-webhook-url="">
-      <section class="an-panel an-hero" x-show="step === 'intro'" x-transition.opacity.duration.250ms>
-        <p class="an-eyebrow">Échelle de maturité en intelligence artificielle</p>
-        <h1 class="an-title">Évaluez votre maturité IA en moins de 2 minutes</h1>
-        <p class="an-lead">
-          Cochez les usages que vous maîtrisez déjà et découvrez votre profil, vos forces et vos
-          prochains axes de progression.
-        </p>
-        <ul class="an-meta">
-          <li>20 critères simples à cocher</li>
-          <li>Résultat immédiat</li>
-          <li>Aucun compte requis</li>
-          <li>Formulaire final optionnel</li>
-        </ul>
-        <div class="an-actions">
-          <button class="an-btn an-btn-primary" type="button" @click="start()">
-            Lancer mon diagnostic
-          </button>
-          <a class="an-btn an-btn-secondary" href="#an-method">Voir la méthode</a>
-        </div>
-      </section>
 
-      <section
-        class="an-section an-panel an-card"
-        x-show="step === 'questions'"
-        x-cloak
-        x-transition.opacity.duration.200ms
-      >
-        <div class="an-stepper">
-          <span class="an-stepper-badge" x-text="progressLabel"></span>
-          <template x-for="(item, idx) in categories" :key="item.key">
-            <span class="an-step-dot" :class="{ active: idx <= currentCategoryIndex }"></span>
-          </template>
-        </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Échelle de maturité en intelligence artificielle | Acculturation Numérique</title>
+  <meta name="description"
+    content="Évaluez votre niveau de maturité en intelligence artificielle générative en moins de 2 minutes. Obtenez votre score, votre profil et vos axes de progression." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css?v=3" />
+</head>
 
-        <h2 class="an-card-title">
-          <span x-text="currentCategory.shortTitle"></span> ·
-          <span x-text="currentCategory.title"></span>
-        </h2>
-        <p class="an-card-subtitle" x-text="currentCategory.description"></p>
+<body>
+  <main id="an-diagnostic" x-data="diagnosticIA()" x-init="init()" data-webhook-url="">
+    <section class="an-panel an-hero" x-show="step === 'intro'" x-transition.opacity.duration.250ms>
+      <p class="an-eyebrow">Échelle de maturité en intelligence artificielle</p>
+      <h1 class="an-title">Évaluez votre maturité IA en moins de 2 minutes</h1>
+      <p class="an-lead">
+        Cochez les usages que vous maîtrisez déjà et découvrez votre profil, vos forces et vos
+        prochains axes de progression.
+      </p>
+      <ul class="an-meta">
+        <li>20 critères simples à cocher</li>
+        <li>Résultat immédiat</li>
+        <li>Aucun compte requis</li>
+        <li>Formulaire final optionnel</li>
+      </ul>
+      <div class="an-actions">
+        <button class="an-btn an-btn-primary" type="button" @click="start()">
+          Lancer mon diagnostic
+        </button>
+      </div>
+    </section>
 
-        <div class="an-checklist" role="group" aria-label="Questions de la catégorie en cours">
-          <template x-for="q in currentQuestions" :key="q.id">
-            <label class="an-check" :for="`q-${q.id}`">
-              <input
-                type="checkbox"
-                :id="`q-${q.id}`"
-                :checked="Boolean(answers[q.id])"
-                @change="answers[q.id] = $event.target.checked"
-              />
+    <section class="an-section an-panel an-card" x-show="step === 'questions'" x-cloak
+      x-transition.opacity.duration.200ms>
+      <div class="an-stepper">
+        <span class="an-stepper-badge" x-text="progressLabel"></span>
+        <template x-for="(item, idx) in categories" :key="item.key">
+          <span class="an-step-dot" :class="{ active: idx <= currentCategoryIndex }"></span>
+        </template>
+      </div>
+
+      <h2 class="an-card-title">
+        <span x-text="currentCategory.shortTitle"></span> ·
+        <span x-text="currentCategory.title"></span>
+      </h2>
+      <p class="an-card-subtitle" x-text="currentCategory.description"></p>
+
+      <div class="an-checklist" role="group" aria-label="Questions de la catégorie en cours">
+        <template x-for="q in currentQuestions" :key="q.id">
+          <label class="an-check" :for="`q-${q.id}`">
+            <input type="checkbox" :id="`q-${q.id}`" :checked="Boolean(answers[q.id])"
+              @change="answers[q.id] = $event.target.checked" />
+            <span>
               <span>
-                <span>
-                  <strong x-text="q.id"></strong>
-                  <span x-text="` — ${q.label}`"></span>
-                </span>
+                <strong x-text="q.id"></strong>
+                <span x-text="` — ${q.label}`"></span>
               </span>
-            </label>
-          </template>
-        </div>
+            </span>
+          </label>
+        </template>
+      </div>
 
-        <div class="an-nav">
-          <button
-            type="button"
-            class="an-btn an-btn-secondary"
-            @click="previousCategory()"
-            :disabled="currentCategoryIndex === 0"
-          >
-            Précédent
-          </button>
+      <div class="an-nav">
+        <button type="button" class="an-btn an-btn-secondary" @click="previousCategory()"
+          :disabled="currentCategoryIndex === 0">
+          Précédent
+        </button>
 
-          <button
-            x-show="!isLastCategory"
-            type="button"
-            class="an-btn an-btn-primary"
-            @click="nextCategory()"
-          >
-            Suivant
-          </button>
+        <button x-show="!isLastCategory" type="button" class="an-btn an-btn-primary" @click="nextCategory()">
+          Suivant
+        </button>
 
-          <button
-            x-show="isLastCategory"
-            type="button"
-            class="an-btn an-btn-primary"
-            @click="showResults()"
-          >
-            Voir mes résultats
-          </button>
-        </div>
-      </section>
+        <button x-show="isLastCategory" type="button" class="an-btn an-btn-primary" @click="showResults()">
+          Voir mes résultats
+        </button>
+      </div>
+    </section>
 
-      <section
-        class="an-section an-grid"
-        x-show="step === 'results'"
-        x-cloak
-        x-transition.opacity.duration.250ms
-      >
-        <div class="an-panel an-card an-result">
-          <aside class="an-score-box">
-            <div class="an-score-circle">
-              <span x-text="scoreTotal"></span>
-            </div>
-            <div class="an-score-meta">
-              <strong>
-                <span x-text="currentLevel ? currentLevel.level : ''"></span>
-                <span>·</span>
-                <span x-text="currentLevel ? currentLevel.profile : ''"></span>
-              </strong>
-              <span>Score global sur 20</span>
-            </div>
-          </aside>
-
-          <div>
-            <h2 class="an-card-title">Votre restitution immédiate</h2>
-            <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.summary : ''"></p>
-
-            <div class="an-badges">
-              <template x-for="row in strengths" :key="`strength-${row.name}`">
-                <span class="an-badge" x-text="`Force: ${row.name}`"></span>
-              </template>
-              <template x-for="row in focusAreas" :key="`focus-${row.name}`">
-                <span class="an-badge" x-text="`Axe: ${row.name}`"></span>
-              </template>
-            </div>
-
-            <div class="an-bars">
-              <template x-for="row in dimensionScores" :key="row.name">
-                <div class="an-bar-row">
-                  <div class="an-bar-label">
-                    <span x-text="row.name"></span>
-                    <strong x-text="`${row.score}/${row.max}`"></strong>
-                  </div>
-                  <div class="an-bar-track">
-                    <div class="an-bar-fill" :style="`width:${row.percent}%`"></div>
-                  </div>
-                </div>
-              </template>
-            </div>
+    <section class="an-section an-grid" x-show="step === 'results'" x-cloak x-transition.opacity.duration.250ms>
+      <div class="an-panel an-card an-result">
+        <aside class="an-score-box">
+          <div class="an-score-circle">
+            <span x-text="scoreTotal"></span>
           </div>
-        </div>
+          <div class="an-score-meta">
+            <strong>
+              <span x-text="currentLevel ? currentLevel.level : ''"></span>
+              <span>·</span>
+              <span x-text="currentLevel ? currentLevel.profile : ''"></span>
+            </strong>
+            <span>Score global sur 20</span>
+          </div>
+        </aside>
 
-        <div class="an-grid an-grid-2">
-          <article class="an-card">
-            <h3 class="an-card-title">Priorités recommandées</h3>
-            <ul class="an-kpi-list">
-              <template x-for="item in currentLevel ? currentLevel.priorities : []" :key="item">
-                <li x-text="item"></li>
-              </template>
-            </ul>
-            <div class="an-callout">
-              <p>
-                <strong>Point de vigilance :</strong>
-                <span x-text="currentLevel ? currentLevel.vigilance : ''"></span>
-              </p>
-            </div>
-          </article>
+        <div>
+          <h2 class="an-card-title">Votre restitution immédiate</h2>
+          <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.summary : ''"></p>
 
-          <article class="an-card">
-            <h3 class="an-card-title">Prochaine étape</h3>
-            <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.nextStep : ''"></p>
-            <h4 class="an-card-subtitle">Outils suggérés</h4>
-            <ul class="an-inline-list">
-              <template x-for="tool in currentLevel ? currentLevel.tools : []" :key="tool">
-                <li x-text="tool"></li>
-              </template>
-            </ul>
-          </article>
-        </div>
+          <div class="an-badges">
+            <template x-for="row in strengths" :key="`strength-${row.name}`">
+              <span class="an-badge" x-text="`Force: ${row.name}`"></span>
+            </template>
+            <template x-for="row in focusAreas" :key="`focus-${row.name}`">
+              <span class="an-badge" x-text="`Axe: ${row.name}`"></span>
+            </template>
+          </div>
 
-        <div class="an-actions">
-          <button type="button" class="an-btn an-btn-primary" @click="openLeadForm()">
-            Recevoir mon diagnostic complet
-          </button>
-          <button type="button" class="an-btn an-btn-secondary" @click="reset()">
-            Recommencer
-          </button>
-        </div>
-      </section>
-
-      <section
-        class="an-section an-grid an-grid-2"
-        x-show="step === 'lead'"
-        x-cloak
-        x-transition.opacity.duration.250ms
-      >
-        <article class="an-panel an-card">
-          <h2 class="an-card-title">Recevoir mon diagnostic complet</h2>
-          <p class="an-card-subtitle">
-            Laissez vos coordonnées pour recevoir votre résultat et des pistes d'action adaptées à
-            votre niveau de maturité IA.
-          </p>
-
-          <form class="an-form" @submit.prevent="submitLead()">
-            <div class="an-grid an-grid-2">
-              <div class="an-field">
-                <label for="first_name">Prénom</label>
-                <input id="first_name" class="an-input" type="text" x-model="lead.first_name" />
-              </div>
-              <div class="an-field">
-                <label for="last_name">Nom</label>
-                <input id="last_name" class="an-input" type="text" x-model="lead.last_name" />
-              </div>
-            </div>
-
-            <div class="an-field">
-              <label for="email">Adresse e-mail</label>
-              <input id="email" class="an-input" type="email" x-model="lead.email" required />
-            </div>
-
-            <div class="an-field">
-              <label for="company">Entreprise</label>
-              <input id="company" class="an-input" type="text" x-model="lead.company" />
-            </div>
-
-            <div class="an-grid an-grid-2">
-              <div class="an-field">
-                <label for="job_title">Fonction</label>
-                <input id="job_title" class="an-input" type="text" x-model="lead.job_title" />
-              </div>
-              <div class="an-field">
-                <label for="company_size">Taille de l'organisation</label>
-                <select id="company_size" class="an-select" x-model="lead.company_size">
-                  <option value="">Sélectionner</option>
-                  <template x-for="size in companySizes" :key="size">
-                    <option :value="size" x-text="size"></option>
-                  </template>
-                </select>
-              </div>
-            </div>
-
-            <label class="an-check-compact" for="consent">
-              <input id="consent" type="checkbox" x-model="lead.consent" />
-              <span>
-                J'accepte que les informations saisies soient utilisées par Acculturation
-                Numérique pour m'envoyer mon diagnostic et me recontacter au sujet de mes besoins
-                en formation IA.
-              </span>
-            </label>
-
-            <div
-              x-show="submitState !== 'idle'"
-              class="an-feedback"
-              :class="{
-                'an-feedback-success': submitState === 'success',
-                'an-feedback-error': submitState === 'error',
-                'an-feedback-loading': submitState === 'loading'
-              }"
-              x-text="submitMessage"
-            ></div>
-
-            <div class="an-actions">
-              <button class="an-btn an-btn-primary" type="submit">Envoyer ma demande</button>
-              <button class="an-btn an-btn-secondary" type="button" @click="backToResults()">
-                Retour au résultat
-              </button>
-              <button class="an-btn an-btn-ghost" type="button" @click="reset()">
-                Recommencer
-              </button>
-            </div>
-          </form>
-        </article>
-
-        <aside class="an-card">
-          <h3 class="an-card-title">Votre profil actuel</h3>
-          <p class="an-card-subtitle">
-            Niveau: <strong x-text="currentLevel ? currentLevel.level : ''"></strong>
-            · Profil: <strong x-text="currentLevel ? currentLevel.profile : ''"></strong>
-          </p>
           <div class="an-bars">
-            <template x-for="row in dimensionScores" :key="`lead-${row.name}`">
+            <template x-for="row in dimensionScores" :key="row.name">
               <div class="an-bar-row">
                 <div class="an-bar-label">
                   <span x-text="row.name"></span>
@@ -297,19 +125,145 @@
               </div>
             </template>
           </div>
-        </aside>
-      </section>
+        </div>
+      </div>
 
-      <section id="an-method" class="an-section an-card">
-        <h2 class="an-card-title">Méthodologie</h2>
+      <div class="an-grid an-grid-2">
+        <article class="an-card">
+          <h3 class="an-card-title">Priorités recommandées</h3>
+          <ul class="an-kpi-list">
+            <template x-for="item in currentLevel ? currentLevel.priorities : []" :key="item">
+              <li x-text="item"></li>
+            </template>
+          </ul>
+          <div class="an-callout">
+            <p>
+              <strong>Point de vigilance :</strong>
+              <span x-text="currentLevel ? currentLevel.vigilance : ''"></span>
+            </p>
+          </div>
+        </article>
+
+        <article class="an-card">
+          <h3 class="an-card-title">Prochaine étape</h3>
+          <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.nextStep : ''"></p>
+          <h4 class="an-card-subtitle">Outils suggérés</h4>
+          <ul class="an-inline-list">
+            <template x-for="tool in currentLevel ? currentLevel.tools : []" :key="tool">
+              <li x-text="tool"></li>
+            </template>
+          </ul>
+        </article>
+      </div>
+
+      <div class="an-actions">
+        <button type="button" class="an-btn an-btn-primary" @click="openLeadForm()">
+          Recevoir mon diagnostic complet
+        </button>
+        <button type="button" class="an-btn an-btn-secondary" @click="reset()">
+          Recommencer
+        </button>
+      </div>
+    </section>
+
+    <section class="an-section an-grid an-grid-2" x-show="step === 'lead'" x-cloak x-transition.opacity.duration.250ms>
+      <article class="an-panel an-card">
+        <h2 class="an-card-title">Recevoir mon diagnostic complet</h2>
         <p class="an-card-subtitle">
-          Le diagnostic s'appuie sur 20 critères déclaratifs, un score global sur 20, 6 dimensions
-          de restitution et 5 niveaux de maturité (Novice à Expert).
+          Laissez vos coordonnées pour recevoir votre résultat et des pistes d'action adaptées à
+          votre niveau de maturité IA.
         </p>
-      </section>
-    </main>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="./app.js"></script>
-  </body>
+        <form class="an-form" @submit.prevent="submitLead()">
+          <div class="an-grid an-grid-2">
+            <div class="an-field">
+              <label for="first_name">Prénom</label>
+              <input id="first_name" class="an-input" type="text" x-model="lead.first_name" />
+            </div>
+            <div class="an-field">
+              <label for="last_name">Nom</label>
+              <input id="last_name" class="an-input" type="text" x-model="lead.last_name" />
+            </div>
+          </div>
+
+          <div class="an-field">
+            <label for="email">Adresse e-mail</label>
+            <input id="email" class="an-input" type="email" x-model="lead.email" required />
+          </div>
+
+          <div class="an-field">
+            <label for="company">Entreprise</label>
+            <input id="company" class="an-input" type="text" x-model="lead.company" />
+          </div>
+
+          <div class="an-grid an-grid-2">
+            <div class="an-field">
+              <label for="job_title">Fonction</label>
+              <input id="job_title" class="an-input" type="text" x-model="lead.job_title" />
+            </div>
+            <div class="an-field">
+              <label for="company_size">Taille de l'organisation</label>
+              <select id="company_size" class="an-select" x-model="lead.company_size">
+                <option value="">Sélectionner</option>
+                <template x-for="size in companySizes" :key="size">
+                  <option :value="size" x-text="size"></option>
+                </template>
+              </select>
+            </div>
+          </div>
+
+          <label class="an-check-compact" for="consent">
+            <input id="consent" type="checkbox" x-model="lead.consent" />
+            <span>
+              J'accepte que les informations saisies soient utilisées par Acculturation
+              Numérique pour m'envoyer mon diagnostic et me recontacter au sujet de mes besoins
+              en formation IA.
+            </span>
+          </label>
+
+          <div x-show="submitState !== 'idle'" class="an-feedback" :class="{
+                'an-feedback-success': submitState === 'success',
+                'an-feedback-error': submitState === 'error',
+                'an-feedback-loading': submitState === 'loading'
+              }" x-text="submitMessage"></div>
+
+          <div class="an-actions">
+            <button class="an-btn an-btn-primary" type="submit">Envoyer ma demande</button>
+            <button class="an-btn an-btn-secondary" type="button" @click="backToResults()">
+              Retour au résultat
+            </button>
+            <button class="an-btn an-btn-ghost" type="button" @click="reset()">
+              Recommencer
+            </button>
+          </div>
+        </form>
+      </article>
+
+      <aside class="an-card">
+        <h3 class="an-card-title">Votre profil actuel</h3>
+        <p class="an-card-subtitle">
+          Niveau: <strong x-text="currentLevel ? currentLevel.level : ''"></strong>
+          · Profil: <strong x-text="currentLevel ? currentLevel.profile : ''"></strong>
+        </p>
+        <div class="an-bars">
+          <template x-for="row in dimensionScores" :key="`lead-${row.name}`">
+            <div class="an-bar-row">
+              <div class="an-bar-label">
+                <span x-text="row.name"></span>
+                <strong x-text="`${row.score}/${row.max}`"></strong>
+              </div>
+              <div class="an-bar-track">
+                <div class="an-bar-fill" :style="`width:${row.percent}%`"></div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="./app.js"></script>
+</body>
+
 </html>
