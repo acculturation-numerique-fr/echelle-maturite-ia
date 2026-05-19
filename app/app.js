@@ -271,7 +271,7 @@
         "Diffuser des standards de pratique au niveau de l'équipe."
       ],
       vigilance: "Pilotez les risques de conformité, de dépendance outil et de qualité des sorties.",
-      tools: ["Agents connectés", "APIs métiers", "Airtable", "Notion", "Google Workspace"],
+      tools: ["Cursor", "Lovable", "Antigravity", "LangChain", "Agents connectés"],
       nextStep:
         "Concevez un prototype d'agent connecté à un service métier avec règles de supervision et d'évaluation."
     }
@@ -295,6 +295,10 @@
     { pattern: /(gemini|gems?)/i, slug: "gemini" },
     { pattern: /claude/i, slug: "claude" },
     { pattern: /perplexity/i, slug: "perplexity" },
+    { pattern: /cursor/i, slug: "cursor" },
+    { pattern: /lovable/i, slug: "lovable" },
+    { pattern: /antigravity/i, slug: "antigravity" },
+    { pattern: /langchain/i, slug: "langchain" },
     { pattern: /notebooklm/i, slug: "notebooklm" },
     { pattern: /make/i, slug: "make" },
     { pattern: /zapier/i, slug: "zapier" },
