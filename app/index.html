@@ -12,28 +12,64 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css?v=3" />
+  <link rel="stylesheet" href="./styles.css?v=4" />
 </head>
 
 <body>
   <main id="an-diagnostic" x-data="diagnosticIA()" x-init="init()" data-webhook-url="">
     <section class="an-panel an-hero" x-show="step === 'intro'" x-transition.opacity.duration.250ms>
-      <p class="an-eyebrow">Échelle de maturité en intelligence artificielle</p>
-      <h1 class="an-title">Évaluez votre maturité IA en moins de 2 minutes</h1>
-      <p class="an-lead">
-        Cochez les usages que vous maîtrisez déjà et découvrez votre profil, vos forces et vos
-        prochains axes de progression.
-      </p>
-      <ul class="an-meta">
-        <li>20 critères simples à cocher</li>
-        <li>Résultat immédiat</li>
-        <li>Aucun compte requis</li>
-        <li>Formulaire final optionnel</li>
-      </ul>
-      <div class="an-actions">
-        <button class="an-btn an-btn-primary" type="button" @click="start()">
-          Lancer mon diagnostic
-        </button>
+      <div class="an-hero-grid">
+        <div class="an-hero-copy">
+          <p class="an-eyebrow">Échelle de maturité en intelligence artificielle</p>
+          <h1 class="an-title">Évaluez votre maturité IA en moins de 2 minutes</h1>
+          <p class="an-lead">
+            Cochez les usages que vous maîtrisez déjà et découvrez votre profil, vos forces et vos
+            prochains axes de progression.
+          </p>
+          <ul class="an-meta">
+            <li>20 critères simples à cocher</li>
+            <li>Résultat immédiat</li>
+            <li>Aucun compte requis</li>
+            <li>Formulaire final optionnel</li>
+          </ul>
+          <div class="an-actions an-hero-actions">
+            <button class="an-btn an-btn-primary" type="button" @click="start()">
+              Lancer mon diagnostic
+            </button>
+          </div>
+        </div>
+
+        <aside class="an-hero-preview" aria-hidden="true">
+          <article class="an-hero-widget an-hero-widget-main">
+            <p class="an-hero-widget-kicker">Exemple de restitution</p>
+            <p class="an-hero-widget-value">14<span>/20</span></p>
+            <p class="an-hero-widget-text">Profil Architecte IA</p>
+            <div class="an-hero-mini-bars">
+              <span style="--an-mini:88"></span>
+              <span style="--an-mini:74"></span>
+              <span style="--an-mini:61"></span>
+              <span style="--an-mini:92"></span>
+              <span style="--an-mini:56"></span>
+            </div>
+          </article>
+          <article class="an-hero-widget">
+            <p class="an-hero-widget-kicker">Bench opérationnel</p>
+            <ul class="an-hero-widget-list">
+              <li>
+                <span>Culture & cadre</span>
+                <strong>4/5</strong>
+              </li>
+              <li>
+                <span>Usages opérationnels</span>
+                <strong>2/3</strong>
+              </li>
+              <li>
+                <span>Automatisation</span>
+                <strong>2/3</strong>
+              </li>
+            </ul>
+          </article>
+        </aside>
       </div>
     </section>
 
@@ -83,11 +119,33 @@
       </div>
     </section>
 
-    <section class="an-section an-grid" x-show="step === 'results'" x-cloak x-transition.opacity.duration.250ms>
-      <div class="an-panel an-card an-result">
-        <aside class="an-score-box">
-          <div class="an-score-circle">
+    <section class="an-section an-results-shell" x-show="step === 'results'" x-cloak
+      x-transition.opacity.duration.250ms>
+      <header class="an-panel an-card an-results-top">
+        <div>
+          <p class="an-eyebrow">Restitution immédiate</p>
+          <h2 class="an-card-title">Votre tableau de maturité IA</h2>
+          <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.summary : ''"></p>
+        </div>
+        <div class="an-actions an-results-actions">
+          <button type="button" class="an-btn an-btn-primary" @click="openLeadForm()">
+            Recevoir mon diagnostic complet
+          </button>
+          <button type="button" class="an-btn an-btn-secondary" @click="reset()">
+            Recommencer
+          </button>
+        </div>
+      </header>
+
+      <div class="an-bento-grid">
+        <article class="an-card an-bento-card an-bento-score">
+          <div class="an-bento-head">
+            <h3 class="an-bento-title">Indice global</h3>
+            <span class="an-bento-tag">Sur 20 points</span>
+          </div>
+          <div class="an-score-ring" :style="scoreRingStyle" role="img" :aria-label="scoreAriaLabel">
             <span x-text="scoreTotal"></span>
+            <small>/20</small>
           </div>
           <div class="an-score-meta">
             <strong>
@@ -95,14 +153,7 @@
               <span>·</span>
               <span x-text="currentLevel ? currentLevel.profile : ''"></span>
             </strong>
-            <span>Score global sur 20</span>
           </div>
-        </aside>
-
-        <div>
-          <h2 class="an-card-title">Votre restitution immédiate</h2>
-          <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.summary : ''"></p>
-
           <div class="an-badges">
             <template x-for="row in strengths" :key="`strength-${row.name}`">
               <span class="an-badge" x-text="`Force: ${row.name}`"></span>
@@ -111,9 +162,38 @@
               <span class="an-badge" x-text="`Axe: ${row.name}`"></span>
             </template>
           </div>
+        </article>
 
-          <div class="an-bars">
-            <template x-for="row in dimensionScores" :key="row.name">
+        <article class="an-card an-bento-card an-bento-radar">
+          <div class="an-bento-head">
+            <h3 class="an-bento-title">Radar des dimensions</h3>
+            <span class="an-bento-tag">6 dimensions</span>
+          </div>
+          <svg class="an-radar-svg" viewBox="0 0 260 260" role="img" aria-label="Répartition des dimensions">
+            <template x-for="ring in radarChart.rings" :key="`ring-${ring.scale}`">
+              <polygon class="an-radar-ring" :points="ring.points"></polygon>
+            </template>
+            <template x-for="axis in radarChart.axes" :key="`axis-${axis.key}`">
+              <line class="an-radar-axis" :x1="radarChart.center" :y1="radarChart.center" :x2="axis.x" :y2="axis.y">
+              </line>
+            </template>
+            <polygon class="an-radar-shape" :points="radarChart.shape"></polygon>
+            <template x-for="axis in radarChart.axes" :key="`dot-${axis.key}`">
+              <circle class="an-radar-dot" :cx="axis.scoreX" :cy="axis.scoreY" r="3.25"></circle>
+            </template>
+            <template x-for="axis in radarChart.axes" :key="`label-${axis.key}`">
+              <text class="an-radar-label" :x="axis.labelX" :y="axis.labelY" x-text="axis.shortLabel"></text>
+            </template>
+          </svg>
+        </article>
+
+        <article class="an-card an-bento-card an-bento-bars">
+          <div class="an-bento-head">
+            <h3 class="an-bento-title">Progression par dimension</h3>
+            <span class="an-bento-tag">Bar charts</span>
+          </div>
+          <div class="an-bars an-bars-tight">
+            <template x-for="row in dimensionScores" :key="`bar-${row.name}`">
               <div class="an-bar-row">
                 <div class="an-bar-label">
                   <span x-text="row.name"></span>
@@ -125,12 +205,30 @@
               </div>
             </template>
           </div>
-        </div>
-      </div>
+        </article>
 
-      <div class="an-grid an-grid-2">
-        <article class="an-card">
-          <h3 class="an-card-title">Priorités recommandées</h3>
+        <article class="an-card an-bento-card an-bento-line">
+          <div class="an-bento-head">
+            <h3 class="an-bento-title">Trajectoire d'adoption</h3>
+            <span class="an-bento-tag">Line + area</span>
+          </div>
+          <svg class="an-line-svg" viewBox="0 0 420 180" role="img" aria-label="Progression par catégorie">
+            <path class="an-line-area" :d="trajectoryChart.area"></path>
+            <path class="an-line-path" :d="trajectoryChart.line"></path>
+            <template x-for="point in trajectoryChart.points" :key="`point-${point.key}`">
+              <g>
+                <circle class="an-line-dot" :cx="point.x" :cy="point.y" r="4"></circle>
+                <text class="an-line-label" :x="point.x" y="166" x-text="point.shortLabel"></text>
+              </g>
+            </template>
+          </svg>
+        </article>
+
+        <article class="an-card an-bento-card an-bento-priority">
+          <div class="an-bento-head">
+            <h3 class="an-bento-title">Priorités recommandées</h3>
+            <span class="an-bento-tag">Plan d'action</span>
+          </div>
           <ul class="an-kpi-list">
             <template x-for="item in currentLevel ? currentLevel.priorities : []" :key="item">
               <li x-text="item"></li>
@@ -144,25 +242,28 @@
           </div>
         </article>
 
-        <article class="an-card">
-          <h3 class="an-card-title">Prochaine étape</h3>
+        <article class="an-card an-bento-card an-bento-next">
+          <div class="an-bento-head">
+            <h3 class="an-bento-title">Prochaine étape & stack suggérée</h3>
+            <span class="an-bento-tag">Tooling</span>
+          </div>
           <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.nextStep : ''"></p>
-          <h4 class="an-card-subtitle">Outils suggérés</h4>
-          <ul class="an-inline-list">
-            <template x-for="tool in currentLevel ? currentLevel.tools : []" :key="tool">
-              <li x-text="tool"></li>
+          <ul class="an-tools-grid">
+            <template x-for="tool in toolVisuals" :key="`tool-${tool.name}`">
+              <li class="an-tool-pill">
+                <span class="an-tool-icon">
+                  <template x-if="tool.iconUrl">
+                    <img :src="tool.iconUrl" :alt="`Logo ${tool.name}`" loading="lazy" />
+                  </template>
+                  <template x-if="!tool.iconUrl">
+                    <span class="an-tool-fallback" x-text="tool.fallback"></span>
+                  </template>
+                </span>
+                <span x-text="tool.name"></span>
+              </li>
             </template>
           </ul>
         </article>
-      </div>
-
-      <div class="an-actions">
-        <button type="button" class="an-btn an-btn-primary" @click="openLeadForm()">
-          Recevoir mon diagnostic complet
-        </button>
-        <button type="button" class="an-btn an-btn-secondary" @click="reset()">
-          Recommencer
-        </button>
       </div>
     </section>
 

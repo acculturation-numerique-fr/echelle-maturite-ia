@@ -288,6 +288,73 @@
     "Autre"
   ];
 
+  const LOBE_ICON_BASE_URL = "https://unpkg.com/@lobehub/icons-static-svg@latest/icons";
+  const TOOL_ICON_RULES = [
+    { pattern: /(chatgpt|openai|custom gpt|gpt)/i, slug: "openai" },
+    { pattern: /copilot/i, slug: "copilot" },
+    { pattern: /(gemini|gems?)/i, slug: "gemini" },
+    { pattern: /claude/i, slug: "claude" },
+    { pattern: /perplexity/i, slug: "perplexity" },
+    { pattern: /notebooklm/i, slug: "notebooklm" },
+    { pattern: /make/i, slug: "make" },
+    { pattern: /zapier/i, slug: "zapier" },
+    { pattern: /ollama/i, slug: "ollama" },
+    { pattern: /notion/i, slug: "notion" },
+    { pattern: /google workspace/i, slug: "google" },
+    { pattern: /agents? connect/i, slug: "agentvoice" }
+  ];
+
+  function shortDimensionLabel(name) {
+    const labels = {
+      "Culture & cadre IA": "Culture",
+      "Prise en main des outils": "Outils",
+      "Usages opérationnels": "Usages",
+      "Prompting & capitalisation": "Prompt",
+      "Personnalisation & autonomie": "Autonomie",
+      "Technique & automatisation": "Tech"
+    };
+
+    return labels[name] || name;
+  }
+
+  function clampPercent(percent) {
+    return Math.max(0, Math.min(100, percent));
+  }
+
+  function scoreToPercent(score, max) {
+    if (!max) {
+      return 0;
+    }
+
+    return Math.round((score / max) * 100);
+  }
+
+  function resolveToolIconUrl(toolName) {
+    const match = TOOL_ICON_RULES.find((rule) => rule.pattern.test(toolName));
+    if (!match) {
+      return "";
+    }
+
+    return `${LOBE_ICON_BASE_URL}/${match.slug}.svg`;
+  }
+
+  function buildToolFallback(toolName) {
+    const words = toolName
+      .replace(/[^A-Za-z0-9À-ÿ\s]/g, " ")
+      .split(/\s+/)
+      .filter(Boolean);
+
+    if (!words.length) {
+      return "AI";
+    }
+
+    if (words.length === 1) {
+      return words[0].slice(0, 2).toUpperCase();
+    }
+
+    return `${words[0][0]}${words[1][0]}`.toUpperCase();
+  }
+
   function normalizeBooleanMap(ids) {
     const map = {};
     ids.forEach((id) => {
@@ -391,6 +458,137 @@
             percent: Math.round(ratio * 100)
           };
         });
+      },
+
+      get scorePercent() {
+        return scoreToPercent(this.scoreTotal, this.questions.length);
+      },
+
+      get scoreRingStyle() {
+        return `--an-progress:${clampPercent(this.scorePercent)}`;
+      },
+
+      get scoreAriaLabel() {
+        return `Score global ${this.scoreTotal} sur ${this.questions.length}`;
+      },
+
+      get categoryScores() {
+        return this.categories.map((category) => {
+          const categoryQuestions = this.questions.filter((q) => q.category === category.key);
+          const score = categoryQuestions.reduce(
+            (sum, q) => sum + (this.answers[q.id] ? q.points : 0),
+            0
+          );
+          const max = categoryQuestions.reduce((sum, q) => sum + q.points, 0);
+          const percent = scoreToPercent(score, max);
+
+          return {
+            key: category.key,
+            shortLabel: category.shortTitle,
+            score,
+            max,
+            percent
+          };
+        });
+      },
+
+      get trajectoryChart() {
+        const width = 420;
+        const height = 180;
+        const paddingX = 30;
+        const baseY = 136;
+        const amplitude = 88;
+        const categories = this.categoryScores;
+        const stepX = categories.length > 1 ? (width - paddingX * 2) / (categories.length - 1) : 0;
+
+        const points = categories.map((category, index) => {
+          const x = paddingX + index * stepX;
+          const y = baseY - (amplitude * category.percent) / 100;
+          return {
+            key: category.key,
+            shortLabel: category.shortLabel,
+            x: Number(x.toFixed(2)),
+            y: Number(y.toFixed(2))
+          };
+        });
+
+        const line = points
+          .map((point, index) => `${index === 0 ? "M" : "L"}${point.x} ${point.y}`)
+          .join(" ");
+
+        const lastX = points.length ? points[points.length - 1].x : paddingX;
+        const area = `${line} L${lastX} ${baseY} L${paddingX} ${baseY} Z`;
+
+        return {
+          points,
+          line,
+          area
+        };
+      },
+
+      get radarChart() {
+        const center = 130;
+        const radius = 86;
+        const ringSteps = [0.25, 0.5, 0.75, 1];
+        const rows = this.dimensionScores;
+        const count = rows.length || 1;
+        const angleShift = -Math.PI / 2;
+
+        const pointAt = (index, distance) => {
+          const angle = (Math.PI * 2 * index) / count + angleShift;
+          return {
+            x: center + Math.cos(angle) * distance,
+            y: center + Math.sin(angle) * distance
+          };
+        };
+
+        const rings = ringSteps.map((scale) => {
+          const points = rows
+            .map((_, index) => {
+              const p = pointAt(index, radius * scale);
+              return `${p.x.toFixed(2)},${p.y.toFixed(2)}`;
+            })
+            .join(" ");
+
+          return {
+            scale,
+            points
+          };
+        });
+
+        const axes = rows.map((row, index) => {
+          const edge = pointAt(index, radius);
+          const label = pointAt(index, radius + 24);
+          const scorePoint = pointAt(index, radius * (row.percent / 100));
+          return {
+            key: row.name,
+            shortLabel: shortDimensionLabel(row.name),
+            x: Number(edge.x.toFixed(2)),
+            y: Number(edge.y.toFixed(2)),
+            labelX: Number(label.x.toFixed(2)),
+            labelY: Number(label.y.toFixed(2)),
+            scoreX: Number(scorePoint.x.toFixed(2)),
+            scoreY: Number(scorePoint.y.toFixed(2))
+          };
+        });
+
+        const shape = axes.map((axis) => `${axis.scoreX},${axis.scoreY}`).join(" ");
+
+        return {
+          center,
+          rings,
+          axes,
+          shape
+        };
+      },
+
+      get toolVisuals() {
+        const tools = this.currentLevel ? this.currentLevel.tools : [];
+        return tools.map((toolName) => ({
+          name: toolName,
+          iconUrl: resolveToolIconUrl(toolName),
+          fallback: buildToolFallback(toolName)
+        }));
       },
 
       get strengths() {
