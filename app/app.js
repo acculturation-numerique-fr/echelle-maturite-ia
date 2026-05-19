@@ -1,3 +1,25 @@
+// Bulletproof Polyfill for Alpine.js x-for template rendering in SVG elements (Firefox/Safari/Chrome namespace fix)
+if (typeof document !== 'undefined') {
+  const setupSvgTemplates = () => {
+    document.querySelectorAll('svg template').forEach(template => {
+      if (!('content' in template) || !template.content) {
+        const fragment = document.createDocumentFragment();
+        while (template.firstChild) {
+          fragment.appendChild(template.firstChild);
+        }
+        Object.defineProperty(template, 'content', {
+          get() { return fragment; },
+          configurable: true
+        });
+      }
+    });
+  };
+  // Run immediately (since app.js is at the bottom of the body, elements are already parsed)
+  setupSvgTemplates();
+  // Also run on DOMContentLoaded just in case
+  document.addEventListener('DOMContentLoaded', setupSvgTemplates);
+}
+
 (function () {
   const DIMENSIONS = [
     { name: "Culture & cadre IA", max: 5 },

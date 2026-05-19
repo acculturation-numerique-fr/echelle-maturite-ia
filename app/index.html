@@ -197,18 +197,18 @@
             <h3 class="an-bento-title">Radar des dimensions</h3>
           </div>
           <svg class="an-radar-svg" viewBox="0 0 260 260" role="img" aria-label="Répartition des dimensions">
-            <template x-for="ring in radarChart.rings" :key="`ring-${ring.scale}`">
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="ring in radarChart.rings" :key="`ring-${ring.scale}`">
               <polygon class="an-radar-ring" :points="ring.points"></polygon>
             </template>
-            <template x-for="axis in radarChart.axes" :key="`axis-${axis.key}`">
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`axis-${axis.key}`">
               <line class="an-radar-axis" :x1="radarChart.center" :y1="radarChart.center" :x2="axis.x" :y2="axis.y">
               </line>
             </template>
             <polygon class="an-radar-shape" :points="radarChart.shape"></polygon>
-            <template x-for="axis in radarChart.axes" :key="`dot-${axis.key}`">
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`dot-${axis.key}`">
               <circle class="an-radar-dot" :cx="axis.scoreX" :cy="axis.scoreY" r="3.25"></circle>
             </template>
-            <template x-for="axis in radarChart.axes" :key="`label-${axis.key}`">
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`label-${axis.key}`">
               <text class="an-radar-label" :x="axis.labelX" :y="axis.labelY" x-text="axis.shortLabel"></text>
             </template>
           </svg>
@@ -240,7 +240,7 @@
           <svg class="an-line-svg" viewBox="0 0 420 180" role="img" aria-label="Progression par catégorie">
             <path class="an-line-area" :d="trajectoryChart.area"></path>
             <path class="an-line-path" :d="trajectoryChart.line"></path>
-            <template x-for="point in trajectoryChart.points" :key="`point-${point.key}`">
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="point in trajectoryChart.points" :key="`point-${point.key}`">
               <g>
                 <circle class="an-line-dot" :cx="point.x" :cy="point.y" r="4"></circle>
                 <text class="an-line-label" :x="point.x" y="166" x-text="point.shortLabel"></text>
