@@ -62,3 +62,13 @@ Voir `worker/README.md` pour :
 - la configuration des secrets ;
 - le déploiement ;
 - un exemple de test `curl`.
+
+## Feuille de route
+
+- [ ] Configurer et déployer le Cloudflare Worker avec les accès de la base Airtable.
+- [ ] Intégrer le module de diagnostic sur le site WordPress.
+- [ ] Mettre en place l'envoi automatique du diagnostic personnalisé par e-mail.
+- [ ] Ajouter la comparaison avec les résultats moyens des utilisateurs sur le tableau de bord (courbe et radar).
+- [ ] Générer un QR Code de partage avec suivi pour les conférences et les cours.
+
+
