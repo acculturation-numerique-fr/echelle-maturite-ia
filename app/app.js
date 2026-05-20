@@ -309,6 +309,7 @@ if (typeof document !== 'undefined') {
         "OpenClaw",
         "Manus",
         "LangChain",
+        "LangGraph",
         "Hugging Face",
         "GitHub Copilot",
         "Antigravity"
@@ -329,10 +330,9 @@ if (typeof document !== 'undefined') {
     "Autre"
   ];
 
-  const LOBE_ICON_BASE_URL = "https://unpkg.com/@lobehub/icons-static-svg@latest/icons";
   const TOOL_ICON_RULES = [
     // --- Niveau Débutant & Intermédiaire (Outils grand public et productivité) ---
-    { pattern: /(chatgpt|openai|custom gpt|gpt)/i, slug: "openai" },
+    { pattern: /(chatgpt|openai|custom gpt|gpt)/i, slug: "chatgpt" },
     { pattern: /(gemini|gems?)/i, slug: "gemini" },
     { pattern: /google workspace/i, slug: "google" },
     { pattern: /perplexity/i, slug: "perplexity" },
@@ -348,9 +348,9 @@ if (typeof document !== 'undefined') {
     { pattern: /mistral/i, slug: "mistral" },
     { pattern: /deepseek/i, slug: "deepseek" },
     { pattern: /grok/i, slug: "grok" },
-    { pattern: /apify/i, slug: "apify", local: true },
-    { pattern: /windmill/i, slug: "windmill", local: true },
-    { pattern: /langflow/i, slug: "langflow", local: true },
+    { pattern: /apify/i, slug: "apify" },
+    { pattern: /windmill/i, slug: "windmill" },
+    { pattern: /langflow/i, slug: "langflow" },
 
     // --- Niveau Expert (Développement, Frameworks et Agents autonomes) ---
     { pattern: /v0/i, slug: "v0" },
@@ -366,6 +366,7 @@ if (typeof document !== 'undefined') {
     { pattern: /antigravity/i, slug: "antigravity" },
     { pattern: /llamaindex/i, slug: "llamaindex" },
     { pattern: /langchain/i, slug: "langchain" },
+    { pattern: /langgraph/i, slug: "langgraph" },
     { pattern: /mcp\s*server/i, slug: "mcp" },
     { pattern: /\bmcp\b/i, slug: "mcp" },
     { pattern: /\bn8n\b/i, slug: "n8n" },
@@ -399,15 +400,7 @@ if (typeof document !== 'undefined') {
 
   function resolveToolIconUrl(toolName) {
     const match = TOOL_ICON_RULES.find((rule) => rule.pattern.test(toolName));
-    if (!match) {
-      return "";
-    }
-
-    if (match.local) {
-      return `assets/${match.slug}.svg`;
-    }
-
-    return `${LOBE_ICON_BASE_URL}/${match.slug}.svg`;
+    return match ? `assets/${match.slug}.webp` : "";
   }
 
   function buildToolFallback(toolName) {
