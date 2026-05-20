@@ -1,28 +1,28 @@
-# Cloudflare Worker - webhook Airtable
+# Cloudflare Worker - Webhook Airtable
 
-Ce dossier contient le webhook sécurisé de la V1.
+Ce dossier contient le code du webhook sécurisé chargé de réceptionner les diagnostics et de les enregistrer dans Airtable.
 
 ## Variables d'environnement
 
-Configurer ces secrets dans Cloudflare Workers:
+Configurer ces secrets dans Cloudflare Workers :
 
-- `AIRTABLE_TOKEN`: token Airtable avec droit d'écriture
-- `AIRTABLE_BASE_ID`: identifiant de base Airtable
-- `AIRTABLE_TABLE` (optionnel): nom de table, par défaut `Diagnostics IA`
+- `AIRTABLE_TOKEN` : token Airtable avec droit d'écriture
+- `AIRTABLE_BASE_ID` : identifiant de base Airtable
+- `AIRTABLE_TABLE` (optionnel) : nom de table, par défaut `Diagnostics IA`
 
 ## Contrat API
 
-- Méthode: `POST`
-- Content-Type: `application/json`
-- Réponse succès: `{ "ok": true }`
-- Réponse erreur: `{ "ok": false, "error": "..." }`
+- Méthode : `POST`
+- Content-Type : `application/json`
+- Réponse succès : `{ "ok": true }`
+- Réponse erreur : `{ "ok": false, "error": "..." }`
 
-Le Worker valide:
+Le Worker valide :
 
 - `score_total` entre `0` et `20`
 - `level` parmi `Novice`, `Débutant`, `Intermédiaire`, `Avancé`, `Expert`
 - `answers` objet JSON
-- si formulaire soumis: `lead.email` valide et `lead.consent=true`
+- si formulaire soumis : `lead.email` valide et `lead.consent=true`
 
 ## Déploiement rapide
 
@@ -31,7 +31,7 @@ Le Worker valide:
 wrangler deploy
 ```
 
-Puis configurer les secrets:
+Puis configurer les secrets :
 
 ```bash
 wrangler secret put AIRTABLE_TOKEN
