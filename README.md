@@ -13,19 +13,7 @@
 .
 ├── app/
 │   ├── app.js
-│   ├── assets/       # Logos WebP locaux des outils et marques
-│   │   ├── chatgpt.webp
-│   │   ├── claudecode.webp
-│   │   ├── claude.webp
-│   │   ├── cursor.webp
-│   │   ├── gemini.webp
-│   │   ├── huggingface.webp
-│   │   ├── lovable.webp
-│   │   ├── manus.webp
-│   │   ├── n8n.webp
-│   │   ├── ollama.webp
-│   │   ├── openclaw.webp
-│   │   └── perplexity.webp
+│   ├── assets/       # Logos WebP locaux des outils et marques (chatgpt, claude, langgraph, etc.)
 │   ├── index.html
 │   └── styles.css
 ├── README.md
