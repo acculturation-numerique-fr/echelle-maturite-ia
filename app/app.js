@@ -348,6 +348,9 @@ if (typeof document !== 'undefined') {
     { pattern: /mistral/i, slug: "mistral" },
     { pattern: /deepseek/i, slug: "deepseek" },
     { pattern: /grok/i, slug: "grok" },
+    { pattern: /apify/i, slug: "apify", local: true },
+    { pattern: /windmill/i, slug: "windmill", local: true },
+    { pattern: /langflow/i, slug: "langflow", local: true },
 
     // --- Niveau Expert (Développement, Frameworks et Agents autonomes) ---
     { pattern: /v0/i, slug: "v0" },
@@ -398,6 +401,10 @@ if (typeof document !== 'undefined') {
     const match = TOOL_ICON_RULES.find((rule) => rule.pattern.test(toolName));
     if (!match) {
       return "";
+    }
+
+    if (match.local) {
+      return `assets/${match.slug}.svg`;
     }
 
     return `${LOBE_ICON_BASE_URL}/${match.slug}.svg`;
@@ -640,9 +647,9 @@ if (typeof document !== 'undefined') {
       },
 
       get trajectoryChart() {
-        const width = 420;
+        const width = 500;
         const height = 180;
-        const paddingX = 30;
+        const paddingX = 65;
         const baseY = 136;
         const amplitude = 88;
         const categories = this.categoryScores;

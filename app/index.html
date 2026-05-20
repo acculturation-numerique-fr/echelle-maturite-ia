@@ -144,15 +144,15 @@
       </div>
 
       <div class="an-nav">
-        <button type="button" class="an-btn an-btn-ghost" @click="previousCategory()">
+        <button type="button" class="an-btn an-btn-secondary" @click="previousCategory()">
           Précédent
         </button>
 
-        <button x-show="!isLastCategory" type="button" class="an-btn an-btn-ghost-primary" @click="nextCategory()">
+        <button x-show="!isLastCategory" type="button" class="an-btn an-btn-primary" @click="nextCategory()">
           Suivant
         </button>
 
-        <button x-show="isLastCategory" type="button" class="an-btn an-btn-ghost-primary" @click="showResults()">
+        <button x-show="isLastCategory" type="button" class="an-btn an-btn-primary" @click="showResults()">
           Voir mes résultats
         </button>
       </div>
@@ -162,11 +162,10 @@
       <header class="an-panel an-card an-results-top">
         <div>
           <h2 class="an-card-title">Votre tableau de maturité IA</h2>
-          <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.summary : ''"></p>
         </div>
         <div class="an-actions an-results-actions">
           <button type="button" class="an-btn an-btn-primary" @click="openLeadForm()">
-            Recevoir mon diagnostic complet
+            Recevoir mon diagnostic
           </button>
           <button type="button" class="an-btn an-btn-secondary" @click="reset()">
             Recommencer
@@ -175,45 +174,6 @@
       </header>
 
       <div class="an-bento-grid">
-        <article class="an-card an-bento-card an-bento-score">
-          <div class="an-bento-head">
-            <h3 class="an-bento-title">Indice global</h3>
-          </div>
-          <div class="an-score-ring" :style="scoreRingStyle" role="img" :aria-label="scoreAriaLabel">
-            <span x-text="scoreTotal"></span>
-            <small>/20</small>
-          </div>
-          <div class="an-score-meta">
-            <strong>
-              <span x-text="currentLevel ? currentLevel.level : ''"></span>
-              <span>·</span>
-              <span x-text="currentLevel ? currentLevel.profile : ''"></span>
-            </strong>
-          </div>
-        </article>
-
-        <article class="an-card an-bento-card an-bento-radar">
-          <div class="an-bento-head">
-            <h3 class="an-bento-title">Radar des dimensions</h3>
-          </div>
-          <svg class="an-radar-svg" viewBox="0 0 260 260" role="img" aria-label="Répartition des dimensions">
-            <template xmlns="http://www.w3.org/1999/xhtml" x-for="ring in radarChart.rings" :key="`ring-${ring.scale}`">
-              <polygon class="an-radar-ring" :points="ring.points"></polygon>
-            </template>
-            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`axis-${axis.key}`">
-              <line class="an-radar-axis" :x1="radarChart.center" :y1="radarChart.center" :x2="axis.x" :y2="axis.y">
-              </line>
-            </template>
-            <polygon class="an-radar-shape" :points="radarChart.shape"></polygon>
-            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`dot-${axis.key}`">
-              <circle class="an-radar-dot" :cx="axis.scoreX" :cy="axis.scoreY" r="3.25"></circle>
-            </template>
-            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`label-${axis.key}`">
-              <text class="an-radar-label" :x="axis.labelX" :y="axis.labelY" x-text="axis.shortLabel"></text>
-            </template>
-          </svg>
-        </article>
-
         <article class="an-card an-bento-card an-bento-bars">
           <div class="an-bento-head">
             <h3 class="an-bento-title">Progression par dimension</h3>
@@ -233,11 +193,72 @@
           </div>
         </article>
 
+        <article class="an-card an-bento-card an-bento-radar">
+          <div class="an-bento-head">
+            <h3 class="an-bento-title">Radar des dimensions</h3>
+          </div>
+          <svg class="an-radar-svg" viewBox="0 0 260 260" role="img" aria-label="Répartition des dimensions">
+            <defs>
+              <linearGradient id="an-radar-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="rgba(29, 86, 216, 0.28)" />
+                <stop offset="100%" stop-color="rgba(29, 156, 204, 0.16)" />
+              </linearGradient>
+            </defs>
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="ring in radarChart.rings" :key="`ring-${ring.scale}`">
+              <polygon class="an-radar-ring" :points="ring.points"></polygon>
+            </template>
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`axis-${axis.key}`">
+              <line class="an-radar-axis" :x1="radarChart.center" :y1="radarChart.center" :x2="axis.x" :y2="axis.y">
+              </line>
+            </template>
+            <polygon class="an-radar-shape" :points="radarChart.shape"></polygon>
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`dot-${axis.key}`">
+              <circle class="an-radar-dot" :cx="axis.scoreX" :cy="axis.scoreY" r="3.25"></circle>
+            </template>
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`label-${axis.key}`">
+              <text class="an-radar-label" :x="axis.labelX" :y="axis.labelY" x-text="axis.shortLabel"></text>
+            </template>
+          </svg>
+        </article>
+
+        <article class="an-card an-bento-card an-bento-score">
+          <div class="an-bento-head">
+            <h3 class="an-bento-title">Indice global</h3>
+          </div>
+          <div class="an-score-ring" :style="scoreRingStyle" role="img" :aria-label="scoreAriaLabel">
+            <span x-text="scoreTotal"></span>
+            <small>/20</small>
+          </div>
+          <div class="an-score-meta">
+            <strong>
+              <span x-text="currentLevel ? currentLevel.level : ''"></span>
+              <span>·</span>
+              <span x-text="currentLevel ? currentLevel.profile : ''"></span>
+            </strong>
+            <p class="an-score-desc" x-text="currentLevel ? currentLevel.summary : ''"></p>
+          </div>
+          <div class="an-score-divider"></div>
+          <div class="an-score-priorities">
+            <h4 class="an-score-priorities-title">Priorités recommandées</h4>
+            <ul class="an-kpi-list">
+              <template x-for="item in currentLevel ? currentLevel.priorities : []" :key="item">
+                <li x-text="item"></li>
+              </template>
+            </ul>
+          </div>
+        </article>
+
         <article class="an-card an-bento-card an-bento-line">
           <div class="an-bento-head">
-            <h3 class="an-bento-title">Trajectoire d'adoption</h3>
+            <h3 class="an-bento-title">Maturité par paliers</h3>
           </div>
-          <svg class="an-line-svg" viewBox="0 0 420 180" role="img" aria-label="Progression par catégorie">
+          <svg class="an-line-svg" viewBox="0 0 500 180" role="img" aria-label="Progression par catégorie">
+            <defs>
+              <linearGradient id="an-line-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="rgba(29, 86, 216, 0.22)" />
+                <stop offset="100%" stop-color="rgba(29, 86, 216, 0.0)" />
+              </linearGradient>
+            </defs>
             <path class="an-line-area" :d="trajectoryChart.area"></path>
             <path class="an-line-path" :d="trajectoryChart.line"></path>
             <template xmlns="http://www.w3.org/1999/xhtml" x-for="point in trajectoryChart.points" :key="`point-${point.key}`">
@@ -247,23 +268,6 @@
               </g>
             </template>
           </svg>
-        </article>
-
-        <article class="an-card an-bento-card an-bento-priority">
-          <div class="an-bento-head">
-            <h3 class="an-bento-title">Priorités recommandées</h3>
-          </div>
-          <ul class="an-kpi-list">
-            <template x-for="item in currentLevel ? currentLevel.priorities : []" :key="item">
-              <li x-text="item"></li>
-            </template>
-          </ul>
-          <div class="an-callout">
-            <p>
-              <strong>Point de vigilance :</strong>
-              <span x-text="currentLevel ? currentLevel.vigilance : ''"></span>
-            </p>
-          </div>
         </article>
 
         <article class="an-card an-bento-card an-bento-next">
@@ -290,13 +294,9 @@
       </div>
     </section>
 
-    <section class="an-section an-grid an-grid-2 an-fade-in" x-show="step === 'lead'" x-cloak>
+    <section class="an-section an-fade-in" x-show="step === 'lead'" x-cloak style="max-width: 600px; margin: 0 auto;">
       <article class="an-panel an-card">
-        <h2 class="an-card-title">Recevoir mon diagnostic complet</h2>
-        <p class="an-card-subtitle">
-          Laissez vos coordonnées pour recevoir votre résultat et des pistes d'action adaptées à
-          votre niveau de maturité IA.
-        </p>
+        <h2 class="an-card-title" style="margin-bottom: 24px;">Recevoir mon diagnostic</h2>
 
         <form class="an-form" @submit.prevent="submitLead()">
           <div class="an-grid an-grid-2">
@@ -320,23 +320,7 @@
             <input id="company" class="an-input" type="text" x-model="lead.company" />
           </div>
 
-          <div class="an-grid an-grid-2">
-            <div class="an-field">
-              <label for="job_title">Fonction</label>
-              <input id="job_title" class="an-input" type="text" x-model="lead.job_title" />
-            </div>
-            <div class="an-field">
-              <label for="company_size">Taille de l'organisation</label>
-              <select id="company_size" class="an-select" x-model="lead.company_size">
-                <option value="">Sélectionner</option>
-                <template x-for="size in companySizes" :key="size">
-                  <option :value="size" x-text="size"></option>
-                </template>
-              </select>
-            </div>
-          </div>
-
-          <label class="an-check-compact" for="consent">
+          <label class="an-check-compact" for="consent" style="margin-top: 18px;">
             <input id="consent" type="checkbox" x-model="lead.consent" />
             <span>
               J'accepte que les informations saisies soient utilisées par Acculturation
@@ -351,38 +335,14 @@
                 'an-feedback-loading': submitState === 'loading'
               }" x-text="submitMessage"></div>
 
-          <div class="an-actions">
+          <div class="an-actions" style="margin-top: 24px;">
             <button class="an-btn an-btn-primary" type="submit">Envoyer ma demande</button>
             <button class="an-btn an-btn-secondary" type="button" @click="backToResults()">
               Retour au résultat
             </button>
-            <button class="an-btn an-btn-ghost" type="button" @click="reset()">
-              Recommencer
-            </button>
           </div>
         </form>
       </article>
-
-      <aside class="an-card">
-        <h3 class="an-card-title">Votre profil actuel</h3>
-        <p class="an-card-subtitle">
-          Niveau: <strong x-text="currentLevel ? currentLevel.level : ''"></strong>
-          · Profil: <strong x-text="currentLevel ? currentLevel.profile : ''"></strong>
-        </p>
-        <div class="an-bars">
-          <template x-for="row in dimensionScores" :key="`lead-${row.name}`">
-            <div class="an-bar-row">
-              <div class="an-bar-label">
-                <span x-text="row.name"></span>
-                <strong x-text="`${row.score}/${row.max}`"></strong>
-              </div>
-              <div class="an-bar-track">
-                <div class="an-bar-fill" :style="`width:${row.percent}%`"></div>
-              </div>
-            </div>
-          </template>
-        </div>
-      </aside>
     </section>
   </main>
 
