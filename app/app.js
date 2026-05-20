@@ -218,14 +218,14 @@ if (typeof document !== 'undefined') {
       level: "Novice",
       profile: "Découvreur IA",
       summary:
-        "Vous débutez votre découverte de l'IA. C'est le moment idéal pour explorer les fondamentaux et apprendre à vérifier les réponses générées.",
+        "Vous débutez votre découverte de l'IA, c'est le moment idéal pour explorer un domaine qui va transformer votre façon de travailler.",
       priorities: [
         "Découvrir les grands usages de l'IA générative.",
         "Apprendre à vérifier les réponses produites.",
         "Créer un premier compte et tester des demandes simples."
       ],
       vigilance: "Ne confondez pas rapidité de réponse et fiabilité de l'information.",
-      tools: ["ChatGPT", "Claude", "Google Gemini", "Microsoft Copilot", "Perplexity", "NotebookLM"],
+      tools: ["Microsoft Copilot", "Google Workspace", "Notion", "ChatGPT"],
       nextStep:
         "Créez un compte et testez trois usages simples : reformuler un e-mail, résumer un texte et générer des idées."
     },
@@ -235,14 +235,14 @@ if (typeof document !== 'undefined') {
       level: "Débutant",
       profile: "Utilisateur assisté",
       summary:
-        "Vous avez franchi les premiers pas et commencez à percevoir le potentiel de l'IA. L'enjeu est maintenant de pratiquer plus régulièrement.",
+        "Vous avez franchi les premiers pas et commencez à percevoir le potentiel de l'IA, il ne vous reste plus qu'à passer à la pratique régulière.",
       priorities: [
         "Comparer plusieurs chatbots.",
         "Formuler des demandes plus précises.",
         "Identifier les cas d'usage les plus utiles dans votre métier."
       ],
       vigilance: "Évitez de rester dans une expérimentation ponctuelle sans méthode.",
-      tools: ["ChatGPT", "Claude", "Gemini", "Perplexity", "NotebookLM", "Make"],
+      tools: ["Perplexity", "NotebookLM", "Gemini", "Claude"],
       nextStep:
         "Choisissez une tâche hebdomadaire répétitive et utilisez l'IA pour l'améliorer pendant un mois."
     },
@@ -252,14 +252,14 @@ if (typeof document !== 'undefined') {
       level: "Intermédiaire",
       profile: "Opérateur augmenté",
       summary:
-        "Vous utilisez déjà l'IA dans votre quotidien. Le prochain palier consiste à structurer vos prompts et sécuriser vos usages.",
+        "Vous utilisez déjà l'IA au quotidien et maîtrisez les bases essentielles pour en tirer un vrai bénéfice dans vos activités professionnelles.",
       priorities: [
         "Utiliser des cadres de prompting.",
         "Constituer une bibliothèque de prompts.",
         "Mieux gérer les risques de données sensibles."
       ],
       vigilance: "Sans capitalisation, vos gains restent limités et difficiles à reproduire.",
-      tools: ["ChatGPT Plus", "Claude Pro", "Gemini", "Perplexity", "Make", "Zapier"],
+      tools: ["ChatGPT Plus", "Claude Pro", "Custom GPTs", "Gems", "Zapier", "Make", "Grok", "Mistral"],
       nextStep:
         "Construisez une bibliothèque de 10 prompts réutilisables pour vos tâches professionnelles."
     },
@@ -269,24 +269,14 @@ if (typeof document !== 'undefined') {
       level: "Avancé",
       profile: "Architecte IA",
       summary:
-        "Vous avez une maîtrise solide des usages et pouvez commencer à structurer des solutions adaptées à votre contexte.",
+        "Vous avez une maîtrise solide des outils et des usages de l'IA générative, et vous êtes en mesure d'accompagner et d'inspirer vos collègues.",
       priorities: [
         "Créer des assistants spécialisés.",
         "Formaliser des règles de gouvernance.",
         "Accompagner d'autres collaborateurs dans la montée en compétences."
       ],
       vigilance: "Gardez une supervision humaine claire sur chaque automatisation mise en place.",
-      tools: [
-        "Custom GPTs",
-        "Gems",
-        "Claude Skills",
-        "Claude Plugins",
-        "MCP Server",
-        "n8n",
-        "Apify",
-        "Windmill",
-        "Langflow"
-      ],
+      tools: ["Ollama", "DeepSeek", "Qwen", "Langflow", "Apify", "v0", "Replit", "n8n", "Windmill"],
       nextStep:
         "Créez un assistant IA interne dédié à une tâche récurrente : support, documentation, reporting ou veille."
     },
@@ -296,7 +286,7 @@ if (typeof document !== 'undefined') {
       level: "Expert",
       profile: "Stratège IA",
       summary:
-        "Vous faites partie des utilisateurs les plus aguerris et savez transformer l'IA en levier opérationnel et organisationnel.",
+        "Vous faites partie des utilisateurs les plus aguerris, capables de concevoir des solutions IA sur mesure et d'anticiper les évolutions à venir.",
       priorities: [
         "Industrialiser les workflows à valeur métier.",
         "Établir des indicateurs de qualité et d'impact.",
@@ -305,14 +295,17 @@ if (typeof document !== 'undefined') {
       vigilance: "Pilotez les risques de conformité, de dépendance outil et de qualité des sorties.",
       tools: [
         "Cursor",
+        "GitHub Copilot",
         "Claude Code",
-        "OpenClaw",
+        "Antigravity",
         "Manus",
+        "OpenClaw",
         "LangChain",
         "LangGraph",
-        "Hugging Face",
-        "GitHub Copilot",
-        "Antigravity"
+        "LlamaIndex",
+        "MCP Server",
+        "Lovable",
+        "Hugging Face"
       ],
       nextStep:
         "Concevez un prototype d'agent connecté à un service métier avec règles de supervision et d'évaluation."
@@ -334,7 +327,7 @@ if (typeof document !== 'undefined') {
     // --- Niveau Débutant & Intermédiaire (Outils grand public et productivité) ---
     { pattern: /(chatgpt|openai|custom gpt|gpt)/i, slug: "chatgpt" },
     { pattern: /(gemini|gems?)/i, slug: "gemini" },
-    { pattern: /google workspace/i, slug: "google" },
+    { pattern: /google workspace/i, slug: "googleworkspace" },
     { pattern: /perplexity/i, slug: "perplexity" },
     { pattern: /notebooklm/i, slug: "notebooklm" },
     { pattern: /notion/i, slug: "notion" },
@@ -373,6 +366,52 @@ if (typeof document !== 'undefined') {
     { pattern: /agents? connect/i, slug: "agentvoice" }
   ];
 
+  const TOOL_URL_RULES = [
+    { pattern: /(chatgpt\s*plus)/i, url: "https://chatgpt.com" },
+    { pattern: /custom gpt/i, url: "https://chatgpt.com/gpts" },
+    { pattern: /(chatgpt|openai|gpt)/i, url: "https://chatgpt.com" },
+    { pattern: /google gemini/i, url: "https://gemini.google.com" },
+    { pattern: /(gemini|gems?)/i, url: "https://gemini.google.com" },
+    { pattern: /google workspace/i, url: "https://workspace.google.com" },
+    { pattern: /perplexity/i, url: "https://www.perplexity.ai" },
+    { pattern: /notebooklm/i, url: "https://notebooklm.google" },
+    { pattern: /notion/i, url: "https://www.notion.so" },
+    { pattern: /hugging\s*face/i, url: "https://huggingface.co" },
+    { pattern: /make/i, url: "https://www.make.com" },
+    { pattern: /zapier/i, url: "https://zapier.com" },
+    { pattern: /ollama/i, url: "https://ollama.com" },
+    { pattern: /qwen/i, url: "https://chat.qwenlm.ai" },
+    { pattern: /mistral/i, url: "https://mistral.ai" },
+    { pattern: /deepseek/i, url: "https://chat.deepseek.com" },
+    { pattern: /grok/i, url: "https://x.ai" },
+    { pattern: /apify/i, url: "https://apify.com" },
+    { pattern: /windmill/i, url: "https://www.windmill.dev" },
+    { pattern: /langflow/i, url: "https://www.langflow.org" },
+    { pattern: /v0/i, url: "https://v0.dev" },
+    { pattern: /replit/i, url: "https://replit.com" },
+    { pattern: /github\s*copilot/i, url: "https://github.com/features/copilot" },
+    { pattern: /microsoft copilot/i, url: "https://copilot.microsoft.com" },
+    { pattern: /copilot/i, url: "https://copilot.microsoft.com" },
+    { pattern: /cursor/i, url: "https://www.cursor.com" },
+    { pattern: /claude\s*code/i, url: "https://claude.com/product/claude-code" },
+    { pattern: /claude pro/i, url: "https://claude.com/pricing" },
+    { pattern: /claude plugins/i, url: "https://claude.ai/customize/connectors" },
+    { pattern: /claude skills/i, url: "https://claude.ai/customize/skills" },
+    { pattern: /claude/i, url: "https://claude.ai" },
+    { pattern: /lovable/i, url: "https://lovable.dev" },
+    { pattern: /manus/i, url: "https://manus.im" },
+    { pattern: /openclaw/i, url: "https://openclaw.ai/" },
+    { pattern: /antigravity/i, url: "https://antigravity.google/" },
+    { pattern: /llamaindex/i, url: "https://www.llamaindex.ai" },
+    { pattern: /langchain/i, url: "https://www.langchain.com" },
+    { pattern: /langgraph/i, url: "https://www.langchain.com/langgraph" },
+    { pattern: /mcp\s*server/i, url: "https://modelcontextprotocol.io" },
+    { pattern: /\bmcp\b/i, url: "https://modelcontextprotocol.io" },
+    { pattern: /\bn8n\b/i, url: "https://n8n.io" },
+    { pattern: /agents? connect/i, url: "https://make.com" }
+  ];
+
+
   function shortDimensionLabel(name) {
     const labels = {
       "Culture & cadre IA": "Culture",
@@ -402,6 +441,12 @@ if (typeof document !== 'undefined') {
     const match = TOOL_ICON_RULES.find((rule) => rule.pattern.test(toolName));
     return match ? `assets/${match.slug}.webp` : "";
   }
+
+  function resolveToolUrl(toolName) {
+    const match = TOOL_URL_RULES.find((rule) => rule.pattern.test(toolName));
+    return match ? match.url : "https://google.com/search?q=" + encodeURIComponent(toolName);
+  }
+
 
   function buildToolFallback(toolName) {
     const words = toolName
@@ -734,9 +779,11 @@ if (typeof document !== 'undefined') {
         return tools.map((toolName) => ({
           name: toolName,
           iconUrl: resolveToolIconUrl(toolName),
-          fallback: buildToolFallback(toolName)
+          fallback: buildToolFallback(toolName),
+          url: resolveToolUrl(toolName)
         }));
       },
+
 
       get strengths() {
         return getStrengthsAndFocuses(this.dimensionScores).strengths;

@@ -277,7 +277,7 @@
           <p class="an-card-subtitle" x-text="currentLevel ? currentLevel.nextStep : ''"></p>
           <ul class="an-tools-grid">
             <template x-for="tool in toolVisuals" :key="`tool-${tool.name}`">
-              <li class="an-tool-pill">
+              <a :href="tool.url" target="_blank" rel="noopener noreferrer" class="an-tool-pill">
                 <span class="an-tool-icon">
                   <template x-if="tool.iconUrl">
                     <img :src="tool.iconUrl" :alt="`Logo ${tool.name}`" loading="lazy" />
@@ -287,7 +287,7 @@
                   </template>
                 </span>
                 <span x-text="tool.name"></span>
-              </li>
+              </a>
             </template>
           </ul>
         </article>
