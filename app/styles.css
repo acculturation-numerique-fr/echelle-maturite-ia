@@ -778,7 +778,7 @@ body {
 .an-score-ring::after {
   content: "";
   position: absolute;
-  inset: 12px;
+  inset: 8px;
   border-radius: 50%;
   background: linear-gradient(135deg, #ffffff 0%, #f4f8ff 100%);
   border: 1px solid rgba(255, 255, 255, 0.9);
@@ -884,7 +884,7 @@ body {
 
 .an-radar-shape {
   fill: url(#an-radar-gradient);
-  stroke: var(--an-primary-bright);
+  stroke: var(--an-primary);
   stroke-width: 1.5;
   stroke-linejoin: round;
 }
@@ -987,7 +987,7 @@ body {
 
 .an-line-path {
   fill: none;
-  stroke: rgba(148, 163, 184, 0.45);
+  stroke: var(--an-primary);
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1129,12 +1129,6 @@ body {
 .an-tool-icon {
   width: 32px;
   height: 32px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  background: linear-gradient(135deg, #ffffff 0%, #f4f8ff 100%);
-  box-shadow: 
-    0 4px 10px rgba(0, 0, 0, 0.03),
-    inset 0 1px 1px rgba(255, 255, 255, 0.9);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1147,8 +1141,11 @@ body {
 }
 
 .an-tool-icon img {
-  width: 20px;
-  height: 20px;
+  max-width: 28px;
+  max-height: 28px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   display: block;
 }
 
