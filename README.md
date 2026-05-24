@@ -19,11 +19,10 @@
 │       │   └── pdf.css             # Styles dédiés à l'export PDF
 │       ├── js/
 │       │   └── app.js              # Logique Alpine.js (questionnaire, scoring, graphiques, export)
-│       └── public/                 # Toutes les images du projet
+│       └── public/
 │           ├── preview.webp        # Capture d'écran pour le README
-│           ├── *.webp              # 40 logos d'outils IA (chatgpt, claude, gemini, etc.)
-│           ├── tool_distribution_ranges.png   # Graphique des plages de score par outil
-│           └── tool_distribution_density.png  # Graphique de densité d'outils par score
+│           ├── icons/              # 40 logos WebP des outils IA (chatgpt, claude, gemini, etc.)
+│           └── figures/            # Graphiques matplotlib (répartition et densité des outils)
 ├── .gitignore
 └── README.md
 ```
@@ -49,11 +48,11 @@ Les 40 outils du catalogue sont affectés chacun à une plage de score `[min, ma
 
 ### Plage de score de chaque outil
 
-![Répartition des outils IA par plage de score](app/assets/public/tool_distribution_ranges.png)
+![Répartition des outils IA par plage de score](app/assets/public/figures/tool_distribution_ranges.png)
 
 ### Densité d'outils disponibles par score
 
-![Densité d'outils par score et par catégorie](app/assets/public/tool_distribution_density.png)
+![Densité d'outils par score et par catégorie](app/assets/public/figures/tool_distribution_density.png)
 
 ## Lancer localement
 
