@@ -106,7 +106,7 @@
       </div>
     </section>
 
-    <section class="an-section an-panel an-card an-fade-in" x-show="step === 'questions'" x-cloak>
+    <section class="an-section an-panel an-card an-card-questions an-fade-in" x-show="step === 'questions'" x-cloak>
       <div class="an-stepper">
         <span class="an-stepper-badge" x-text="progressLabel"></span>
         <template x-for="(item, idx) in categories" :key="item.key">
@@ -116,15 +116,33 @@
 
       <h2 class="an-card-title" x-text="currentCategory.title"></h2>
 
+      <!-- Légende de la grille en haut -->
+      <div class="an-checklist-legend">
+        <div></div> <!-- Spacer pour aligner les options à droite -->
+        <div class="an-legend-options">
+          <span>Partiel</span>
+          <span>Acquis</span>
+        </div>
+      </div>
+
       <div class="an-checklist" role="group" aria-label="Questions de la catégorie en cours">
         <template x-for="q in currentQuestions" :key="q.id">
-          <label class="an-check" :for="`q-${q.id}`">
-            <input type="checkbox" :id="`q-${q.id}`" :checked="Boolean(answers[q.id])"
-              @change="answers[q.id] = $event.target.checked" />
-            <span>
-              <span x-text="q.label"></span>
-            </span>
-          </label>
+          <div class="an-checklist-row">
+            <span class="an-checklist-label" x-text="q.label"></span>
+            <div class="an-checklist-options">
+              <!-- Partiellement acquis (0.5) -->
+              <label class="an-mini-box" :class="{ 'active-box': answers[q.id] === 0.5 }" :aria-label="`Partiellement acquis - ${q.label}`">
+                <input type="checkbox" :checked="answers[q.id] === 0.5"
+                  @change="answers[q.id] = $event.target.checked ? 0.5 : 0" />
+              </label>
+
+              <!-- Totalement acquis (1) -->
+              <label class="an-mini-box" :class="{ 'active-box': answers[q.id] === 1 }" :aria-label="`Totalement acquis - ${q.label}`">
+                <input type="checkbox" :checked="answers[q.id] === 1"
+                  @change="answers[q.id] = $event.target.checked ? 1 : 0" />
+              </label>
+            </div>
+          </div>
         </template>
       </div>
 
@@ -184,7 +202,7 @@
           <div class="an-bento-head">
             <h3 class="an-bento-title">Radar des dimensions</h3>
           </div>
-          <svg class="an-radar-svg" viewBox="0 0 260 260" role="img" aria-label="Répartition des dimensions">
+          <svg class="an-radar-svg" viewBox="-30 0 320 260" role="img" aria-label="Répartition des dimensions">
             <defs>
               <linearGradient id="an-radar-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="rgba(29, 86, 216, 0.28)" />

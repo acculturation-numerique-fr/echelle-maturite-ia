@@ -461,10 +461,10 @@ if (typeof document !== 'undefined') {
     return `${words[0][0]}${words[1][0]}`.toUpperCase();
   }
 
-  function normalizeBooleanMap(ids) {
+  function normalizeScoreMap(ids) {
     const map = {};
     ids.forEach((id) => {
-      map[id] = false;
+      map[id] = 0;
     });
     return map;
   }
@@ -586,7 +586,7 @@ if (typeof document !== 'undefined') {
       currentCategoryIndex: 0,
 
       init() {
-        this.answers = normalizeBooleanMap(this.questions.map((q) => q.id));
+        this.answers = normalizeScoreMap(this.questions.map((q) => q.id));
       },
 
       get currentCategory() {
@@ -610,12 +610,13 @@ if (typeof document !== 'undefined') {
       },
 
       get scoreTotal() {
-        return Object.values(this.answers).filter(Boolean).length;
+        return Object.values(this.answers).reduce((sum, val) => sum + Number(val), 0);
       },
 
       get currentLevel() {
+        const roundedScore = Math.floor(this.scoreTotal);
         return this.levels.find(
-          (lvl) => this.scoreTotal >= lvl.min && this.scoreTotal <= lvl.max
+          (lvl) => roundedScore >= lvl.min && roundedScore <= lvl.max
         );
       },
 
@@ -623,7 +624,7 @@ if (typeof document !== 'undefined') {
         return this.dimensions.map((dimension) => {
           const score = this.questions
             .filter((q) => q.dimension === dimension.name)
-            .reduce((sum, q) => sum + (this.answers[q.id] ? q.points : 0), 0);
+            .reduce((sum, q) => sum + (this.answers[q.id] !== undefined ? Number(this.answers[q.id]) * q.points : 0), 0);
 
           const ratio = dimension.max === 0 ? 0 : score / dimension.max;
           return {
@@ -652,7 +653,7 @@ if (typeof document !== 'undefined') {
         return this.categories.map((category) => {
           const categoryQuestions = this.questions.filter((q) => q.category === category.key);
           const score = categoryQuestions.reduce(
-            (sum, q) => sum + (this.answers[q.id] ? q.points : 0),
+            (sum, q) => sum + (this.answers[q.id] !== undefined ? Number(this.answers[q.id]) * q.points : 0),
             0
           );
           const max = categoryQuestions.reduce((sum, q) => sum + q.points, 0);
@@ -822,7 +823,7 @@ if (typeof document !== 'undefined') {
       reset() {
         this.step = "intro";
         this.currentCategoryIndex = 0;
-        this.answers = normalizeBooleanMap(this.questions.map((q) => q.id));
+        this.answers = normalizeScoreMap(this.questions.map((q) => q.id));
       },
 
       async waitForImages(element) {
@@ -960,15 +961,15 @@ if (typeof document !== 'undefined') {
           let didRenderRadar = false;
 
           if (ctx) {
-            const scaleX = width / 260;
+            const scaleX = width / 320;
             const scaleY = height / 260;
             const scale = Math.min(scaleX, scaleY);
-            const offsetX = (width - 260 * scale) / 2;
+            const offsetX = (width - 320 * scale) / 2;
             const offsetY = (height - 260 * scale) / 2;
             const center = 130;
 
             const toCanvasPoint = (x, y) => ({
-              x: offsetX + x * scale,
+              x: offsetX + (x + 30) * scale,
               y: offsetY + y * scale
             });
 
