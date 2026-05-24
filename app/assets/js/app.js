@@ -491,7 +491,7 @@ if (typeof document !== 'undefined') {
 
   function resolveToolIconUrl(toolName) {
     const match = TOOL_ICON_RULES.find((rule) => rule.pattern.test(toolName));
-    return match ? `assets/icons/${match.slug}.webp` : "";
+    return match ? `assets/public/${match.slug}.webp` : "";
   }
 
   function resolveToolUrl(toolName) {
