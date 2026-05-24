@@ -1,6 +1,6 @@
 # Échelle de maturité en intelligence artificielle
 
-![Aperçu du Tableau de Maturité IA](app/assets/preview.png)
+![Aperçu du Tableau de Maturité IA](app/assets/preview.webp)
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
@@ -20,7 +20,7 @@
 │       ├── js/
 │       │   └── app.js
 │       ├── icons/    # Logos WebP locaux des outils et marques (chatgpt, claude, langgraph, etc.)
-│       └── preview.png
+│       └── preview.webp
 └── README.md
 ```
 
