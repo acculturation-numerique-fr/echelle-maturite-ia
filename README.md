@@ -21,7 +21,7 @@
 │       │   └── app.js              # Logique Alpine.js (questionnaire, scoring, graphiques, export)
 │       └── public/
 │           ├── preview.webp        # Capture d'écran pour le README
-│           ├── icons/              # 40 logos WebP des outils IA (chatgpt, claude, gemini, etc.)
+│           ├── icons/              # Logos des 40 outils IA et [catalogue complet](app/assets/public/icons/README.md)
 │           └── figures/            # Graphiques matplotlib (répartition et densité des outils)
 ├── .gitignore
 └── README.md
@@ -44,7 +44,7 @@
 
 ## Répartition des outils IA par score
 
-Les 40 outils du catalogue sont affectés chacun à une plage de score `[min, max]`. L'algorithme de recommandation sélectionne les 9 outils les plus pertinents pour le score obtenu.
+Les 40 outils du catalogue sont affectés chacun à une plage de score `[min, max]`. L'algorithme de recommandation sélectionne les 9 outils les plus pertinents pour le score obtenu. Vous pouvez consulter le [catalogue complet des applications et outils](app/assets/public/icons/README.md) pour voir la liste détaillée (liens, icônes, plages de score et descriptions).
 
 ### Plage de score de chaque outil
 
