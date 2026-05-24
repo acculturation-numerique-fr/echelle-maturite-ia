@@ -219,14 +219,14 @@ if (typeof document !== 'undefined') {
       summary:
         "Vous débutez votre découverte de l'IA, c'est le moment idéal pour explorer un domaine qui va transformer votre façon de travailler.",
       priorities: [
-        "Découvrir les grands usages de l'IA générative.",
-        "Apprendre à vérifier les réponses produites.",
-        "Créer un premier compte et tester des demandes simples."
+        "Testez trois usages simples : reformuler un message, résumer un document, générer des idées.",
+        "Vérifiez chaque réponse avec une source fiable.",
+        "Gardez dans une note les prompts efficaces."
       ],
       vigilance: "Ne confondez pas rapidité de réponse et fiabilité de l'information.",
-      tools: ["Microsoft Copilot", "Google Workspace", "Notion", "ChatGPT"],
+      tools: ["Microsoft Copilot", "Google Workspace", "Notion", "ChatGPT", "Gemini", "Claude", "Perplexity", "NotebookLM"],
       nextStep:
-        "Créez un compte et testez trois usages simples : reformuler un e-mail, résumer un texte et générer des idées."
+        "Créez votre compte sur un outil d'IA et réalisez un premier mini-exercice complet en 15 minutes."
     },
     {
       min: 3,
@@ -236,14 +236,14 @@ if (typeof document !== 'undefined') {
       summary:
         "Vous avez franchi les premiers pas et commencez à percevoir le potentiel de l'IA, il ne vous reste plus qu'à passer à la pratique régulière.",
       priorities: [
-        "Comparer plusieurs chatbots.",
-        "Formuler des demandes plus précises.",
-        "Identifier les cas d'usage les plus utiles dans votre métier."
+        "Comparez deux outils d'IA sur la même consigne.",
+        "Précisez le contexte, l'objectif et le format attendu.",
+        "Utilisez l'IA sur une tâche hebdomadaire et mesurez le gain de temps."
       ],
       vigilance: "Évitez de rester dans une expérimentation ponctuelle sans méthode.",
-      tools: ["Perplexity", "NotebookLM", "Gemini", "Claude"],
+      tools: ["ChatGPT Plus", "Claude Pro", "Custom GPTs", "Gems", "Canva", "Gamma", "Zapier", "Make"],
       nextStep:
-        "Choisissez une tâche hebdomadaire répétitive et utilisez l'IA pour l'améliorer pendant un mois."
+        "Choisissez une tâche récurrente de vos études et utilisez l'IA pour la traiter chaque semaine pendant un mois."
     },
     {
       min: 6,
@@ -253,14 +253,14 @@ if (typeof document !== 'undefined') {
       summary:
         "Vous utilisez déjà l'IA au quotidien et maîtrisez les bases essentielles pour en tirer un vrai bénéfice dans vos activités professionnelles.",
       priorities: [
-        "Utiliser des cadres de prompting.",
-        "Constituer une bibliothèque de prompts.",
-        "Mieux gérer les risques de données sensibles."
+        "Rédigez des prompts structurés : contexte, rôle, livrable attendu.",
+        "Constituez une bibliothèque de prompts pour vos travaux.",
+        "Appliquez une règle simple pour protéger les données sensibles."
       ],
       vigilance: "Sans capitalisation, vos gains restent limités et difficiles à reproduire.",
-      tools: ["ChatGPT Plus", "Claude Pro", "Custom GPTs", "Gems", "Zapier", "Make", "Grok", "Mistral"],
+      tools: ["Airtable", "n8n", "Apify", "Replit", "v0", "Lovable", "Grok", "Mistral", "Hugging Face"],
       nextStep:
-        "Construisez une bibliothèque de 10 prompts réutilisables pour vos tâches professionnelles."
+        "Construisez une bibliothèque de 10 prompts fiables pour vos principaux cas d'usage académiques."
     },
     {
       min: 11,
@@ -270,14 +270,14 @@ if (typeof document !== 'undefined') {
       summary:
         "Vous avez une maîtrise solide des outils et des usages de l'IA générative, et vous êtes en mesure d'accompagner et d'inspirer vos collègues.",
       priorities: [
-        "Créer des assistants spécialisés.",
-        "Formaliser des règles de gouvernance.",
-        "Accompagner d'autres collaborateurs dans la montée en compétences."
+        "Automatisez une tâche répétitive de votre semaine.",
+        "Vérifiez sur 2 à 3 cas réels le gain de temps.",
+        "Partagez votre méthode avec un camarade, puis améliorez-la."
       ],
       vigilance: "Gardez une supervision humaine claire sur chaque automatisation mise en place.",
-      tools: ["Ollama", "DeepSeek", "Qwen", "Langflow", "Apify", "v0", "Replit", "n8n", "Windmill"],
+      tools: ["Ollama", "LM Studio", "DeepSeek", "Qwen", "Langflow", "Flowise", "Dify", "Windmill", "OpenClaw"],
       nextStep:
-        "Créez un assistant IA interne dédié à une tâche récurrente : support, documentation, reporting ou veille."
+        "Créez un mini-agent relié à un outil simple (Notion, Google Sheets ou Gmail) pour un usage concret."
     },
     {
       min: 16,
@@ -287,9 +287,9 @@ if (typeof document !== 'undefined') {
       summary:
         "Vous faites partie des utilisateurs les plus aguerris, capables de concevoir des solutions IA sur mesure et d'anticiper les évolutions à venir.",
       priorities: [
-        "Industrialiser les workflows à valeur métier.",
-        "Établir des indicateurs de qualité et d'impact.",
-        "Diffuser des standards de pratique au niveau de l'équipe."
+        "Concevez un flux complet, de la collecte au livrable final.",
+        "Définissez trois critères pour évaluer les résultats de l'agent.",
+        "Documentez votre méthode pour qu'elle soit réutilisable."
       ],
       vigilance: "Pilotez les risques de conformité, de dépendance outil et de qualité des sorties.",
       tools: [
@@ -298,16 +298,13 @@ if (typeof document !== 'undefined') {
         "Claude Code",
         "Antigravity",
         "Manus",
-        "OpenClaw",
         "LangChain",
         "LangGraph",
-        "LlamaIndex",
-        "MCP Server",
-        "Lovable",
-        "Hugging Face"
+        "MLflow",
+        "MCP"
       ],
       nextStep:
-        "Concevez un prototype d'agent connecté à un service métier avec règles de supervision et d'évaluation."
+        "Prototypez un agent connecté à un service externe et testez-le sur un scénario réel, du brief au résultat final."
     }
   ];
 
@@ -319,6 +316,8 @@ if (typeof document !== 'undefined') {
     { pattern: /perplexity/i, slug: "perplexity" },
     { pattern: /notebooklm/i, slug: "notebooklm" },
     { pattern: /notion/i, slug: "notion" },
+    { pattern: /canva/i, slug: "canva" },
+    { pattern: /\bgamma\b/i, slug: "gamma" },
     { pattern: /hugging\s*face/i, slug: "huggingface" },
 
     // --- Niveau Avancé (Automatisation, No-code et Modèles alternatifs) ---
@@ -330,8 +329,12 @@ if (typeof document !== 'undefined') {
     { pattern: /deepseek/i, slug: "deepseek" },
     { pattern: /grok/i, slug: "grok" },
     { pattern: /apify/i, slug: "apify" },
+    { pattern: /airtable/i, slug: "airtable" },
     { pattern: /windmill/i, slug: "windmill" },
     { pattern: /langflow/i, slug: "langflow" },
+    { pattern: /flowise/i, slug: "flowise" },
+    { pattern: /dify/i, slug: "dify" },
+    { pattern: /lm\s*studio/i, slug: "lmstudio" },
 
     // --- Niveau Expert (Développement, Frameworks et Agents autonomes) ---
     { pattern: /v0/i, slug: "v0" },
@@ -345,9 +348,9 @@ if (typeof document !== 'undefined') {
     { pattern: /manus/i, slug: "manus" },
     { pattern: /openclaw/i, slug: "openclaw" },
     { pattern: /antigravity/i, slug: "antigravity" },
-    { pattern: /llamaindex/i, slug: "llamaindex" },
     { pattern: /langchain/i, slug: "langchain" },
     { pattern: /langgraph/i, slug: "langgraph" },
+    { pattern: /mlflow/i, slug: "mlflow" },
     { pattern: /mcp\s*server/i, slug: "mcp" },
     { pattern: /\bmcp\b/i, slug: "mcp" },
     { pattern: /\bn8n\b/i, slug: "n8n" },
@@ -364,6 +367,8 @@ if (typeof document !== 'undefined') {
     { pattern: /perplexity/i, url: "https://www.perplexity.ai" },
     { pattern: /notebooklm/i, url: "https://notebooklm.google" },
     { pattern: /notion/i, url: "https://www.notion.so" },
+    { pattern: /canva/i, url: "https://www.canva.com" },
+    { pattern: /\bgamma\b/i, url: "https://gamma.app" },
     { pattern: /hugging\s*face/i, url: "https://huggingface.co" },
     { pattern: /make/i, url: "https://www.make.com" },
     { pattern: /zapier/i, url: "https://zapier.com" },
@@ -373,8 +378,12 @@ if (typeof document !== 'undefined') {
     { pattern: /deepseek/i, url: "https://chat.deepseek.com" },
     { pattern: /grok/i, url: "https://x.ai" },
     { pattern: /apify/i, url: "https://apify.com" },
+    { pattern: /airtable/i, url: "https://www.airtable.com" },
     { pattern: /windmill/i, url: "https://www.windmill.dev" },
     { pattern: /langflow/i, url: "https://www.langflow.org" },
+    { pattern: /flowise/i, url: "https://flowiseai.com" },
+    { pattern: /dify/i, url: "https://dify.ai" },
+    { pattern: /lm\s*studio/i, url: "https://lmstudio.ai" },
     { pattern: /v0/i, url: "https://v0.dev" },
     { pattern: /replit/i, url: "https://replit.com" },
     { pattern: /github\s*copilot/i, url: "https://github.com/features/copilot" },
@@ -390,9 +399,9 @@ if (typeof document !== 'undefined') {
     { pattern: /manus/i, url: "https://manus.im" },
     { pattern: /openclaw/i, url: "https://openclaw.ai/" },
     { pattern: /antigravity/i, url: "https://antigravity.google/" },
-    { pattern: /llamaindex/i, url: "https://www.llamaindex.ai" },
     { pattern: /langchain/i, url: "https://www.langchain.com" },
     { pattern: /langgraph/i, url: "https://www.langchain.com/langgraph" },
+    { pattern: /mlflow/i, url: "https://mlflow.org" },
     { pattern: /mcp\s*server/i, url: "https://modelcontextprotocol.io" },
     { pattern: /\bmcp\b/i, url: "https://modelcontextprotocol.io" },
     { pattern: /\bn8n\b/i, url: "https://n8n.io" },
