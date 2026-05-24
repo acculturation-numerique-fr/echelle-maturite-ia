@@ -6,8 +6,6 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat-square&logo=alpinejs&logoColor=white)
-![Cloudflare Workers](https://img.shields.io/badge/Cloudflare_Workers-F38020?style=flat-square&logo=cloudflare&logoColor=white)
-![Airtable](https://img.shields.io/badge/Airtable-18BFFF?style=flat-square&logo=airtable&logoColor=white)
 
 ## Structure
 
@@ -17,11 +15,9 @@
 │   ├── app.js
 │   ├── assets/       # Logos WebP locaux des outils et marques (chatgpt, claude, langgraph, etc.)
 │   ├── index.html
+│   ├── pdf.css
 │   └── styles.css
-├── README.md
-└── worker/
-    ├── index.js
-    └── README.md
+└── README.md
 ```
 
 ## Fonctionnalités principales
@@ -30,11 +26,10 @@
 - Questionnaire 20 critères (Q01-Q20), score global sur 20.
 - Restitution immédiate :
   - niveau et profil ;
-  - scores par dimensions ;
+  - scores par critères ;
   - recommandations contextualisées.
-- Formulaire final optionnel (RGPD, consentement, validation e-mail).
-- Envoi sécurisé vers le webhook Cloudflare Worker.
-- Mapping Airtable côté serveur (aucune clé API exposée dans le front).
+- Export direct en PDF côté navigateur (fichier `Diagnostic-maturite-IA.pdf`, sans en-têtes/pieds de page navigateur).
+- Aucune collecte de données personnelles côté front.
 
 ## Lancer localement
 
@@ -52,23 +47,10 @@ Puis ouvrir :
 ## Intégration WordPress
 
 - Copier le contenu du `<main id="an-diagnostic">...</main>` depuis `app/index.html` dans un bloc HTML personnalisé.
-- Charger `styles.css`, `app.js` et Alpine.js (CDN) sur la page.
-- Renseigner `data-webhook-url="https://votre-worker.workers.dev"` sur le conteneur principal.
-
-## Webhook Cloudflare
-
-Voir `worker/README.md` pour :
-
-- la configuration des secrets ;
-- le déploiement ;
-- un exemple de test `curl`.
+- Charger `styles.css`, `pdf.css`, `app.js`, Alpine.js, `html2canvas` et `jsPDF` (CDN) sur la page.
 
 ## Feuille de route
 
-- [ ] Configurer et déployer le Cloudflare Worker avec les accès de la base Airtable.
 - [ ] Intégrer le module de diagnostic sur le site WordPress.
-- [ ] Mettre en place l'envoi automatique du diagnostic personnalisé par e-mail.
 - [ ] Ajouter la comparaison avec les résultats moyens des utilisateurs sur le tableau de bord (courbe et radar).
 - [ ] Générer un QR Code de partage avec suivi pour les conférences et les cours.
-
-

@@ -1,0 +1,62 @@
+.an-pdf-export-root {
+  display: none;
+}
+
+.an-pdf-capture-shell {
+  display: grid;
+  margin-top: 0 !important;
+}
+
+.an-pdf-capture-shell .an-results-top {
+  grid-template-columns: 1fr !important;
+  align-items: start !important;
+}
+
+.an-pdf-capture-shell .an-results-actions {
+  display: none !important;
+}
+
+.an-pdf-capture-shell .an-pdf-only {
+  display: block !important;
+}
+
+.an-pdf-capture-shell .an-fade-in {
+  animation: none !important;
+}
+
+.an-pdf-capture-mode,
+.an-pdf-capture-mode * {
+  animation: none !important;
+  transition: none !important;
+  text-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.an-pdf-capture-mode .an-bento-card,
+.an-pdf-capture-mode .an-panel,
+.an-pdf-capture-mode .an-card {
+  box-shadow: none !important;
+}
+
+.an-pdf-canvas-fallback {
+  display: block;
+}
+
+.an-pdf-canvas-score {
+  margin: 10px auto 20px;
+}
+
+.an-pdf-canvas-radar {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.an-pdf-canvas-line {
+  width: 100%;
+}
+
+.an-pdf-canvas-fallback canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
