@@ -12,11 +12,15 @@
 ```txt
 .
 ├── app/
-│   ├── app.js
-│   ├── assets/       # Logos WebP locaux des outils et marques (chatgpt, claude, langgraph, etc.)
 │   ├── index.html
-│   ├── pdf.css
-│   └── styles.css
+│   └── assets/
+│       ├── css/
+│       │   ├── styles.css
+│       │   └── pdf.css
+│       ├── js/
+│       │   └── app.js
+│       ├── icons/    # Logos WebP locaux des outils et marques (chatgpt, claude, langgraph, etc.)
+│       └── preview.png
 └── README.md
 ```
 
@@ -47,7 +51,7 @@ Puis ouvrir :
 ## Intégration WordPress
 
 - Copier le contenu du `<main id="an-diagnostic">...</main>` depuis `app/index.html` dans un bloc HTML personnalisé.
-- Charger `styles.css`, `pdf.css`, `app.js`, Alpine.js, `html2canvas` et `jsPDF` (CDN) sur la page.
+- Charger `assets/css/styles.css`, `assets/css/pdf.css`, `assets/js/app.js`, Alpine.js, `html2canvas` et `jsPDF` (CDN) sur la page.
 
 ## Feuille de route
 
