@@ -224,7 +224,7 @@ if (typeof document !== 'undefined') {
         "Gardez dans une note les prompts efficaces."
       ],
       vigilance: "Ne confondez pas rapidité de réponse et fiabilité de l'information.",
-      tools: ["Microsoft Copilot", "Google Workspace", "Notion", "ChatGPT", "Gemini", "Claude", "Perplexity", "NotebookLM"],
+
       nextStep:
         "Créez votre compte sur un outil d'IA et réalisez un premier mini-exercice complet en 15 minutes."
     },
@@ -241,7 +241,7 @@ if (typeof document !== 'undefined') {
         "Utilisez l'IA sur une tâche hebdomadaire et mesurez le gain de temps."
       ],
       vigilance: "Évitez de rester dans une expérimentation ponctuelle sans méthode.",
-      tools: ["ChatGPT Plus", "Claude Pro", "Custom GPTs", "Gems", "Canva", "Gamma", "Zapier", "Make"],
+
       nextStep:
         "Choisissez une tâche récurrente de vos études et utilisez l'IA pour la traiter chaque semaine pendant un mois."
     },
@@ -258,7 +258,7 @@ if (typeof document !== 'undefined') {
         "Appliquez une règle simple pour protéger les données sensibles."
       ],
       vigilance: "Sans capitalisation, vos gains restent limités et difficiles à reproduire.",
-      tools: ["Airtable", "n8n", "Apify", "Replit", "v0", "Lovable", "Grok", "Mistral", "Hugging Face"],
+
       nextStep:
         "Construisez une bibliothèque de 10 prompts fiables pour vos principaux cas d'usage académiques."
     },
@@ -275,7 +275,7 @@ if (typeof document !== 'undefined') {
         "Partagez votre méthode avec un camarade, puis améliorez-la."
       ],
       vigilance: "Gardez une supervision humaine claire sur chaque automatisation mise en place.",
-      tools: ["Ollama", "LM Studio", "DeepSeek", "Qwen", "Langflow", "Flowise", "Dify", "Windmill", "OpenClaw"],
+
       nextStep:
         "Créez un mini-agent relié à un outil simple (Notion, Google Sheets ou Gmail) pour un usage concret."
     },
@@ -292,20 +292,74 @@ if (typeof document !== 'undefined') {
         "Documentez votre méthode pour qu'elle soit réutilisable."
       ],
       vigilance: "Pilotez les risques de conformité, de dépendance outil et de qualité des sorties.",
-      tools: [
-        "Cursor",
-        "GitHub Copilot",
-        "Claude Code",
-        "Antigravity",
-        "Manus",
-        "LangChain",
-        "LangGraph",
-        "MLflow",
-        "MCP"
-      ],
+
       nextStep:
         "Prototypez un agent connecté à un service externe et testez-le sur un scénario réel, du brief au résultat final."
     }
+  ];
+
+  // Granular tool ranges: each tool has its own [min, max] score window.
+  // At any given score, we display the 9 most relevant tools whose range
+  // includes that score, sorted by centrality (how close the score is to
+  // the tool's range center).
+  const TOOL_RANGES = [
+    // --- Compagnons universels (présents à tout ou presque tout niveau) ---
+    { name: "ChatGPT",         min: 0,    max: 20, companion: true },
+    { name: "Claude",           min: 0,    max: 20, companion: true },
+    { name: "Gemini",           min: 0,    max: 20 },
+    { name: "Perplexity",       min: 0,    max: 18 },
+
+    // --- Outils d'entrée (disparaissent quand on dépasse les basiques) ---
+    { name: "Microsoft Copilot", min: 0,   max: 8 },
+    { name: "Google Workspace",  min: 0,   max: 7 },
+    { name: "NotebookLM",        min: 0.5, max: 12 },
+    { name: "Notion",            min: 1,   max: 10 },
+
+    // --- Création visuelle et présentations ---
+    { name: "Canva",            min: 2,    max: 12 },
+    { name: "Gamma",            min: 2,    max: 11 },
+
+    // --- Modèles alternatifs (comparaison de LLMs) ---
+    { name: "Grok",             min: 4,    max: 13 },
+    { name: "Mistral",          min: 4,    max: 16 },
+    { name: "DeepSeek",         min: 5,    max: 16 },
+    { name: "Qwen",             min: 6,    max: 16 },
+
+    // --- Automatisation no-code / low-code ---
+    { name: "Zapier",           min: 3,    max: 12 },
+    { name: "Make",             min: 4,    max: 13 },
+    { name: "Airtable",         min: 4,    max: 12 },
+    { name: "Apify",            min: 7,    max: 15 },
+    { name: "n8n",              min: 8,    max: 17 },
+
+    // --- Exploration modèles et données ---
+    { name: "Hugging Face",     min: 7,    max: 18 },
+    { name: "Kaggle",            min: 8,    max: 17 },
+
+    // --- Coder avec l'IA (accessible → avancé) ---
+    { name: "Replit",           min: 5,    max: 12 },
+    { name: "v0",               min: 5,    max: 13 },
+    { name: "Lovable",          min: 6,    max: 16 },
+
+    // --- IA locale et plateformes d'agents ---
+    { name: "Dify",             min: 9,    max: 17 },
+    { name: "Ollama",           min: 10,   max: 19 },
+    { name: "LM Studio",        min: 11,   max: 17 },
+    { name: "Langflow",         min: 11,   max: 17 },
+    { name: "Flowise",          min: 11,   max: 17 },
+    { name: "Windmill",         min: 13,   max: 18 },
+
+    // --- Expert : IDE, agents autonomes, frameworks ---
+    { name: "GitHub Copilot",   min: 11,   max: 20 },
+    { name: "Cursor",           min: 12,   max: 20 },
+    { name: "Claude Code",      min: 14,   max: 20 },
+    { name: "LangChain",        min: 14,   max: 20 },
+    { name: "Antigravity",      min: 15,   max: 20 },
+    { name: "Manus",            min: 15,   max: 20 },
+    { name: "MCP",              min: 15,   max: 20 },
+    { name: "OpenClaw",         min: 15.5, max: 19 },
+    { name: "LangGraph",        min: 16,   max: 20 },
+    { name: "MLflow",           min: 17,   max: 20 },
   ];
 
   const TOOL_ICON_RULES = [
@@ -319,6 +373,7 @@ if (typeof document !== 'undefined') {
     { pattern: /canva/i, slug: "canva" },
     { pattern: /\bgamma\b/i, slug: "gamma" },
     { pattern: /hugging\s*face/i, slug: "huggingface" },
+    { pattern: /kaggle/i, slug: "kaggle" },
 
     // --- Niveau Avancé (Automatisation, No-code et Modèles alternatifs) ---
     { pattern: /make/i, slug: "make" },
@@ -370,6 +425,7 @@ if (typeof document !== 'undefined') {
     { pattern: /canva/i, url: "https://www.canva.com" },
     { pattern: /\bgamma\b/i, url: "https://gamma.app" },
     { pattern: /hugging\s*face/i, url: "https://huggingface.co" },
+    { pattern: /kaggle/i, url: "https://www.kaggle.com" },
     { pattern: /make/i, url: "https://www.make.com" },
     { pattern: /zapier/i, url: "https://zapier.com" },
     { pattern: /ollama/i, url: "https://ollama.com" },
@@ -760,12 +816,45 @@ if (typeof document !== 'undefined') {
       },
 
       get toolVisuals() {
-        const tools = this.currentLevel ? this.currentLevel.tools : [];
-        return tools.map((toolName) => ({
-          name: toolName,
-          iconUrl: resolveToolIconUrl(toolName),
-          fallback: buildToolFallback(toolName),
-          url: resolveToolUrl(toolName)
+        const score = this.scoreTotal;
+        const maxTools = 9;
+
+        // Filter tools whose range includes the current score
+        const eligible = TOOL_RANGES.filter(
+          (tool) => score >= tool.min && score <= tool.max
+        );
+
+        // Separate companion tools (always shown when score >= 2)
+        const companions = eligible.filter((t) => t.companion);
+        const others = eligible.filter((t) => !t.companion);
+
+        // Sort non-companion tools by centrality to pick the most relevant
+        others.sort((a, b) => {
+          const centerA = (a.min + a.max) / 2;
+          const halfA = (a.max - a.min) / 2 || 0.5;
+          const centralityA = 1 - Math.abs(score - centerA) / halfA;
+
+          const centerB = (b.min + b.max) / 2;
+          const halfB = (b.max - b.min) / 2 || 0.5;
+          const centralityB = 1 - Math.abs(score - centerB) / halfB;
+
+          return centralityB - centralityA;
+        });
+
+        // Reserve slots for companions (at score >= 2), fill the rest by centrality
+        const companionSlots = (score >= 2) ? companions : [];
+        const remainingSlots = maxTools - companionSlots.length;
+        const selected = [...companionSlots, ...others.slice(0, remainingSlots)];
+
+        // Re-sort for display: simplest (lowest min) → hardest (highest min)
+        // If same min, the narrower range (more specialized) comes after
+        selected.sort((a, b) => a.min - b.min || a.max - b.max);
+
+        return selected.map((tool) => ({
+          name: tool.name,
+          iconUrl: resolveToolIconUrl(tool.name),
+          fallback: buildToolFallback(tool.name),
+          url: resolveToolUrl(tool.name)
         }));
       },
 

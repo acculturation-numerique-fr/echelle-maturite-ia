@@ -27,7 +27,7 @@
 ## Fonctionnalités principales
 
 - Front statique en `HTML/CSS/JS` + `Alpine.js`.
-- Questionnaire 20 critères (Q01-Q20), score global sur 20.
+- Questionnaire 20 critères (Q01-Q20) sous forme de cases à cocher à 3 états (Non acquis : 0 pt, Partiel : 0,5 pt, Acquis : 1 pt), avec calcul de score global sur 20.
 - Restitution immédiate :
   - niveau et profil ;
   - scores par critères ;
