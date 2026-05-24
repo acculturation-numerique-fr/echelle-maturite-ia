@@ -22,152 +22,151 @@ if (typeof document !== 'undefined') {
 
 (function () {
   const DIMENSIONS = [
-    { name: "Culture & cadre IA", max: 5 },
-    { name: "Prise en main des outils", max: 4 },
-    { name: "Usages opérationnels", max: 3 },
-    { name: "Prompting & capitalisation", max: 2 },
-    { name: "Personnalisation & autonomie", max: 3 },
-    { name: "Technique & automatisation", max: 3 }
+    { name: "Connaissances", max: 5 },
+    { name: "Prise en main", max: 4 },
+    { name: "Usages", max: 5 },
+    { name: "Usages avancés", max: 3 },
+    { name: "Usages experts", max: 3 }
   ];
 
   const QUESTIONS = [
     {
       id: "Q01",
       category: "connaissances",
-      dimension: "Culture & cadre IA",
+      dimension: "Connaissances",
       label: "Je sais ce qu'est l'IA et comment elle fonctionne.",
       points: 1
     },
     {
       id: "Q02",
       category: "connaissances",
-      dimension: "Culture & cadre IA",
+      dimension: "Connaissances",
       label: "Je sais à quoi peut servir l'IA dans mon quotidien.",
       points: 1
     },
     {
       id: "Q03",
       category: "connaissances",
-      dimension: "Culture & cadre IA",
+      dimension: "Connaissances",
       label: "Je sais que l'IA peut donner des réponses fausses, donc je vérifie.",
       points: 1
     },
     {
       id: "Q04",
       category: "connaissances",
-      dimension: "Culture & cadre IA",
+      dimension: "Connaissances",
       label: "Je connais les cadres juridiques liés à l'IA, notamment le RGPD et l'AI Act.",
       points: 1
     },
     {
       id: "Q05",
       category: "connaissances",
-      dimension: "Culture & cadre IA",
+      dimension: "Connaissances",
       label: "Je sais comment on crée un modèle génératif, par exemple via le pré-entraînement.",
       points: 1
     },
     {
       id: "Q06",
       category: "prise_en_main",
-      dimension: "Prise en main des outils",
+      dimension: "Prise en main",
       label: "J'ai déjà utilisé un chatbot ou assistant IA, par exemple ChatGPT, Gemini ou Copilot.",
       points: 1
     },
     {
       id: "Q07",
       category: "prise_en_main",
-      dimension: "Prise en main des outils",
+      dimension: "Prise en main",
       label: "J'ai créé mon propre compte sur un outil d'IA, par exemple ChatGPT, Gemini ou Claude.",
       points: 1
     },
     {
       id: "Q08",
       category: "prise_en_main",
-      dimension: "Prise en main des outils",
+      dimension: "Prise en main",
       label: "J'ai testé plusieurs chatbots et je sais les différencier.",
       points: 1
     },
     {
       id: "Q09",
       category: "prise_en_main",
-      dimension: "Prise en main des outils",
+      dimension: "Prise en main",
       label: "Je sais évaluer une réponse d'IA et reformuler ma demande.",
       points: 1
     },
     {
       id: "Q10",
       category: "usages",
-      dimension: "Usages opérationnels",
+      dimension: "Usages",
       label: "J'utilise l'IA pour rédiger ou améliorer des textes.",
       points: 1
     },
     {
       id: "Q11",
       category: "usages",
-      dimension: "Usages opérationnels",
+      dimension: "Usages",
       label: "J'utilise l'IA pour créer ou modifier des images.",
       points: 1
     },
     {
       id: "Q12",
       category: "usages",
-      dimension: "Usages opérationnels",
+      dimension: "Usages",
       label: "J'utilise l'IA pour analyser des documents ou des données, par exemple une grille Excel.",
       points: 1
     },
     {
       id: "Q13",
       category: "usages",
-      dimension: "Prompting & capitalisation",
+      dimension: "Usages",
       label: "Je rédige des prompts avec un cadre, par exemple RTF, RAFT ou CRAFTI.",
       points: 1
     },
     {
       id: "Q14",
       category: "usages",
-      dimension: "Prompting & capitalisation",
+      dimension: "Usages",
       label: "J'organise et réutilise mes meilleurs prompts.",
       points: 1
     },
     {
       id: "Q15",
       category: "usages_avances",
-      dimension: "Personnalisation & autonomie",
+      dimension: "Usages avancés",
       label: "J'ai un abonnement payant à un outil d'IA, par exemple ChatGPT, Gemini ou Copilot.",
       points: 1
     },
     {
       id: "Q16",
       category: "usages_avances",
-      dimension: "Personnalisation & autonomie",
+      dimension: "Usages avancés",
       label: "J'ai créé mon propre chatbot, par exemple un Custom GPT ou un Gem.",
       points: 1
     },
     {
       id: "Q17",
       category: "usages_avances",
-      dimension: "Personnalisation & autonomie",
+      dimension: "Usages avancés",
       label: "J'ai installé un logiciel d'IA sur mon ordinateur, par exemple Ollama.",
       points: 1
     },
     {
       id: "Q18",
       category: "usages_experts",
-      dimension: "Technique & automatisation",
+      dimension: "Usages experts",
       label: "J'utilise l'IA pour coder ou corriger du code, par exemple avec Codex, Copilot ou Cursor.",
       points: 1
     },
     {
       id: "Q19",
       category: "usages_experts",
-      dimension: "Technique & automatisation",
+      dimension: "Usages experts",
       label: "J'ai créé un agent pour automatiser des tâches simples.",
       points: 1
     },
     {
       id: "Q20",
       category: "usages_experts",
-      dimension: "Technique & automatisation",
+      dimension: "Usages experts",
       label: "J'ai créé un agent connecté à des APIs ou à des services externes.",
       points: 1
     }
@@ -414,12 +413,11 @@ if (typeof document !== 'undefined') {
 
   function shortDimensionLabel(name) {
     const labels = {
-      "Culture & cadre IA": "Culture",
-      "Prise en main des outils": "Outils",
-      "Usages opérationnels": "Usages",
-      "Prompting & capitalisation": "Prompt",
-      "Personnalisation & autonomie": "Autonomie",
-      "Technique & automatisation": "Tech"
+      "Connaissances": "Connaissances",
+      "Prise en main": "Prise en main",
+      "Usages": "Usages",
+      "Usages avancés": "Usages avancés",
+      "Usages experts": "Usages experts"
     };
 
     return labels[name] || name;
