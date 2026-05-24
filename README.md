@@ -15,7 +15,7 @@
 │   ├── index.html                  # Page unique du diagnostic
 │   └── assets/
 │       ├── css/
-│       │   ├── styles.css          # Styles principaux
+│       │   ├── app.css             # Styles principaux
 │       │   └── pdf.css             # Styles dédiés à l'export PDF
 │       ├── js/
 │       │   └── app.js              # Logique Alpine.js (questionnaire, scoring, graphiques, export)
@@ -66,7 +66,7 @@ Puis ouvrir `http://localhost:8080`.
 ## Intégration WordPress
 
 1. Copier le contenu du `<main id="an-diagnostic">…</main>` depuis `app/index.html` dans un bloc HTML personnalisé.
-2. Charger `assets/css/styles.css`, `assets/css/pdf.css`, `assets/js/app.js`, Alpine.js, `html2canvas` et `jsPDF` (CDN) sur la page.
+2. Charger `assets/css/app.css`, `assets/css/pdf.css`, `assets/js/app.js`, Alpine.js, `html2canvas` et `jsPDF` (CDN) sur la page.
 
 ## Feuille de route
 
