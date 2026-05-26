@@ -640,6 +640,8 @@ if (typeof document !== 'undefined') {
       levels: LEVELS,
       answers: {},
       currentCategoryIndex: 0,
+      avgScore: null,
+      avgDimensions: null,
 
       init() {
         this.answers = normalizeScoreMap(this.questions.map((q) => q.id));
@@ -728,19 +730,24 @@ if (typeof document !== 'undefined') {
       get barChart() {
         const width = 500;
         const height = 180;
-        const paddingX = 40;
+        const paddingX = 35;
         const topPad = 24;
         const bottomPad = 28;
         const barAreaHeight = height - topPad - bottomPad;
         const categories = this.categoryScores;
         const count = categories.length || 1;
-        const gap = 14;
+        const gap = 16;
         const barAreaWidth = width - paddingX * 2;
         const totalGaps = (count - 1) * gap;
-        const barWidth = (barAreaWidth - totalGaps) / count;
+        const groupWidth = (barAreaWidth - totalGaps) / count;
+
+        const hasAvg = !!this.avgDimensions;
+        const subGap = hasAvg ? 4 : 0;
+        const barWidth = hasAvg ? (groupWidth - subGap) / 2 : groupWidth;
 
         const bars = categories.map((category, index) => {
-          const x = paddingX + index * (barWidth + gap);
+          const groupX = paddingX + index * (groupWidth + gap);
+          const x = groupX;
           const barHeight = (barAreaHeight * category.percent) / 100;
           const y = topPad + barAreaHeight - barHeight;
           return {
@@ -750,13 +757,36 @@ if (typeof document !== 'undefined') {
             y: Number(y.toFixed(2)),
             width: Number(barWidth.toFixed(2)),
             height: Number(Math.max(2, barHeight).toFixed(2)),
-            labelX: Number((x + barWidth / 2).toFixed(2)),
+            labelX: Number((groupX + groupWidth / 2).toFixed(2)),
+            valueX: Number((x + barWidth / 2).toFixed(2)),
             labelY: height - 6,
             percent: category.percent
           };
         });
 
-        return { bars, baseY: topPad + barAreaHeight };
+        let avgBars = [];
+        if (hasAvg) {
+          const dimNames = ["Connaissances", "Prise en main", "Usages", "Usages avancés", "Usages experts"];
+          avgBars = dimNames.map((dimName, index) => {
+            const groupX = paddingX + index * (groupWidth + gap);
+            const x = groupX + barWidth + subGap;
+            const avgData = this.avgDimensions[dimName];
+            const avgPercent = avgData ? avgData.percent : 0;
+            const bh = (barAreaHeight * avgPercent) / 100;
+            const y = topPad + barAreaHeight - bh;
+            return {
+              key: `avg-${dimName}`,
+              x: Number(x.toFixed(2)),
+              y: Number(y.toFixed(2)),
+              width: Number(barWidth.toFixed(2)),
+              height: Number(Math.max(2, bh).toFixed(2)),
+              valueX: Number((x + barWidth / 2).toFixed(2)),
+              percent: avgPercent
+            };
+          });
+        }
+
+        return { bars, avgBars, baseY: topPad + barAreaHeight };
       },
 
       get radarChart() {
@@ -807,11 +837,22 @@ if (typeof document !== 'undefined') {
 
         const shape = axes.map((axis) => `${axis.scoreX},${axis.scoreY}`).join(" ");
 
+        let avgShape = null;
+        if (this.avgDimensions) {
+          avgShape = rows.map((row, index) => {
+            const avgData = this.avgDimensions[row.name];
+            const avgPercent = avgData ? avgData.percent : 0;
+            const p = pointAt(index, radius * (avgPercent / 100));
+            return `${p.x.toFixed(2)},${p.y.toFixed(2)}`;
+          }).join(" ");
+        }
+
         return {
           center,
           rings,
           axes,
-          shape
+          shape,
+          avgShape
         };
       },
 
@@ -907,12 +948,44 @@ if (typeof document !== 'undefined') {
 
       showResults() {
         this.step = "results";
+        this._submitAndFetchStats();
+      },
+
+      async _submitAndFetchStats() {
+        try {
+          await fetch("/api/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              answers: this.answers,
+              scoreTotal: this.scoreTotal
+            })
+          });
+        } catch (_) { /* server not running */ }
+
+        try {
+          const res = await fetch("/api/stats");
+          if (res.ok) {
+            const stats = await res.json();
+            if (stats.avgScore !== null) {
+              this.avgScore = stats.avgScore;
+              this.avgDimensions = stats.avgDimensions;
+            }
+          }
+        } catch (_) { /* server not running */ }
       },
 
       reset() {
         this.step = "intro";
         this.currentCategoryIndex = 0;
         this.answers = normalizeScoreMap(this.questions.map((q) => q.id));
+        this.avgScore = null;
+        this.avgDimensions = null;
+      },
+
+      get avgScoreLabel() {
+        if (this.avgScore === null) return null;
+        return `Score moyen : ${this.avgScore}/20`;
       },
 
       async waitForImages(element) {
@@ -1163,25 +1236,22 @@ if (typeof document !== 'undefined') {
         if (barChartSvg) {
           const rect = barChartSvg.getBoundingClientRect();
           const { canvas, ctx, width, height } = createHiDpiCanvas(rect.width || 500, rect.height || 180);
-          const chart = this.barChart || { bars: [], baseY: 152 };
+          const chart = this.barChart || { bars: [], avgBars: [], baseY: 152 };
           const bars = Array.isArray(chart.bars) ? chart.bars : [];
+          const avgBars = Array.isArray(chart.avgBars) ? chart.avgBars : [];
           let didRenderBars = false;
 
           if (ctx && bars.length) {
             const sx = width / 500;
             const sy = height / 180;
 
-            bars.forEach((bar) => {
+            const drawBar = (bar, color, valueColor) => {
               const bx = bar.x * sx;
               const by = bar.y * sy;
               const bw = bar.width * sx;
               const bh = bar.height * sy;
 
-              const grad = ctx.createLinearGradient(bx, by, bx, by + bh);
-              grad.addColorStop(0, "rgba(29, 86, 216, 0.9)");
-              grad.addColorStop(1, "rgba(45, 116, 255, 0.6)");
-              ctx.fillStyle = grad;
-
+              ctx.fillStyle = color;
               const r = Math.min(4 * sx, bw / 2);
               ctx.beginPath();
               ctx.moveTo(bx + r, by);
@@ -1194,12 +1264,23 @@ if (typeof document !== 'undefined') {
               ctx.closePath();
               ctx.fill();
 
-              ctx.fillStyle = "#1646b5";
-              ctx.font = `800 ${Math.max(8, Math.round(9.5 * Math.min(sx, sy)))}px ${pdfLabelFontFamily}`;
+              ctx.fillStyle = valueColor;
+              ctx.font = `800 ${Math.max(7, Math.round(8 * Math.min(sx, sy)))}px ${pdfLabelFontFamily}`;
               ctx.textAlign = "center";
               ctx.textBaseline = "bottom";
-              ctx.fillText(`${bar.percent}%`, bar.labelX * sx, by - 3 * sy);
+              ctx.fillText(`${bar.percent}%`, bar.valueX * sx, by - 3 * sy);
+            };
 
+            avgBars.forEach((bar) => {
+              drawBar(bar, "rgba(29, 156, 204, 0.25)", "#1d9ccc");
+            });
+
+            bars.forEach((bar) => {
+              const grad = ctx.createLinearGradient(0, bar.y * sy, 0, (bar.y + bar.height) * sy);
+              grad.addColorStop(0, "rgba(29, 86, 216, 0.9)");
+              grad.addColorStop(1, "rgba(45, 116, 255, 0.6)");
+              drawBar(bar, grad, "#1646b5");
+              
               ctx.fillStyle = "#42567d";
               ctx.font = `700 ${Math.max(8, Math.round(8.5 * Math.min(sx, sy)))}px ${pdfLabelFontFamily}`;
               ctx.textAlign = "center";

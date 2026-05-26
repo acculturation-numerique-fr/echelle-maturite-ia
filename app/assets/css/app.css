@@ -902,6 +902,15 @@ body {
   opacity: 0.75;
 }
 
+.an-avg-score {
+  margin: 0 0 6px;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--an-secondary);
+  letter-spacing: 0.01em;
+}
+
 .an-score-meta {
   text-align: left;
   margin-top: 5px;
@@ -974,6 +983,14 @@ body {
   stroke: var(--an-primary);
   stroke-width: 1.5;
   stroke-linejoin: round;
+}
+
+.an-radar-avg-shape {
+  fill: rgba(29, 156, 204, 0.10);
+  stroke: var(--an-secondary);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  stroke-dasharray: 5 3;
 }
 
 .an-radar-dot {
@@ -1092,9 +1109,24 @@ body {
   opacity: 0.78;
 }
 
+.an-barchart-avg-rect {
+  fill: rgba(29, 156, 204, 0.15);
+  stroke: rgba(29, 156, 204, 0.6);
+  stroke-width: 1;
+}
+
+.an-barchart-avg-value {
+  fill: var(--an-secondary);
+  font-size: 8px;
+  font-weight: 700;
+  font-family: var(--an-font-mono);
+  text-anchor: middle;
+  letter-spacing: 0.01em;
+}
+
 .an-barchart-value {
   fill: var(--an-primary-strong);
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 800;
   font-family: var(--an-font-mono);
   text-anchor: middle;

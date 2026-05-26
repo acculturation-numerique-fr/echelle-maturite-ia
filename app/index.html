@@ -217,6 +217,7 @@
               </line>
             </template>
             <polygon class="an-radar-shape" :points="radarChart.shape"></polygon>
+            <polygon class="an-radar-avg-shape" x-show="radarChart.avgShape" :points="radarChart.avgShape || ''" x-cloak></polygon>
             <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`dot-${axis.key}`">
               <circle class="an-radar-dot" :cx="axis.scoreX" :cy="axis.scoreY" r="3.25"></circle>
             </template>
@@ -234,6 +235,7 @@
             <span x-text="scoreTotal"></span>
             <small>/20</small>
           </div>
+          <p class="an-avg-score" x-show="avgScoreLabel" x-text="avgScoreLabel" x-cloak></p>
           <div class="an-score-meta">
             <strong>
               <span x-text="currentLevel ? currentLevel.level : ''"></span>
@@ -272,11 +274,18 @@
                 <stop offset="100%" stop-color="rgba(45, 116, 255, 0.6)" />
               </linearGradient>
             </defs>
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="avgBar in barChart.avgBars"
+              :key="`avg-${avgBar.key}`">
+              <g>
+                <rect class="an-barchart-avg-rect" :x="avgBar.x" :y="avgBar.y" :width="avgBar.width" :height="avgBar.height" rx="3"></rect>
+                <text class="an-barchart-avg-value" :x="avgBar.valueX" :y="avgBar.y - 6" x-text="`${avgBar.percent}%`"></text>
+              </g>
+            </template>
             <template xmlns="http://www.w3.org/1999/xhtml" x-for="bar in barChart.bars"
               :key="`barchart-${bar.key}`">
               <g>
-                <rect class="an-barchart-rect" :x="bar.x" :y="bar.y" :width="bar.width" :height="bar.height" rx="4"></rect>
-                <text class="an-barchart-value" :x="bar.labelX" :y="bar.y - 6" x-text="`${bar.percent}%`"></text>
+                <rect class="an-barchart-rect" :x="bar.x" :y="bar.y" :width="bar.width" :height="bar.height" rx="3"></rect>
+                <text class="an-barchart-value" :x="bar.valueX" :y="bar.y - 6" x-text="`${bar.percent}%`"></text>
                 <text class="an-barchart-label" :x="bar.labelX" :y="bar.labelY" x-text="bar.shortLabel"></text>
               </g>
             </template>
