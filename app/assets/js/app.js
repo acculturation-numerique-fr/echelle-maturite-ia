@@ -725,38 +725,38 @@ if (typeof document !== 'undefined') {
         });
       },
 
-      get trajectoryChart() {
+      get barChart() {
         const width = 500;
         const height = 180;
-        const paddingX = 65;
-        const baseY = 136;
-        const amplitude = 88;
+        const paddingX = 40;
+        const topPad = 24;
+        const bottomPad = 28;
+        const barAreaHeight = height - topPad - bottomPad;
         const categories = this.categoryScores;
-        const stepX = categories.length > 1 ? (width - paddingX * 2) / (categories.length - 1) : 0;
+        const count = categories.length || 1;
+        const gap = 14;
+        const barAreaWidth = width - paddingX * 2;
+        const totalGaps = (count - 1) * gap;
+        const barWidth = (barAreaWidth - totalGaps) / count;
 
-        const points = categories.map((category, index) => {
-          const x = paddingX + index * stepX;
-          const y = baseY - (amplitude * category.percent) / 100;
+        const bars = categories.map((category, index) => {
+          const x = paddingX + index * (barWidth + gap);
+          const barHeight = (barAreaHeight * category.percent) / 100;
+          const y = topPad + barAreaHeight - barHeight;
           return {
             key: category.key,
             shortLabel: category.shortLabel,
             x: Number(x.toFixed(2)),
-            y: Number(y.toFixed(2))
+            y: Number(y.toFixed(2)),
+            width: Number(barWidth.toFixed(2)),
+            height: Number(Math.max(2, barHeight).toFixed(2)),
+            labelX: Number((x + barWidth / 2).toFixed(2)),
+            labelY: height - 6,
+            percent: category.percent
           };
         });
 
-        const line = points
-          .map((point, index) => `${index === 0 ? "M" : "L"}${point.x} ${point.y}`)
-          .join(" ");
-
-        const lastX = points.length ? points[points.length - 1].x : paddingX;
-        const area = `${line} L${lastX} ${baseY} L${paddingX} ${baseY} Z`;
-
-        return {
-          points,
-          line,
-          area
-        };
+        return { bars, baseY: topPad + barAreaHeight };
       },
 
       get radarChart() {
@@ -969,7 +969,7 @@ if (typeof document !== 'undefined') {
         };
 
         const svgTemplates = Array.from(
-          captureNode.querySelectorAll(".an-radar-svg template, .an-line-svg template")
+          captureNode.querySelectorAll(".an-radar-svg template, .an-bar-chart-svg template")
         );
         svgTemplates.forEach((templateNode) => {
           const placeholder = document.createComment("pdf-template-placeholder");
@@ -1159,87 +1159,70 @@ if (typeof document !== 'undefined') {
           }
         }
 
-        const lineSvg = captureNode.querySelector(".an-line-svg");
-        if (lineSvg) {
-          const rect = lineSvg.getBoundingClientRect();
+        const barChartSvg = captureNode.querySelector(".an-bar-chart-svg");
+        if (barChartSvg) {
+          const rect = barChartSvg.getBoundingClientRect();
           const { canvas, ctx, width, height } = createHiDpiCanvas(rect.width || 500, rect.height || 180);
-          const chart = this.trajectoryChart || { points: [] };
-          const points = Array.isArray(chart.points) ? chart.points : [];
-          let didRenderLine = false;
+          const chart = this.barChart || { bars: [], baseY: 152 };
+          const bars = Array.isArray(chart.bars) ? chart.bars : [];
+          let didRenderBars = false;
 
-          if (ctx && points.length) {
-            const minX = 65;
-            const maxX = 435;
-            const minY = 48;
-            const maxY = 136;
+          if (ctx && bars.length) {
             const sx = width / 500;
             const sy = height / 180;
-            const toCanvas = (x, y) => ({ x: x * sx, y: y * sy });
 
-            const first = toCanvas(minX, maxY);
-            const last = toCanvas(maxX, maxY);
+            bars.forEach((bar) => {
+              const bx = bar.x * sx;
+              const by = bar.y * sy;
+              const bw = bar.width * sx;
+              const bh = bar.height * sy;
 
-            ctx.beginPath();
-            points.forEach((point, index) => {
-              const p = toCanvas(point.x, point.y);
-              if (index === 0) {
-                ctx.moveTo(p.x, p.y);
-              } else {
-                ctx.lineTo(p.x, p.y);
-              }
-            });
-            ctx.lineTo(last.x, last.y);
-            ctx.lineTo(first.x, first.y);
-            ctx.closePath();
-            ctx.fillStyle = "rgba(29, 86, 216, 0.18)";
-            ctx.fill();
+              const grad = ctx.createLinearGradient(bx, by, bx, by + bh);
+              grad.addColorStop(0, "rgba(29, 86, 216, 0.9)");
+              grad.addColorStop(1, "rgba(45, 116, 255, 0.6)");
+              ctx.fillStyle = grad;
 
-            ctx.beginPath();
-            points.forEach((point, index) => {
-              const p = toCanvas(point.x, point.y);
-              if (index === 0) {
-                ctx.moveTo(p.x, p.y);
-              } else {
-                ctx.lineTo(p.x, p.y);
-              }
-            });
-            ctx.strokeStyle = "#1d56d8";
-            ctx.lineWidth = 2;
-            ctx.lineJoin = "round";
-            ctx.lineCap = "round";
-            ctx.stroke();
-
-            points.forEach((point) => {
-              const p = toCanvas(point.x, point.y);
-              ctx.fillStyle = "#1d56d8";
+              const r = Math.min(4 * sx, bw / 2);
               ctx.beginPath();
-              ctx.arc(p.x, p.y, Math.max(2.5, 4 * Math.min(sx, sy)), 0, Math.PI * 2);
+              ctx.moveTo(bx + r, by);
+              ctx.lineTo(bx + bw - r, by);
+              ctx.quadraticCurveTo(bx + bw, by, bx + bw, by + r);
+              ctx.lineTo(bx + bw, by + bh);
+              ctx.lineTo(bx, by + bh);
+              ctx.lineTo(bx, by + r);
+              ctx.quadraticCurveTo(bx, by, bx + r, by);
+              ctx.closePath();
               ctx.fill();
 
-              const label = toCanvas(point.x, 166);
+              ctx.fillStyle = "#1646b5";
+              ctx.font = `800 ${Math.max(8, Math.round(9.5 * Math.min(sx, sy)))}px ${pdfLabelFontFamily}`;
+              ctx.textAlign = "center";
+              ctx.textBaseline = "bottom";
+              ctx.fillText(`${bar.percent}%`, bar.labelX * sx, by - 3 * sy);
+
               ctx.fillStyle = "#42567d";
-              ctx.font = `700 ${Math.max(9, Math.round(10 * Math.min(sx, sy)))}px ${pdfLabelFontFamily}`;
+              ctx.font = `700 ${Math.max(8, Math.round(8.5 * Math.min(sx, sy)))}px ${pdfLabelFontFamily}`;
               ctx.textAlign = "center";
               ctx.textBaseline = "middle";
-              ctx.fillText(point.shortLabel, label.x, label.y);
+              ctx.fillText(bar.shortLabel, bar.labelX * sx, bar.labelY * sy);
             });
 
-            didRenderLine = true;
+            didRenderBars = true;
           }
 
-          if (didRenderLine) {
+          if (didRenderBars) {
             const replacement = document.createElement("div");
-            replacement.className = "an-pdf-canvas-fallback an-pdf-canvas-line";
+            replacement.className = "an-pdf-canvas-fallback an-pdf-canvas-barchart";
             replacement.style.width = `${canvas.style.width}`;
             replacement.style.height = `${canvas.style.height}`;
             replacement.appendChild(canvas);
 
-            const previousDisplay = lineSvg.style.display;
-            lineSvg.style.display = "none";
-            lineSvg.insertAdjacentElement("afterend", replacement);
+            const previousDisplay = barChartSvg.style.display;
+            barChartSvg.style.display = "none";
+            barChartSvg.insertAdjacentElement("afterend", replacement);
 
             cleanups.push(() => {
-              lineSvg.style.display = previousDisplay;
+              barChartSvg.style.display = previousDisplay;
               replacement.remove();
             });
           }

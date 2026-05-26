@@ -265,20 +265,19 @@
           <div class="an-bento-head">
             <h3 class="an-bento-title">Maturité comparée à la moyenne</h3>
           </div>
-          <svg class="an-line-svg" viewBox="0 0 500 180" role="img" aria-label="Progression par catégorie">
+          <svg class="an-bar-chart-svg" viewBox="0 0 500 180" role="img" aria-label="Maturité comparée à la moyenne">
             <defs>
-              <linearGradient id="an-line-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="rgba(29, 86, 216, 0.22)" />
-                <stop offset="100%" stop-color="rgba(29, 86, 216, 0.0)" />
+              <linearGradient id="an-barchart-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="rgba(29, 86, 216, 0.9)" />
+                <stop offset="100%" stop-color="rgba(45, 116, 255, 0.6)" />
               </linearGradient>
             </defs>
-            <path class="an-line-area" :d="trajectoryChart.area"></path>
-            <path class="an-line-path" :d="trajectoryChart.line"></path>
-            <template xmlns="http://www.w3.org/1999/xhtml" x-for="point in trajectoryChart.points"
-              :key="`point-${point.key}`">
+            <template xmlns="http://www.w3.org/1999/xhtml" x-for="bar in barChart.bars"
+              :key="`barchart-${bar.key}`">
               <g>
-                <circle class="an-line-dot" :cx="point.x" :cy="point.y" r="4"></circle>
-                <text class="an-line-label" :x="point.x" y="166" x-text="point.shortLabel"></text>
+                <rect class="an-barchart-rect" :x="bar.x" :y="bar.y" :width="bar.width" :height="bar.height" rx="4"></rect>
+                <text class="an-barchart-value" :x="bar.labelX" :y="bar.y - 6" x-text="`${bar.percent}%`"></text>
+                <text class="an-barchart-label" :x="bar.labelX" :y="bar.labelY" x-text="bar.shortLabel"></text>
               </g>
             </template>
           </svg>
