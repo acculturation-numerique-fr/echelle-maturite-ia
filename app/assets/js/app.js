@@ -1191,10 +1191,24 @@ if (typeof document !== 'undefined') {
 
             const shapePoints = axes.map((axis) => ({ x: axis.scoreX, y: axis.scoreY }));
             drawPolygon(shapePoints, {
-              fill: "rgba(29, 86, 216, 0.24)",
+              fill: "rgba(29, 86, 216, 0.15)",
               stroke: "#1d56d8",
               lineWidth: 1.6
             });
+
+            if (radar.avgShape) {
+              const avgPoints = radar.avgShape.split(" ").map(pt => {
+                const coords = pt.split(",");
+                return { x: parseFloat(coords[0]), y: parseFloat(coords[1]) };
+              });
+              ctx.setLineDash([5 * scale, 3 * scale]);
+              drawPolygon(avgPoints, {
+                fill: "rgba(29, 156, 204, 0.10)",
+                stroke: "#1d9ccc",
+                lineWidth: 1.4
+              });
+              ctx.setLineDash([]);
+            }
 
             axes.forEach((axis) => {
               const dot = toCanvasPoint(axis.scoreX, axis.scoreY);
@@ -1289,10 +1303,10 @@ if (typeof document !== 'undefined') {
             });
 
             bars.forEach((bar) => {
-              const grad = ctx.createLinearGradient(0, bar.y * sy, 0, (bar.y + bar.height) * sy);
-              grad.addColorStop(0, "rgba(29, 86, 216, 0.9)");
-              grad.addColorStop(1, "rgba(45, 116, 255, 0.6)");
-              drawBar(bar, grad, "#1646b5");
+              drawBar(bar, "rgba(29, 86, 216, 0.15)", "#1646b5", {
+                color: "#1d56d8",
+                width: 1
+              });
               
               ctx.fillStyle = "#42567d";
               ctx.font = `700 ${Math.max(8, Math.round(8.5 * Math.min(sx, sy)))}px ${pdfLabelFontFamily}`;

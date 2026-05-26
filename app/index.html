@@ -268,12 +268,7 @@
             <h3 class="an-bento-title">Maturité comparée à la moyenne</h3>
           </div>
           <svg class="an-bar-chart-svg" viewBox="0 0 500 180" role="img" aria-label="Maturité comparée à la moyenne">
-            <defs>
-              <linearGradient id="an-barchart-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="rgba(29, 86, 216, 0.9)" />
-                <stop offset="100%" stop-color="rgba(45, 116, 255, 0.6)" />
-              </linearGradient>
-            </defs>
+
             <template xmlns="http://www.w3.org/1999/xhtml" x-for="avgBar in barChart.avgBars"
               :key="`avg-${avgBar.key}`">
               <g>
