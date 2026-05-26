@@ -1088,11 +1088,11 @@ if (typeof document !== 'undefined') {
             ctx.font = `800 ${Math.round(width * 0.255)}px Roboto`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(String(this.scoreTotal), cx, cy - height * 0.045);
+            ctx.fillText(String(this.scoreTotal), cx, cy + height * 0.01);
 
             ctx.fillStyle = "#6f809f";
             ctx.font = `700 ${Math.round(width * 0.09)}px Roboto`;
-            ctx.fillText(`/20`, cx, cy + height * 0.18);
+            ctx.fillText(`/20`, cx, cy + height * 0.16);
             didRenderScore = true;
           }
 

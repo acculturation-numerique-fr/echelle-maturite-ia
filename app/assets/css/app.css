@@ -886,6 +886,7 @@ body {
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1;
+  margin-top: 12px;
   background: linear-gradient(135deg, var(--an-primary-strong), var(--an-primary-bright));
   -webkit-background-clip: text;
   background-clip: text;
