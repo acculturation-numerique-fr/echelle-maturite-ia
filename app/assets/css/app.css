@@ -1111,8 +1111,9 @@ body {
 
 .an-barchart-avg-rect {
   fill: rgba(29, 156, 204, 0.15);
-  stroke: rgba(29, 156, 204, 0.6);
+  stroke: var(--an-secondary);
   stroke-width: 1;
+  stroke-dasharray: 5 3;
 }
 
 .an-barchart-avg-value {

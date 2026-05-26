@@ -1245,14 +1245,14 @@ if (typeof document !== 'undefined') {
             const sx = width / 500;
             const sy = height / 180;
 
-            const drawBar = (bar, color, valueColor) => {
+            const drawBar = (bar, color, valueColor, borderOptions) => {
               const bx = bar.x * sx;
               const by = bar.y * sy;
               const bw = bar.width * sx;
               const bh = bar.height * sy;
 
               ctx.fillStyle = color;
-              const r = Math.min(4 * sx, bw / 2);
+              const r = Math.min(3 * sx, bw / 2);
               ctx.beginPath();
               ctx.moveTo(bx + r, by);
               ctx.lineTo(bx + bw - r, by);
@@ -1264,6 +1264,16 @@ if (typeof document !== 'undefined') {
               ctx.closePath();
               ctx.fill();
 
+              if (borderOptions) {
+                ctx.lineWidth = borderOptions.width || 1;
+                ctx.strokeStyle = borderOptions.color;
+                if (borderOptions.dash) {
+                  ctx.setLineDash(borderOptions.dash.map(d => d * Math.min(sx, sy)));
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+              }
+
               ctx.fillStyle = valueColor;
               ctx.font = `800 ${Math.max(7, Math.round(8 * Math.min(sx, sy)))}px ${pdfLabelFontFamily}`;
               ctx.textAlign = "center";
@@ -1272,7 +1282,10 @@ if (typeof document !== 'undefined') {
             };
 
             avgBars.forEach((bar) => {
-              drawBar(bar, "rgba(29, 156, 204, 0.25)", "#1d9ccc");
+              drawBar(bar, "rgba(29, 156, 204, 0.15)", "#1d9ccc", {
+                color: "#1d9ccc",
+                dash: [5, 3]
+              });
             });
 
             bars.forEach((bar) => {
