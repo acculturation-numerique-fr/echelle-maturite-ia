@@ -1191,7 +1191,7 @@ if (typeof document !== 'undefined') {
 
             const shapePoints = axes.map((axis) => ({ x: axis.scoreX, y: axis.scoreY }));
             drawPolygon(shapePoints, {
-              fill: "rgba(29, 86, 216, 0.15)",
+              fill: "rgba(29, 86, 216, 0.28)",
               stroke: "#1d56d8",
               lineWidth: 1.6
             });
@@ -1303,7 +1303,7 @@ if (typeof document !== 'undefined') {
             });
 
             bars.forEach((bar) => {
-              drawBar(bar, "rgba(29, 86, 216, 0.15)", "#1646b5", {
+              drawBar(bar, "rgba(29, 86, 216, 0.28)", "#1646b5", {
                 color: "#1d56d8",
                 width: 1
               });

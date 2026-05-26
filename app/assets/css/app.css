@@ -979,7 +979,7 @@ body {
 }
 
 .an-radar-shape {
-  fill: url(#an-radar-gradient);
+  fill: rgba(29, 86, 216, 0.28);
   stroke: var(--an-primary);
   stroke-width: 1.5;
   stroke-linejoin: round;
@@ -1081,7 +1081,7 @@ body {
   width: 0;
   height: 100%;
   border-radius: 999px;
-  background: rgba(29, 86, 216, 0.15);
+  background: rgba(29, 86, 216, 0.28);
   border: 1px solid var(--an-primary);
   box-sizing: border-box;
   transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1102,7 +1102,7 @@ body {
 }
 
 .an-barchart-rect {
-  fill: rgba(29, 86, 216, 0.15);
+  fill: rgba(29, 86, 216, 0.28);
   stroke: var(--an-primary);
   stroke-width: 1;
   transition: opacity 0.25s ease;

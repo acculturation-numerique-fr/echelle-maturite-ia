@@ -203,12 +203,7 @@
             <h3 class="an-bento-title">Radar des dimensions</h3>
           </div>
           <svg class="an-radar-svg" viewBox="-30 0 320 260" role="img" aria-label="Répartition des dimensions">
-            <defs>
-              <linearGradient id="an-radar-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="rgba(29, 86, 216, 0.28)" />
-                <stop offset="100%" stop-color="rgba(29, 156, 204, 0.16)" />
-              </linearGradient>
-            </defs>
+
             <template xmlns="http://www.w3.org/1999/xhtml" x-for="ring in radarChart.rings" :key="`ring-${ring.scale}`">
               <polygon class="an-radar-ring" :points="ring.points"></polygon>
             </template>
