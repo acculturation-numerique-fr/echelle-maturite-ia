@@ -213,9 +213,7 @@
             </template>
             <polygon class="an-radar-shape" :points="radarChart.shape"></polygon>
             <polygon class="an-radar-avg-shape" x-show="radarChart.avgShape" :points="radarChart.avgShape || ''" x-cloak></polygon>
-            <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`dot-${axis.key}`">
-              <circle class="an-radar-dot" :cx="axis.scoreX" :cy="axis.scoreY" r="3.25"></circle>
-            </template>
+
             <template xmlns="http://www.w3.org/1999/xhtml" x-for="axis in radarChart.axes" :key="`label-${axis.key}`">
               <text class="an-radar-label" :x="axis.labelX" :y="axis.labelY" x-text="axis.shortLabel"></text>
             </template>

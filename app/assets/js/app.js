@@ -1088,7 +1088,7 @@ if (typeof document !== 'undefined') {
             ctx.font = `800 ${Math.round(width * 0.255)}px Roboto`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(String(this.scoreTotal), cx, cy + height * 0.01);
+            ctx.fillText(String(this.scoreTotal), cx, cy + height * 0.12);
 
             ctx.fillStyle = "#6f809f";
             ctx.font = `700 ${Math.round(width * 0.09)}px Roboto`;
@@ -1211,11 +1211,6 @@ if (typeof document !== 'undefined') {
             }
 
             axes.forEach((axis) => {
-              const dot = toCanvasPoint(axis.scoreX, axis.scoreY);
-              ctx.fillStyle = "#1d56d8";
-              ctx.beginPath();
-              ctx.arc(dot.x, dot.y, Math.max(2.5, 3 * scale), 0, Math.PI * 2);
-              ctx.fill();
 
               const label = toCanvasPoint(axis.labelX, axis.labelY);
               ctx.fillStyle = "#3e5278";
