@@ -12,23 +12,15 @@
 
 ```txt
 .
-├── app/
-│   ├── index.html                  # Page unique du diagnostic
-│   └── assets/
-│       ├── css/
-│       │   ├── app.css             # Styles principaux
-│       │   └── pdf.css             # Styles dédiés à l'export PDF
-│       ├── js/
-│       │   └── app.js              # Logique Alpine.js (questionnaire, scoring, graphiques, export)
-│       └── public/
-│           ├── landing.webp        # Capture d'écran pour le README
-│           ├── form.webp           # Capture d'écran du formulaire
-│           ├── result.webp         # Capture d'écran des résultats
-│           ├── icons/              # Logos des 40 outils IA et [catalogue complet](app/assets/public/icons/README.md)
-│           └── figures/            # Graphiques matplotlib (répartition et densité des outils)
+├── app/                            # Interface web
+│   ├── index.html                  # Page principale
+│   └── assets/                     # Ressources
+│       ├── css/                    # Styles
+│       ├── js/                     # Scripts
+│       └── public/                 # Images & médias
 ├── data/
-│   └── stats.csv                   # Stockage local des réponses (RGPD, pas de base de données externe)
-├── server.py                       # Serveur minimaliste (persistance + calcul des moyennes)
+│   └── stats.csv                   # Base de données locale
+├── server.py                       # Serveur backend API
 ├── .gitignore
 └── README.md
 ```
@@ -65,12 +57,3 @@ Puis ouvrir `http://localhost:8080/app/`.
 
 > **Note** : Il est impératif d'utiliser `server.py` (et non pas un simple serveur statique) car l'application s'appuie sur ce backend pour enregistrer les réponses anonymisées et calculer les statistiques comparées en temps réel (`POST /api/submit` et `GET /api/stats`).
 
-## Intégration WordPress
-
-1. Copier le contenu du `<main id="an-diagnostic">…</main>` depuis `app/index.html` dans un bloc HTML personnalisé.
-2. Charger `assets/css/app.css`, `assets/css/pdf.css`, `assets/js/app.js`, Alpine.js, `html2canvas` et `jsPDF` (CDN) sur la page.
-
-## Feuille de route
-
-- [ ] Intégrer le module de diagnostic sur le site WordPress.
-- [ ] Générer un QR Code de partage avec suivi pour les conférences et les cours.
