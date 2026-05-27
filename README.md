@@ -1,6 +1,6 @@
 # Échelle de maturité en intelligence artificielle
 
-![Aperçu du Tableau de Maturité IA](app/assets/public/preview.webp)
+![Aperçu du Tableau de Maturité IA](app/assets/public/landing.webp)
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
@@ -21,7 +21,9 @@
 │       ├── js/
 │       │   └── app.js              # Logique Alpine.js (questionnaire, scoring, graphiques, export)
 │       └── public/
-│           ├── preview.webp        # Capture d'écran pour le README
+│           ├── landing.webp        # Capture d'écran pour le README
+│           ├── form.webp           # Capture d'écran du formulaire
+│           ├── result.webp         # Capture d'écran des résultats
 │           ├── icons/              # Logos des 40 outils IA et [catalogue complet](app/assets/public/icons/README.md)
 │           └── figures/            # Graphiques matplotlib (répartition et densité des outils)
 ├── data/
@@ -33,11 +35,18 @@
 
 ## Fonctionnalités principales
 
+![Formulaire de diagnostic](app/assets/public/form.webp)
+
+*Légende :*
 - Architecture hybride : Front statique `HTML/CSS/JS` + `Alpine.js` et serveur back-end minimaliste en Python (zéro dépendance externe).
 - Questionnaire **20 critères** (Q01–Q20) répartis en 5 dimensions :
   - Connaissances · Prise en main · Usages · Usages avancés · Usages experts
 - Chaque critère à 3 états : _Non acquis_ (0 pt) · _Partiel_ (0,5 pt) · _Acquis_ (1 pt).
 - Score global sur 20 avec **5 niveaux** : Novice → Débutant → Intermédiaire → Avancé → Expert.
+
+![Restitution des résultats](app/assets/public/result.webp)
+
+*Légende :*
 - Restitution immédiate avec statistiques comparées :
   - Niveau et profil personnalisé ;
   - Radar des dimensions avec surimpression de la moyenne globale ;
