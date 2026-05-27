@@ -36,12 +36,12 @@
 ## Fonctionnalités principales
 
 ![Formulaire de diagnostic](app/assets/public/form.webp)
-*L'application repose sur une architecture hybride, alliant une interface client statique (`HTML/CSS/JS` et `Alpine.js`) à un serveur de traitement minimaliste en Python, garantissant ainsi un déploiement sans dépendance externe. Le cadre méthodologique s'articule autour d'un questionnaire de **20 critères** (Q01 à Q20), répartis sur cinq dimensions analytiques : Connaissances, Prise en main, Usages, Usages avancés et Usages experts. Chaque critère est évalué selon trois seuils d'acquisition (Non acquis pour 0 pt, Partiel pour 0,5 pt, Acquis pour 1 pt), permettant d'établir un score d'évaluation sur 20. Ce résultat permet ensuite de classifier la progression de l'utilisateur selon **5 niveaux** de maturité, évoluant du stade Novice au profil Expert.*
+Le questionnaire s'articule autour de **20 critères** (Q01 à Q20), répartis sur cinq dimensions : Connaissances, Prise en main, Usages, Usages avancés et Usages experts. Chaque critère est évalué selon trois seuils d'acquisition (Non acquis, Partiel, Acquis) pour établir un score global sur 20. Ce résultat permet de classifier l'utilisateur selon **5 niveaux** de maturité, du stade Novice au profil Expert.
 
 <br>
 
 ![Restitution des résultats](app/assets/public/result.webp)
-*À l'issue de l'évaluation, le système délivre une restitution analytique immédiate, mise en perspective par des statistiques comparatives. Le profil généré expose un graphique en radar superposant les performances à la moyenne globale, complété par des barres de maturité mesurant l'écart à la norme pour chaque critère. Sur la base du score obtenu, un algorithme de centralité isole les **9 outils IA les plus pertinents** au sein d'un catalogue qualifié de 40 solutions, accompagnés de recommandations contextualisées. Le rapport complet est directement exportable au format PDF (`Diagnostic-maturite-IA.pdf`) via le navigateur. Enfin, l'architecture garantit une stricte **conformité RGPD** : les données anonymisées sont exclusivement conservées localement au format CSV, proscrivant tout hébergement cloud externe.*
+À l'issue de l'évaluation, le système délivre une restitution analytique immédiate avec des statistiques comparatives. Le profil expose un radar superposant les performances à la moyenne globale, ainsi que des barres mesurant l'écart à la norme par critère. L'algorithme isole les **9 outils IA les plus pertinents** parmi un catalogue de 40 solutions, avec des recommandations contextualisées. Le rapport est exportable au format PDF (`Diagnostic-maturite-IA.pdf`) et l'architecture garantit une stricte **conformité RGPD** en conservant les données localement au format CSV.
 
 ## Répartition des outils IA par score
 
