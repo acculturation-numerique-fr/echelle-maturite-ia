@@ -40,7 +40,7 @@ Si le budget est de 0€, il est impossible de conserver le système de stockage
 
 **Marche à suivre (Nécessite de modifier le code de l'application) :**
 1. **Base de données Cloud (BDD)** : Créer une base de données externe gratuite (comme Supabase, Firebase ou MongoDB Atlas).
-2. **Réécrire le Backend** : Le backend (actuellement en PHP) devra être réécrit sous forme de "Serverless Functions" (en Node.js ou Python) compatibles avec Vercel, afin de communiquer avec cette nouvelle base de données externe au lieu du fichier CSV.
+2. **Adapter le Backend** : Le script Python existant (`server.py`) devra être légèrement adapté pour fonctionner comme "Serverless Function" sur Vercel. Il faudra modifier sa logique de sauvegarde pour qu'il communique avec cette base de données externe au lieu d'écrire dans le fichier `stats.csv` local.
 3. **Hébergement Frontend (Vercel)** : Pousser le code source sur un dépôt GitHub, puis lier ce dépôt à Vercel. Vercel hébergera l'interface (`app/`) gratuitement et mettra à disposition les Serverless Functions pour l'API.
 4. **Lien de domaine** : Vercel fournit une URL gratuite (ex: `diagnostic-ia.vercel.app`). Vous pouvez également y relier gratuitement votre sous-domaine `diagnostic.acculturation-numerique.fr`.
 
