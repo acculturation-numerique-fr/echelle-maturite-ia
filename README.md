@@ -41,7 +41,7 @@ Le questionnaire s'articule autour de **20 critères** (Q01 à Q20), répartis s
 <br>
 
 ![Restitution des résultats](app/assets/public/result.webp)
-À l'issue de l'évaluation, le système délivre une restitution analytique immédiate avec des statistiques comparatives. Le profil expose un radar superposant les performances à la moyenne globale, ainsi que des barres mesurant l'écart à la norme par critère. L'algorithme isole les **9 outils IA les plus pertinents** parmi un catalogue de 40 solutions, avec des recommandations contextualisées. Le rapport est exportable au format PDF (`Diagnostic-maturite-IA.pdf`) et l'architecture garantit une stricte **conformité RGPD** en conservant les données localement au format CSV.
+À l'issue de l'évaluation, le système délivre une restitution analytique immédiate avec des statistiques comparatives. Le profil expose un radar superposant les performances à la moyenne globale, ainsi que des barres mesurant l'écart à la norme par critère. Le rapport est exportable au format PDF (`Diagnostic-maturite-IA.pdf`).
 
 ## Répartition des outils IA par score
 
