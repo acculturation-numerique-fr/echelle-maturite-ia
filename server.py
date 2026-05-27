@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Lightweight local server for the IA Maturity Diagnostic.
-
-Serves the static app from ./app and exposes two JSON API endpoints:
-  POST /api/submit  — record a completed diagnostic (answers + score)
-  GET  /api/stats   — return aggregated averages across all submissions
-
-Data is stored in data/stats.csv (auto-created on first submission).
-No external dependencies required — Python 3 standard library only.
-"""
+# Serveur local ultra-léger pour le Diagnostic de Maturité IA.
+# 
+# Son rôle est double :
+# 1. Servir les fichiers statiques de l'application (HTML, CSS, JS) situés dans le dossier ./app
+# 2. Exposer deux points d'accès API (JSON) pour que le front-end puisse communiquer avec le back-end :
+#    - POST /api/submit : Enregistre les réponses et le score d'un utilisateur à la fin de son diagnostic.
+#    - GET  /api/stats  : Calcule et renvoie les statistiques moyennes globales de tous les participants.
+#
+# Les données sont sauvegardées de manière persistante dans un simple fichier data/stats.csv (créé automatiquement).
+# Aucune dépendance externe n'est requise, ce script s'appuie uniquement sur la bibliothèque standard de Python 3.
 
 import csv
 import json
@@ -34,7 +35,8 @@ DIMENSIONS = {
 
 
 def read_csv_rows():
-    """Read all rows from the CSV file. Returns an empty list if absent."""
+    # Lit et extrait toutes les lignes du fichier CSV. 
+    # Si le fichier n'existe pas encore (ex: premier lancement), retourne une liste vide pour éviter les erreurs.
     if not CSV_PATH.exists():
         return []
     with open(CSV_PATH, "r", newline="", encoding="utf-8") as f:
@@ -42,7 +44,8 @@ def read_csv_rows():
 
 
 def compute_stats(rows):
-    """Compute aggregated statistics from CSV rows."""
+    # Calcule les statistiques globales (moyennes) à partir des données extraites du CSV.
+    # Ces calculs permettent d'afficher le radar et les barres comparatives à la fin du diagnostic.
     if not rows:
         return {"count": 0, "avgScore": None, "avgDimensions": None}
 
@@ -69,12 +72,14 @@ def compute_stats(rows):
 
 
 class DiagnosticHandler(SimpleHTTPRequestHandler):
-    """HTTP handler: static files from app/ + JSON API."""
+    # Gestionnaire HTTP personnalisé qui s'occupe de router les requêtes entrantes :
+    # - Si l'URL correspond à notre API (/api/...), on traite la logique de calcul ou de sauvegarde.
+    # - Sinon, la classe parente (SimpleHTTPRequestHandler) prend le relais pour distribuer les fichiers web (index.html, css, js).
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(APP_DIR), **kwargs)
 
-    # ── API routing ──────────────────────────────────────────────
+    # ── Routage de l'API ─────────────────────────────────────────
 
     def do_GET(self):
         if self.path == "/api/stats":
@@ -87,12 +92,13 @@ class DiagnosticHandler(SimpleHTTPRequestHandler):
         self.send_error(404)
 
     def do_OPTIONS(self):
-        """Handle CORS preflight."""
+        # Gère les requêtes "preflight" liées au CORS (Cross-Origin Resource Sharing).
+        # C'est un mécanisme de sécurité des navigateurs : avant d'envoyer un POST, le navigateur vérifie d'abord si le serveur est d'accord.
         self.send_response(204)
         self._cors_headers()
         self.end_headers()
 
-    # ── Handlers ─────────────────────────────────────────────────
+    # ── Gestionnaires (Handlers) ─────────────────────────────────
 
     def _handle_submit(self):
         try:
@@ -127,7 +133,7 @@ class DiagnosticHandler(SimpleHTTPRequestHandler):
         except Exception as exc:
             self._json_response(500, {"error": str(exc)})
 
-    # ── Helpers ──────────────────────────────────────────────────
+    # ── Fonctions Utilitaires (Helpers) ──────────────────────────
 
     def _json_response(self, status, data):
         payload = json.dumps(data, ensure_ascii=False).encode("utf-8")
@@ -144,7 +150,8 @@ class DiagnosticHandler(SimpleHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
     def log_message(self, format, *args):
-        """Only log API requests to keep the console clean."""
+        # Surcharge de la méthode de journalisation (log) native :
+        # On ne conserve que les logs des appels API pour garder la console propre et lisible, en ignorant le chargement des images/css.
         path = args[0] if args else ""
         if "/api/" in str(path):
             super().log_message(format, *args)

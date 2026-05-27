@@ -1,4 +1,5 @@
-// Bulletproof Polyfill for Alpine.js x-for template rendering in SVG elements (Firefox/Safari/Chrome namespace fix)
+// Polyfill robuste pour corriger un bug d'Alpine.js avec les éléments <template> à l'intérieur des SVG.
+// Sans cela, la directive x-for échoue silencieusement sur Firefox et Safari à cause des conflits de namespaces SVG.
 if (typeof document !== 'undefined') {
   const setupSvgTemplates = () => {
     document.querySelectorAll('svg template').forEach(template => {
@@ -14,9 +15,9 @@ if (typeof document !== 'undefined') {
       }
     });
   };
-  // Run immediately (since app.js is at the bottom of the body, elements are already parsed)
+  // Exécution immédiate : le script étant chargé en fin de page, les éléments SVG sont déjà parsés.
   setupSvgTemplates();
-  // Also run on DOMContentLoaded just in case
+  // Sécurité supplémentaire : on ré-exécute au chargement complet au cas où des SVG seraient injectés plus tard.
   document.addEventListener('DOMContentLoaded', setupSvgTemplates);
 }
 
@@ -298,10 +299,10 @@ if (typeof document !== 'undefined') {
     }
   ];
 
-  // Granular tool ranges: each tool has its own [min, max] score window.
-  // At any given score, we display the 9 most relevant tools whose range
-  // includes that score, sorted by centrality (how close the score is to
-  // the tool's range center).
+  // Système d'affichage dynamique des outils IA basé sur le score global de l'utilisateur :
+  // Chaque outil possède une fenêtre d'éligibilité [min, max].
+  // À la fin du test, l'algorithme filtre et sélectionne les 9 outils les plus pertinents pour le score obtenu.
+  // Le choix se fait par "centralité" : plus le score de l'utilisateur est proche du milieu de la fourchette de l'outil, plus cet outil sera poussé en priorité.
   const TOOL_RANGES = [
     // --- Compagnons universels (présents à tout ou presque tout niveau) ---
     { name: "ChatGPT",         min: 0,    max: 20, companion: true },
@@ -860,16 +861,16 @@ if (typeof document !== 'undefined') {
         const score = this.scoreTotal;
         const maxTools = 9;
 
-        // Filter tools whose range includes the current score
+        // 1. Filtrage initial : on ne garde que les outils dont la fourchette englobe le score actuel
         const eligible = TOOL_RANGES.filter(
           (tool) => score >= tool.min && score <= tool.max
         );
 
-        // Separate companion tools (always shown when score >= 2)
+        // 2. On sépare les outils dits "Compagnons" (ex: ChatGPT, Claude) qui ont un passe-droit d'affichage
         const companions = eligible.filter((t) => t.companion);
         const others = eligible.filter((t) => !t.companion);
 
-        // Sort non-companion tools by centrality to pick the most relevant
+        // 3. Tri par centralité des outils classiques : on priorise ceux dont le cœur de cible correspond au score de l'étudiant
         others.sort((a, b) => {
           const centerA = (a.min + a.max) / 2;
           const halfA = (a.max - a.min) / 2 || 0.5;
@@ -882,13 +883,14 @@ if (typeof document !== 'undefined') {
           return centralityB - centralityA;
         });
 
-        // Reserve slots for companions (at score >= 2), fill the rest by centrality
+        // 4. On réserve les premières places aux Compagnons (seulement si le score >= 2 pour ne pas saturer un grand débutant)
+        // et on comble les slots restants (jusqu'à 9) avec les outils classiques les plus pertinents.
         const companionSlots = (score >= 2) ? companions : [];
         const remainingSlots = maxTools - companionSlots.length;
         const selected = [...companionSlots, ...others.slice(0, remainingSlots)];
 
-        // Re-sort for display: simplest (lowest min) → hardest (highest min)
-        // If same min, the narrower range (more specialized) comes after
+        // 5. Tri visuel final : on affiche du plus basique (min faible) au plus exigeant (min élevé).
+        // En cas d'égalité sur le min, l'outil avec la fourchette la plus étroite (donc plus spécialisé) s'affichera après.
         selected.sort((a, b) => a.min - b.min || a.max - b.max);
 
         return selected.map((tool) => ({
@@ -1363,12 +1365,13 @@ if (typeof document !== 'undefined') {
           });
         });
 
-        // Templates are runtime instructions only; rendered siblings are already in the DOM.
+        // On purge les balises <template> : ce sont des instructions internes à Alpine.js qui pollueraient le rendu PDF.
         captureNode.querySelectorAll("template").forEach((templateNode) => {
           templateNode.remove();
         });
 
-        // Keep the cloned tree fully static so Alpine does not re-evaluate x-for scopes.
+        // On gèle complètement l'arbre DOM cloné avec l'attribut x-ignore.
+        // Sans cela, Alpine.js tenterait de réévaluer le javascript dans le clone fantôme, ce qui ferait planter l'export PDF.
         captureNode.setAttribute("x-ignore", "");
       },
 
