@@ -1,3 +1,14 @@
+<!--
+  ========================================================================
+  POINT D'ENTRÉE PRINCIPAL - DIAGNOSTIC MATURITÉ IA
+  ========================================================================
+  Cette page unique (Single Page Application) utilise le framework Alpine.js.
+  
+  Concepts clés :
+  - x-data="diagnosticIA()" : Initialise l'état global et les fonctions (logique dans app.js).
+  - x-show="step === '...'" : Gère la navigation entre l'intro, les questions et les résultats sans recharger la page.
+  - x-bind (:) et x-on (@) : Relient dynamiquement les données du DOM aux variables Javascript.
+-->
 <!doctype html>
 <html lang="fr">
 
@@ -116,9 +127,9 @@
 
       <h2 class="an-card-title" x-text="currentCategory.title"></h2>
 
-      <!-- Légende de la grille en haut -->
+      <!-- En-tête de la grille d'évaluation (Légende des cases à cocher) -->
       <div class="an-checklist-legend">
-        <div></div> <!-- Spacer pour aligner les options à droite -->
+        <div></div> <!-- Élément vide "Spacer" utilisé pour pousser les libellés "Partiel" et "Acquis" vers la droite via CSS Grid -->
         <div class="an-legend-options">
           <span>Partiel</span>
           <span>Acquis</span>
@@ -130,13 +141,13 @@
           <div class="an-checklist-row">
             <span class="an-checklist-label" x-text="q.label"></span>
             <div class="an-checklist-options">
-              <!-- Partiellement acquis (0.5) -->
+              <!-- Bouton central : Compétence en cours d'acquisition (0.5 point) -->
               <label class="an-mini-box" :class="{ 'active-box': answers[q.id] === 0.5 }" :aria-label="`Partiellement acquis - ${q.label}`">
                 <input type="checkbox" :checked="answers[q.id] === 0.5"
                   @change="answers[q.id] = $event.target.checked ? 0.5 : 0" />
               </label>
 
-              <!-- Totalement acquis (1) -->
+              <!-- Bouton droit : Compétence totalement maîtrisée (1 point) -->
               <label class="an-mini-box" :class="{ 'active-box': answers[q.id] === 1 }" :aria-label="`Totalement acquis - ${q.label}`">
                 <input type="checkbox" :checked="answers[q.id] === 1"
                   @change="answers[q.id] = $event.target.checked ? 1 : 0" />

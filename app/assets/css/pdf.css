@@ -1,3 +1,18 @@
+/* 
+ * ========================================================================
+ * FEUILLE DE STYLE D'EXPORT PDF (html2canvas)
+ * ========================================================================
+ * Cette feuille de style est activée UNIQUEMENT lors de la génération du PDF.
+ * Son rôle est vital : html2canvas est un moteur de rendu expérimental qui 
+ * ne supporte pas les effets visuels modernes (animations, ombres, flous, 
+ * dégradés complexes). 
+ * 
+ * On utilise ce fichier pour :
+ * 1. Désactiver toutes les animations et transitions.
+ * 2. Supprimer les ombres (box-shadow) et les flous (backdrop-filter) qui font planter le rendu.
+ * 3. Réorganiser la grille pour éviter les chevauchements de texte (bugs connus de flex/grid sur html2canvas).
+ */
+
 .an-pdf-export-root {
   display: none;
 }

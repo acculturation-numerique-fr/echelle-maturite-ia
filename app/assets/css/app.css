@@ -1,3 +1,18 @@
+/* 
+ * ========================================================================
+ * FEUILLE DE STYLE PRINCIPALE (UI/UX)
+ * ========================================================================
+ * Ce fichier gère l'intégralité du design "Glassmorphism" de l'application.
+ * L'architecture CSS suit une approche "Design System" propre :
+ * 
+ * 1. Variables CSS (:root) : Définition des couleurs (bleu dominant), de la typographie (Roboto) et des espacements.
+ * 2. Utilitaires : Classes d'animation (fade-in), d'interaction (hover, focus) et de grille responsive.
+ * 3. Composants : Cartes interactives, boutons, formulaires et le radar/cercle de résultats.
+ * 
+ * Note : Le préfixe "an-" (Acculturation Numérique) est utilisé sur toutes les classes
+ * pour éviter les conflits si ce module est intégré dans un autre site web à l'avenir.
+ */
+
 :root {
   --an-font-body: "Roboto", "Segoe UI", sans-serif;
   --an-font-display: "Roboto", sans-serif;
