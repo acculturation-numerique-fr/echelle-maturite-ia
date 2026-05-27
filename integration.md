@@ -7,6 +7,7 @@ Ce document explique comment déployer l'application **Échelle de Maturité IA*
 ## 1. Comprendre l'architecture et la contrainte WordPress.com
 
 L'application repose sur une architecture minimaliste divisée en trois éléments clés :
+
 - `app/` : L'interface visuelle (Frontend) qui tourne dans le navigateur de l'utilisateur.
 - `data/` : Le dossier contenant `stats.csv` (Base de données très légère pour stocker les scores).
 - `index.php` (ou `server.py`) : Le serveur backend qui fait le pont entre l'interface et la base de données.
@@ -16,33 +17,33 @@ Le script serveur initial (`server.py`) a été converti en **PHP** (`index.php`
 **Cependant, une contrainte technique importante existe :**
 Le site principal (`acculturation-numerique.fr`) est hébergé sur **WordPress.com** (le service Cloud managé par Automattic). Contrairement à un hébergement classique, WordPress.com est un environnement verrouillé. Il n'autorise pas l'accès FTP complet ni l'exécution de scripts autonomes qui écrivent dans des fichiers locaux (le stockage des scores dans le fichier `stats.csv` risquerait d'être effacé à chaque mise à jour de leur Cloud).
 
-Il y a donc deux options possibles de déploiement selon le budget et la complexité technique souhaitée.
+Il y a donc deux options possibles de déploiement selon l'architecture souhaitée.
 
 ---
 
 ## 2. Déploiement : Les Deux Options
 
-### Option 1 : Hébergement dédié PHP (Payant mais simple)
+### Option 1 : Vercel + Base de Données Cloud (Gratuit)
 
-Il faut utiliser un hébergement "mutualisé" externe très basique et peu coûteux (type OVH, Hostinger, o2switch) **dédié uniquement à cette application**. Vous pourrez ensuite lier cette application à votre nom de domaine via un sous-domaine (ex: `https://diagnostic.acculturation-numerique.fr`).
+Les hébergements gratuits comme Vercel étant éphémères (les fichiers locaux sont réinitialisés à chaque exécution), il est nécessaire de remplacer le fichier `stats.csv` par une base de données cloud.
 
 **Marche à suivre :**
-1. **Accéder au serveur** : Connectez-vous à l'espace client de ce nouvel hébergeur (interface web "Gestionnaire de Fichiers" ou via un logiciel FTP comme FileZilla).
-2. **Trouver la racine** : Rendez-vous dans le dossier racine associé au sous-domaine (souvent `public_html`, `www` ou un dossier au nom du sous-domaine).
+
+1. **Base de données Cloud (BDD)** : Créer une base de données externe (comme Supabase, Firebase ou MongoDB Atlas).
+2. **Adapter le Backend** : Le script Python existant (`server.py`) devra être légèrement adapté pour fonctionner comme "Serverless Function" sur Vercel. Il faudra modifier sa logique de sauvegarde pour qu'il communique avec cette base de données externe au lieu d'écrire dans le fichier `stats.csv` local.
+3. **Hébergement (Vercel)** : Pousser le code source sur un dépôt GitHub, puis lier ce dépôt à Vercel. Vercel hébergera l'interface (`app/`) et mettra à disposition les Serverless Functions pour l'API.
+4. **Lien de domaine** : Vercel fournit une URL (ex: `diagnostic-ia.vercel.app`). Vous pouvez également y relier votre sous-domaine `diagnostic.acculturation-numerique.fr`.
+
+### Option 2 : Hébergement dédié PHP (Payant)
+
+Il est possible d'utiliser un hébergement "mutualisé" externe standard (type OVH, Hostinger, o2switch) dédié à cette application, et d'y lier un sous-domaine (ex: `https://diagnostic.acculturation-numerique.fr`).
+
+**Marche à suivre :**
+
+1. **Accéder au serveur** : Connectez-vous à l'espace client de l'hébergeur (interface web "Gestionnaire de Fichiers" ou via un logiciel FTP comme FileZilla).
+2. **Trouver la racine** : Rendez-vous dans le dossier racine associé au sous-domaine (souvent `public_html` ou `www`).
 3. **Transférer les fichiers** : Glissez-déposez le contenu du projet (`app/`, `data/`, `index.php`) à l'intérieur de ce dossier.
 4. **Permissions (Important)** : Assurez-vous que le dossier `data/` a bien les permissions d'écriture (CHMOD `755` ou `775`) pour que le serveur puisse écrire dans `stats.csv`.
-
-**L'application est en ligne.** Elle est désormais accessible de manière autonome via l'URL (exemple) : `https://diagnostic.acculturation-numerique.fr/`.
-
-### Option 2 : Vercel + Base de Données Cloud (100% Gratuit mais complexe)
-
-Si le budget est de 0€, il est impossible de conserver le système de stockage par fichier `stats.csv` car les hébergements gratuits comme Vercel sont éphémères (les fichiers locaux sont effacés à chaque exécution). 
-
-**Marche à suivre (Nécessite de modifier le code de l'application) :**
-1. **Base de données Cloud (BDD)** : Créer une base de données externe gratuite (comme Supabase, Firebase ou MongoDB Atlas).
-2. **Adapter le Backend** : Le script Python existant (`server.py`) devra être légèrement adapté pour fonctionner comme "Serverless Function" sur Vercel. Il faudra modifier sa logique de sauvegarde pour qu'il communique avec cette base de données externe au lieu d'écrire dans le fichier `stats.csv` local.
-3. **Hébergement Frontend (Vercel)** : Pousser le code source sur un dépôt GitHub, puis lier ce dépôt à Vercel. Vercel hébergera l'interface (`app/`) gratuitement et mettra à disposition les Serverless Functions pour l'API.
-4. **Lien de domaine** : Vercel fournit une URL gratuite (ex: `diagnostic-ia.vercel.app`). Vous pouvez également y relier gratuitement votre sous-domaine `diagnostic.acculturation-numerique.fr`.
 
 ---
 
