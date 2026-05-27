@@ -6,7 +6,7 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat-square&logo=alpinejs&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
 
 ## Structure
 
@@ -20,7 +20,7 @@
 │       └── public/                 # Images & médias
 ├── data/
 │   └── stats.csv                   # Base de données locale
-├── server.py                       # Serveur backend API
+├── index.php                       # Serveur backend API & Routeur
 ├── .gitignore
 └── README.md
 ```
@@ -50,10 +50,10 @@ Les 40 outils du catalogue sont affectés chacun à une plage de score `[min, ma
 ## Lancer localement
 
 ```bash
-python3 server.py 8080
+php -S localhost:8000
 ```
 
-Puis ouvrir `http://localhost:8080/app/`.
+Puis ouvrir `http://localhost:8000/`.
 
-> **Note** : Il est impératif d'utiliser `server.py` (et non pas un simple serveur statique) car l'application s'appuie sur ce backend pour enregistrer les réponses anonymisées et calculer les statistiques comparées en temps réel (`POST /api/submit` et `GET /api/stats`).
+> **Note** : Le fichier `index.php` agit comme routeur et s'appuie sur PHP pour enregistrer les réponses anonymisées et calculer les statistiques comparées en temps réel (`POST index.php?action=submit` et `GET index.php?action=stats`).
 

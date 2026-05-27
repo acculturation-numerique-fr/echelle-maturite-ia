@@ -955,7 +955,7 @@ if (typeof document !== 'undefined') {
 
       async _submitAndFetchStats() {
         try {
-          await fetch("/api/submit", {
+          await fetch("../index.php?action=submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -966,7 +966,7 @@ if (typeof document !== 'undefined') {
         } catch (_) { /* server not running */ }
 
         try {
-          const res = await fetch("/api/stats");
+          const res = await fetch("../index.php?action=stats");
           if (res.ok) {
             const stats = await res.json();
             if (stats.avgScore !== null) {
