@@ -7,6 +7,7 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat-square&logo=alpinejs&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
 ## Structure
 
@@ -20,7 +21,8 @@
 │       └── public/                 # Images & médias
 ├── data/
 │   └── stats.csv                   # Base de données locale
-├── index.php                       # Serveur backend API & Routeur
+├── index.php                       # Backend API PHP (Déploiement hébergeur classique type Hostinger)
+├── server.py                       # Backend API Python (Identique, pour déploiement Vercel + BDD)
 ├── .gitignore
 └── README.md
 ```
