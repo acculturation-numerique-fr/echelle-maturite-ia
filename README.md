@@ -22,6 +22,7 @@
 ├── data/
 │   └── stats.csv                   # Base de données locale
 ├── index.php                       # Backend API PHP (Déploiement hébergeur classique type Hostinger)
+├── integration.md                  # Guide de déploiement et d'intégration
 ├── server.py                       # Backend API Python (Identique, pour déploiement Vercel + BDD)
 ├── .gitignore
 └── README.md

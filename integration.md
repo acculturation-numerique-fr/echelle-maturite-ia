@@ -6,10 +6,15 @@ Ce document explique comment déployer l'application **Échelle de Maturité IA*
 
 ## 1. Comprendre l'architecture et la contrainte WordPress.com
 
-Le script serveur initial a été converti en **PHP** pour être universellement compatible avec les hébergements web.
+L'application repose sur une architecture minimaliste divisée en trois éléments clés :
+- `app/` : L'interface visuelle (Frontend) qui tourne dans le navigateur de l'utilisateur.
+- `data/` : Le dossier contenant `stats.csv` (Base de données très légère pour stocker les scores).
+- `index.php` (ou `server.py`) : Le serveur backend qui fait le pont entre l'interface et la base de données.
+
+Le script serveur initial (`server.py`) a été converti en **PHP** (`index.php`) pour être universellement compatible avec les hébergements web.
 
 **Cependant, une contrainte technique importante existe :**
-Le site principal (`acculturation-numerique.fr`) est hébergé sur **WordPress.com** (le service Cloud managé par Automattic). Contrairement à un hébergement classique, WordPress.com est un environnement verrouillé. Il n'autorise pas l'accès FTP complet ni l'exécution de scripts PHP autonomes qui écrivent dans des fichiers locaux (le stockage des scores dans le fichier `stats.csv` risquerait d'être effacé à chaque mise à jour de leur Cloud).
+Le site principal (`acculturation-numerique.fr`) est hébergé sur **WordPress.com** (le service Cloud managé par Automattic). Contrairement à un hébergement classique, WordPress.com est un environnement verrouillé. Il n'autorise pas l'accès FTP complet ni l'exécution de scripts autonomes qui écrivent dans des fichiers locaux (le stockage des scores dans le fichier `stats.csv` risquerait d'être effacé à chaque mise à jour de leur Cloud).
 
 Il y a donc deux options possibles de déploiement selon le budget et la complexité technique souhaitée.
 
