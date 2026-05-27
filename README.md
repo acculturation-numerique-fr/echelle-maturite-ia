@@ -43,15 +43,15 @@ Le questionnaire s'articule autour de **20 critères** (Q01 à Q20), répartis s
 ![Restitution des résultats](app/assets/public/result.webp)
 À l'issue de l'évaluation, le système délivre une restitution analytique immédiate avec des statistiques comparatives. Le profil expose un radar superposant les performances à la moyenne globale, ainsi que des barres mesurant l'écart à la norme par critère. Le rapport est exportable au format PDF (`Diagnostic-maturite-IA.pdf`).
 
-## Répartition des outils IA par score
+### Répartition des outils IA par score
 
 Les 40 outils du catalogue sont affectés chacun à une plage de score `[min, max]`. L'algorithme de recommandation sélectionne les 9 outils les plus pertinents pour le score obtenu. Vous pouvez consulter le [catalogue complet des applications et outils](app/assets/public/icons/README.md) pour voir la liste détaillée (liens, icônes, plages de score et descriptions).
 
-### Plage de score de chaque outil
+#### Plage de score de chaque outil
 
 ![Répartition des outils IA par plage de score](app/assets/public/figures/tool_distribution_ranges.png)
 
-### Densité d'outils disponibles par score
+#### Densité d'outils disponibles par score
 
 ![Densité d'outils par score et par catégorie](app/assets/public/figures/tool_distribution_density.png)
 
