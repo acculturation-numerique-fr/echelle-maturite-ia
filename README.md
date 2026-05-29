@@ -55,7 +55,7 @@ Les 40 outils du catalogue sont affectés chacun à une plage de score `[min, ma
 ```bash
 export SUPABASE_URL="ton_url_supabase"
 export SUPABASE_KEY="ta_cle_supabase"
-python server.py
+python local_server.py
 ```
 
 Puis ouvrir `http://localhost:8080/`.
