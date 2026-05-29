@@ -5,8 +5,8 @@
       "destination": "/app/index.html"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/app/assets/$1"
+      "source": "/assets/:path*",
+      "destination": "/app/assets/:path*"
     }
   ]
 }
