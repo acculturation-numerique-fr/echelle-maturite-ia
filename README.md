@@ -61,3 +61,9 @@ Puis ouvrir `http://localhost:8080/`.
 
 > **Note** : Les données sont stockées de façon sécurisée sur Supabase via son API REST native (zéro dépendance locale requise).
 
+## À faire (To-Do)
+
+- [ ] **Export de données** : Créer un script automatisé pour l'export fréquent des données Supabase en CSV (tests et analyses sur les résultats anonymisés).
+- [ ] **Nom de domaine** : Configurer Vercel pour utiliser le domaine personnalisé `https://acculturation-numerique.fr/intelligence-artificielle/diagnostic/`.
+- [ ] **Intégration site web** : Ajouter un Call to Action (CTA) sur la page `https://acculturation-numerique.fr/intelligence-artificielle/` pour rediriger vers le diagnostic.
+- [ ] **QR Code** : Générer un QR Code permanent pointant vers le diagnostic pour l'afficher facilement en cours et en conférence.
