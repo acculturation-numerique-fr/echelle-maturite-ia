@@ -21,8 +21,7 @@
 ├── api/                            # Fonctions Serverless (Vercel)
 │   ├── stats.py
 │   └── submit.py
-├── requirements.txt                # Fichier vide (plus de dépendances)
-├── server.py                       # Serveur local Python
+├── local_server.py                 # Serveur local Python pour les tests
 ├── vercel.json                     # Configuration Vercel
 ├── .gitignore
 └── README.md
