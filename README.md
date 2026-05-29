@@ -6,7 +6,6 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat-square&logo=alpinejs&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
 ## Structure
@@ -19,11 +18,12 @@
 │       ├── css/                    # Styles
 │       ├── js/                     # Scripts
 │       └── public/                 # Images & médias
-├── data/
-│   └── stats.csv                   # Base de données locale
-├── index.php                       # Backend API PHP (Déploiement hébergeur classique type Hostinger)
-├── integration.md                  # Guide de déploiement et d'intégration
-├── server.py                       # Backend API Python (Identique, pour déploiement Vercel + BDD)
+├── api/                            # Fonctions Serverless (Vercel)
+│   ├── stats.py
+│   └── submit.py
+├── requirements.txt                # Fichier vide (plus de dépendances)
+├── server.py                       # Serveur local Python
+├── vercel.json                     # Configuration Vercel
 ├── .gitignore
 └── README.md
 ```
@@ -53,10 +53,12 @@ Les 40 outils du catalogue sont affectés chacun à une plage de score `[min, ma
 ## Lancer localement
 
 ```bash
-php -S localhost:8000
+export SUPABASE_URL="ton_url_supabase"
+export SUPABASE_KEY="ta_cle_supabase"
+python server.py
 ```
 
-Puis ouvrir `http://localhost:8000/`.
+Puis ouvrir `http://localhost:8080/`.
 
-> **Note** : Le fichier `index.php` agit comme routeur et s'appuie sur PHP pour enregistrer les réponses anonymisées et calculer les statistiques comparées en temps réel (`POST index.php?action=submit` et `GET index.php?action=stats`).
+> **Note** : Les données sont stockées de façon sécurisée sur Supabase via son API REST native (zéro dépendance locale requise).
 
