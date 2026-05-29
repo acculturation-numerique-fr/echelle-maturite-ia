@@ -1,12 +1,5 @@
 {
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/app/index.html"
-    },
-    {
-      "source": "/assets/:path*",
-      "destination": "/app/assets/:path*"
-    }
-  ]
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": "app"
 }
