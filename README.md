@@ -48,28 +48,3 @@ Les 40 outils du catalogue sont affectés chacun à une plage de score `[min, ma
 #### Densité d'outils disponibles par score
 
 ![Densité d'outils disponibles par score](https://raw.githubusercontent.com/wiki/acculturation-numerique-fr/echelle-maturite-ia/figures/tool_distribution_density.png)
-
-## Lancer localement
-
-```bash
-export SUPABASE_URL="ton_url_supabase"
-export SUPABASE_KEY="ta_cle_supabase"
-python local_server.py
-```
-
-Puis ouvrir `http://localhost:8080/`.
-
-> **Note** : Les données sont stockées de façon sécurisée sur Supabase via son API REST native (zéro dépendance locale requise).
-
-## Export des données (CSV)
-
-```bash
-export SUPABASE_URL="ton_url_supabase"
-export SUPABASE_KEY="ta_cle_supabase"
-python scripts/export.py            # -> data/export_<horodatage>.csv
-python scripts/export.py --output data/export.csv
-```
-
-Le script paginate automatiquement (Supabase/PostgREST limite à 1000 lignes par requête) et exporte les colonnes `timestamp, score_total, Q01..Q20` (déjà anonymisées, aucune donnée personnelle en base). `data/` est ignoré par git.
-
-Un workflow GitHub Actions (`.github/workflows/export-supabase-csv.yml`) exécute cet export chaque jour à 03h00 UTC (et à la demande) et publie le CSV en tant qu'artéfact de build. Pour l'activer, renseigner les secrets du dépôt `SUPABASE_URL` et `SUPABASE_KEY` (Settings → Secrets and variables → Actions).
