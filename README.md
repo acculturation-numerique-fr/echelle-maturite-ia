@@ -39,7 +39,7 @@ Le questionnaire s'articule autour de **20 critères** (Q01 à Q20), répartis s
 
 ### Répartition des outils IA par score
 
-Les 40 outils du catalogue sont affectés chacun à une plage de score `[min, max]`. L'algorithme de recommandation sélectionne les 9 outils les plus pertinents pour le score obtenu. Vous pouvez consulter le [catalogue complet des applications et outils](https://github.com/acculturation-numerique-fr/echelle-maturite-ia/wiki) pour voir la liste détaillée (liens, icônes, plages de score et descriptions).
+Les 42 outils du catalogue sont affectés chacun à une plage de score `[min, max]`. L'algorithme de recommandation sélectionne les 9 outils les plus pertinents pour le score obtenu. Vous pouvez consulter le [catalogue complet des applications et outils](https://github.com/acculturation-numerique-fr/echelle-maturite-ia/wiki) pour voir la liste détaillée (liens, icônes, plages de score et descriptions).
 
 #### Plage de score de chaque outil
 
