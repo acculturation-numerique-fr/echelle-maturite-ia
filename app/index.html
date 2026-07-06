@@ -23,7 +23,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="./assets/css/app.css?v=27" />
+  <link rel="stylesheet" href="./assets/css/app.css?v=28" />
   <link rel="stylesheet" href="./assets/css/pdf.css?v=7" />
 </head>
 
@@ -142,15 +142,21 @@
             <span class="an-checklist-label" x-text="q.label"></span>
             <div class="an-checklist-options">
               <!-- Bouton central : Compétence en cours d'acquisition (0.5 point) -->
-              <label class="an-mini-box" :class="{ 'active-box': answers[q.id] === 0.5 }" :aria-label="`Partiellement acquis - ${q.label}`">
-                <input type="checkbox" :checked="answers[q.id] === 0.5"
-                  @change="answers[q.id] = $event.target.checked ? 0.5 : 0" />
+              <label class="an-option-wrapper">
+                <span class="an-mini-box" :class="{ 'active-box': answers[q.id] === 0.5 }" :aria-label="`Partiellement acquis - ${q.label}`">
+                  <input type="checkbox" :checked="answers[q.id] === 0.5"
+                    @change="answers[q.id] = $event.target.checked ? 0.5 : 0" />
+                </span>
+                <span class="an-option-label">Partiel</span>
               </label>
 
               <!-- Bouton droit : Compétence totalement maîtrisée (1 point) -->
-              <label class="an-mini-box" :class="{ 'active-box': answers[q.id] === 1 }" :aria-label="`Totalement acquis - ${q.label}`">
-                <input type="checkbox" :checked="answers[q.id] === 1"
-                  @change="answers[q.id] = $event.target.checked ? 1 : 0" />
+              <label class="an-option-wrapper">
+                <span class="an-mini-box" :class="{ 'active-box': answers[q.id] === 1 }" :aria-label="`Totalement acquis - ${q.label}`">
+                  <input type="checkbox" :checked="answers[q.id] === 1"
+                    @change="answers[q.id] = $event.target.checked ? 1 : 0" />
+                </span>
+                <span class="an-option-label">Acquis</span>
               </label>
             </div>
           </div>
@@ -319,7 +325,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="./assets/js/app.js?v=22"></script>
+  <script src="./assets/js/app.js?v=23"></script>
 </body>
 
 </html>

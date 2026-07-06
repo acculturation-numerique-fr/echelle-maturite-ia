@@ -658,6 +658,17 @@ body {
   justify-items: center;
 }
 
+.an-option-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.an-option-label {
+  display: none;
+}
+
 .an-mini-box {
   position: relative;
   display: flex;
@@ -705,15 +716,25 @@ body {
 @media (max-width: 640px) {
   .an-checklist-row {
     grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 12px 0;
+    gap: 8px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--an-border-light);
   }
   .an-checklist-options {
-    justify-content: flex-end;
+    display: flex;
+    gap: 24px;
+    justify-content: flex-start;
     width: 100%;
+    margin-top: 4px;
   }
   .an-checklist-legend {
     display: none;
+  }
+  .an-option-label {
+    display: inline;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--an-ink-soft);
   }
 }
 
@@ -1554,14 +1575,25 @@ body {
     justify-content: center;
   }
 
-  .an-nav,
   .an-actions {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .an-btn {
+  .an-actions .an-btn {
     width: 100%;
+  }
+
+  .an-nav {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .an-nav .an-btn {
+    flex: 1;
+    width: auto;
   }
 }
 
