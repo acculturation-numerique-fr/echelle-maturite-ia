@@ -492,7 +492,7 @@ if (typeof document !== 'undefined') {
 
   function resolveToolIconUrl(toolName) {
     const match = TOOL_ICON_RULES.find((rule) => rule.pattern.test(toolName));
-    return match ? `assets/public/icons/${match.slug}.webp` : "";
+    return match ? `https://raw.githubusercontent.com/wiki/acculturation-numerique-fr/echelle-maturite-ia/icons/${match.slug}.webp` : "";
   }
 
   function resolveToolUrl(toolName) {
@@ -955,7 +955,7 @@ if (typeof document !== 'undefined') {
 
       async _submitAndFetchStats() {
         try {
-          await fetch("/api/submit", {
+          await fetch("api/submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -966,7 +966,7 @@ if (typeof document !== 'undefined') {
         } catch (_) { /* server not running */ }
 
         try {
-          const res = await fetch("/api/stats");
+          const res = await fetch("api/stats");
           if (res.ok) {
             const stats = await res.json();
             if (stats.avgScore !== null) {

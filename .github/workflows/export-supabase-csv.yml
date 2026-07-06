@@ -1,0 +1,28 @@
+name: Export CSV Supabase
+
+on:
+  schedule:
+    - cron: "0 3 * * *" # tous les jours à 03h00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Export des données Supabase en CSV
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python scripts/export.py --output data/export.csv
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: export-supabase-csv
+          path: data/export.csv
+          retention-days: 90
