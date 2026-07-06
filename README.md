@@ -73,10 +73,3 @@ python scripts/export.py --output data/export.csv
 Le script paginate automatiquement (Supabase/PostgREST limite à 1000 lignes par requête) et exporte les colonnes `timestamp, score_total, Q01..Q20` (déjà anonymisées, aucune donnée personnelle en base). `data/` est ignoré par git.
 
 Un workflow GitHub Actions (`.github/workflows/export-supabase-csv.yml`) exécute cet export chaque jour à 03h00 UTC (et à la demande) et publie le CSV en tant qu'artéfact de build. Pour l'activer, renseigner les secrets du dépôt `SUPABASE_URL` et `SUPABASE_KEY` (Settings → Secrets and variables → Actions).
-
-## QR Code permanent
-
-Pour projeter ou imprimer facilement le lien du diagnostic en cours ou en conférence, vous pouvez utiliser ce QR Code permanent :
-
-![QR Code Permanent](https://raw.githubusercontent.com/wiki/acculturation-numerique-fr/echelle-maturite-ia/qrcode.png)
-
