@@ -20,8 +20,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT_DIR = ROOT / "data"
 
-URL = os.environ.get("SUPABASE_URL", "")
-KEY = os.environ.get("SUPABASE_KEY", "")
+URL = os.environ.get("SUPABASE_URL", "") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL", "")
+KEY = os.environ.get("SUPABASE_KEY", "") or os.environ.get("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "") or os.environ.get("SUPABASE_ANON_KEY", "") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY", "")
 
 TABLE = "stats"
 PAGE_SIZE = 1000

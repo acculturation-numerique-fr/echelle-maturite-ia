@@ -19,8 +19,8 @@ import urllib.request
 ROOT = Path(__file__).resolve().parent
 APP_DIR = ROOT / "app"
 
-url: str = os.environ.get("SUPABASE_URL", "")
-key: str = os.environ.get("SUPABASE_KEY", "")
+url: str = os.environ.get("SUPABASE_URL", "") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL", "")
+key: str = os.environ.get("SUPABASE_KEY", "") or os.environ.get("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "") or os.environ.get("SUPABASE_ANON_KEY", "") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY", "")
 
 def supabase_request(method: str, path: str, data=None):
     if not url or not key:
