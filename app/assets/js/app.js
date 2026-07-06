@@ -561,6 +561,13 @@ if (typeof document !== 'undefined') {
       return;
     }
 
+    // Effet de répulsion réservé aux appareils avec pointeur précis (souris) :
+    // sur tactile, un scroll déclenche pointermove puis pointercancel (jamais
+    // pointerleave), ce qui laissait les icônes bloquées en position décalée.
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      return;
+    }
+
     let pointerActive = false;
     let pointerX = 0;
     let pointerY = 0;

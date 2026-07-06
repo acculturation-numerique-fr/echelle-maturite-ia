@@ -1553,14 +1553,35 @@ body {
     min-height: 510px;
   }
 
-  .an-hero-float--2,
-  .an-hero-float--4,
-  .an-hero-float--6,
+  /* On ne garde que 4 icônes, une par coin, pour un rendu symétrique
+     sans chevauchement sur petit écran (3, 4, 9, 10 déjà masquées à 820px). */
+  .an-hero-float--7,
   .an-hero-float--8,
-  .an-hero-float--10,
   .an-hero-float--11,
   .an-hero-float--12 {
     display: none;
+  }
+
+  .an-hero-float--1 {
+    top: 9%;
+    left: 6%;
+  }
+
+  .an-hero-float--2 {
+    top: 11%;
+    right: 6%;
+  }
+
+  .an-hero-float--5 {
+    top: auto;
+    bottom: 11%;
+    left: 7%;
+  }
+
+  .an-hero-float--6 {
+    top: auto;
+    bottom: 12%;
+    right: 7%;
   }
 
   .an-hero-content {
