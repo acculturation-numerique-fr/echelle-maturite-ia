@@ -299,71 +299,9 @@ if (typeof document !== 'undefined') {
     }
   ];
 
-  // Système d'affichage dynamique des outils IA basé sur le score global de l'utilisateur :
-  // Chaque outil possède une fenêtre d'éligibilité [min, max].
-  // À la fin du test, l'algorithme filtre et sélectionne les 9 outils les plus pertinents pour le score obtenu.
-  // Le choix se fait par "centralité" : plus le score de l'utilisateur est proche du milieu de la fourchette de l'outil, plus cet outil sera poussé en priorité.
-  const TOOL_RANGES = [
-    // --- Compagnons universels (présents à tout ou presque tout niveau) ---
-    { name: "ChatGPT",         min: 0,    max: 20, companion: true },
-    { name: "Claude",           min: 0,    max: 20, companion: true },
-    { name: "Gemini",           min: 0,    max: 20 },
-    { name: "Perplexity",       min: 0,    max: 18 },
-
-    // --- Outils d'entrée (disparaissent quand on dépasse les basiques) ---
-    { name: "Microsoft Copilot", min: 0,   max: 8 },
-    { name: "Google Workspace",  min: 0,   max: 7 },
-    { name: "NotebookLM",        min: 0.5, max: 12 },
-    { name: "Notion",            min: 1,   max: 10 },
-
-    // --- Création visuelle et présentations ---
-    { name: "Canva",            min: 2,    max: 12 },
-    { name: "Gamma",            min: 2,    max: 11 },
-
-    // --- Modèles alternatifs (comparaison de LLMs) ---
-    { name: "Grok",             min: 4,    max: 13 },
-    { name: "Mistral",          min: 4,    max: 16 },
-    { name: "DeepSeek",         min: 5,    max: 16 },
-    { name: "Qwen",             min: 6,    max: 16 },
-
-    // --- Automatisation no-code / low-code ---
-    { name: "Zapier",           min: 3,    max: 12 },
-    { name: "Make",             min: 4,    max: 13 },
-    { name: "Airtable",         min: 4,    max: 12 },
-    { name: "Apify",            min: 7,    max: 15 },
-    { name: "n8n",              min: 8,    max: 17 },
-
-    // --- Exploration modèles et données ---
-    { name: "Hugging Face",     min: 7,    max: 18 },
-    { name: "Kaggle",            min: 8,    max: 17 },
-
-    // --- Coder avec l'IA (accessible → avancé) ---
-    { name: "Replit",           min: 5,    max: 12 },
-    { name: "v0",               min: 5,    max: 13 },
-    { name: "Lovable",          min: 6,    max: 16 },
-
-    // --- IA locale et plateformes d'agents ---
-    { name: "Dify",             min: 9,    max: 17 },
-    { name: "Ollama",           min: 10,   max: 19 },
-    { name: "LM Studio",        min: 11,   max: 17 },
-    { name: "Langflow",         min: 11,   max: 17 },
-    { name: "Flowise",          min: 11,   max: 17 },
-    { name: "Windmill",         min: 13,   max: 18 },
-
-    // --- Expert : IDE, agents autonomes, frameworks ---
-    { name: "GitHub Copilot",   min: 11,   max: 20 },
-    { name: "Cursor",           min: 12,   max: 20 },
-    { name: "Claude Code",      min: 14,   max: 20 },
-    { name: "LangChain",        min: 14,   max: 20 },
-    { name: "Antigravity",      min: 15,   max: 20 },
-    { name: "Manus",            min: 15,   max: 20 },
-    { name: "MCP",              min: 15,   max: 20 },
-    { name: "OpenClaw",         min: 15.5, max: 19 },
-    { name: "Kimi",             min: 15.5, max: 20 },
-    { name: "Hermes",           min: 16,   max: 20 },
-    { name: "LangGraph",        min: 16,   max: 20 },
-    { name: "MLflow",           min: 17,   max: 20 },
-  ];
+  // Système d'affichage dynamique des outils IA basé sur le score global de l'utilisateur.
+  const TOOL_RANGES_URL = "./assets/data/tool-ranges.json?v=1";
+  let TOOL_RANGES = [];
 
   const TOOL_ICON_RULES = [
     // --- Niveau Débutant & Intermédiaire (Outils grand public et productivité) ---
@@ -656,9 +594,26 @@ if (typeof document !== 'undefined') {
       currentCategoryIndex: 0,
       avgScore: null,
       avgDimensions: null,
+        toolRangesVersion: 0,
 
       init() {
         this.answers = normalizeScoreMap(this.questions.map((q) => q.id));
+          void this.loadToolRanges();
+        },
+
+        async loadToolRanges() {
+          try {
+            const response = await fetch(TOOL_RANGES_URL, { cache: "no-store" });
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+
+            const data = await response.json();
+            TOOL_RANGES = Array.isArray(data) ? data : [];
+            this.toolRangesVersion += 1;
+          } catch (error) {
+            console.warn("Impossible de charger le catalogue des outils.", error);
+          }
       },
 
       get currentCategory() {
@@ -871,6 +826,7 @@ if (typeof document !== 'undefined') {
       },
 
       get toolVisuals() {
+          void this.toolRangesVersion;
         const score = this.scoreTotal;
         const maxTools = 9;
 

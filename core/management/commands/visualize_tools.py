@@ -1,3 +1,4 @@
+import json
 import os
 import matplotlib
 matplotlib.use("Agg")
@@ -29,50 +30,20 @@ LEVEL_BOUNDS = [0, 2.5, 5.5, 10.5, 15.5, 20]
 LEVEL_NAMES = ["Novice", "Débutant", "Intermédiaire", "Avancé", "Expert"]
 LEVEL_SHADES = ["#111a2d", "#131b2e", "#151e31", "#192135", "#1d2538"]
 
-TOOLS = [
-    ("ChatGPT", 0, 20, "Compagnons universels"),
-    ("Claude", 0, 20, "Compagnons universels"),
-    ("Gemini", 0, 20, "Compagnons universels"),
-    ("Perplexity", 0, 18, "Compagnons universels"),
-    ("Microsoft Copilot", 0, 8, "Outils d'entrée"),
-    ("Google Workspace", 0, 7, "Outils d'entrée"),
-    ("NotebookLM", 0.5, 12, "Outils d'entrée"),
-    ("Notion", 1, 10, "Outils d'entrée"),
-    ("Canva", 2, 12, "Création visuelle"),
-    ("Gamma", 2, 11, "Création visuelle"),
-    ("Grok", 4, 13, "Modèles alternatifs"),
-    ("Mistral", 4, 16, "Modèles alternatifs"),
-    ("DeepSeek", 5, 16, "Modèles alternatifs"),
-    ("Qwen", 6, 16, "Modèles alternatifs"),
-    ("Zapier", 3, 12, "Automatisation"),
-    ("Make", 4, 13, "Automatisation"),
-    ("Airtable", 4, 12, "Automatisation"),
-    ("Apify", 7, 15, "Automatisation"),
-    ("n8n", 8, 17, "Automatisation"),
-    ("Hugging Face", 7, 18, "Exploration données"),
-    ("Kaggle", 8, 17, "Exploration données"),
-    ("Replit", 5, 12, "Coder avec l'IA"),
-    ("v0", 5, 13, "Coder avec l'IA"),
-    ("Lovable", 6, 16, "Coder avec l'IA"),
-    ("Dify", 9, 17, "IA locale & agents"),
-    ("Ollama", 10, 19, "IA locale & agents"),
-    ("LM Studio", 11, 17, "IA locale & agents"),
-    ("Langflow", 11, 17, "IA locale & agents"),
-    ("Flowise", 11, 17, "IA locale & agents"),
-    ("Windmill", 13, 18, "IA locale & agents"),
-    ("GitHub Copilot", 11, 20, "Expert / Frameworks"),
-    ("Cursor", 12, 20, "Expert / Frameworks"),
-    ("Claude Code", 14, 20, "Expert / Frameworks"),
-    ("LangChain", 14, 20, "Expert / Frameworks"),
-    ("Antigravity", 15, 20, "Expert / Frameworks"),
-    ("Manus", 15, 20, "Expert / Frameworks"),
-    ("MCP", 15, 20, "Expert / Frameworks"),
-    ("OpenClaw", 15.5, 19, "Expert / Frameworks"),
-    ("Kimi", 15.5, 20, "Expert / Frameworks"),
-    ("Hermes", 16, 20, "Expert / Frameworks"),
-    ("LangGraph", 16, 20, "Expert / Frameworks"),
-    ("MLflow", 17, 20, "Expert / Frameworks"),
-]
+TOOL_RANGES_PATH = settings.BASE_DIR / "app" / "assets" / "data" / "tool-ranges.json"
+
+
+def load_tools():
+    with TOOL_RANGES_PATH.open(encoding="utf-8") as handle:
+        data = json.load(handle)
+
+    return [
+        (item["name"], item["min"], item["max"], item["category"])
+        for item in data
+    ]
+
+
+TOOLS = load_tools()
 
 def fmt(value):
     return f"{value:g}"

@@ -15,11 +15,19 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Prepare local database
+        run: python manage.py migrate --noinput
+
       - name: Export des données Supabase en CSV
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-        run: python scripts/export.py --output data/export.csv
+        run: python manage.py export_csv --output data/export.csv
 
       - uses: actions/upload-artifact@v4
         with:

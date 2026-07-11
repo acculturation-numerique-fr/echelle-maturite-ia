@@ -21,6 +21,8 @@ staticfiles/
 
 # Data (diagnostic submissions)
 data/
+!app/assets/data/
+!app/assets/data/tool-ranges.json
 
 # Node
 node_modules/
