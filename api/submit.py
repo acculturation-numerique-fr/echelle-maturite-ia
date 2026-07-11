@@ -1,39 +1,18 @@
 from http.server import BaseHTTPRequestHandler
 import json
 from datetime import datetime
-import os
-import urllib.request
-
-url: str = os.environ.get("SUPABASE_URL", "") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL", "")
-key: str = os.environ.get("SUPABASE_KEY", "") or os.environ.get("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "") or os.environ.get("SUPABASE_ANON_KEY", "") or os.environ.get("NEXT_PUBLIC_SUPABASE_ANON_KEY", "")
-
-def supabase_request(method: str, path: str, data=None):
-    if not url or not key:
-        return None
-    req_url = f"{url}/rest/v1/{path}"
-    headers = {
-        "apikey": key,
-        "Authorization": f"Bearer {key}",
-        "Content-Type": "application/json",
-        "Prefer": "return=representation"
-    }
-    payload = json.dumps(data).encode("utf-8") if data else None
-    req = urllib.request.Request(req_url, data=payload, headers=headers, method=method)
-    try:
-        with urllib.request.urlopen(req) as res:
-            return json.loads(res.read().decode("utf-8"))
-    except Exception as e:
-        raise Exception(f"Erreur Supabase: {e}")
+from .utils import _to_float, get_supabase_credentials, supabase_request
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             length = int(self.headers.get("Content-Length", 0))
-            body = json.loads(self.rfile.read(length))
+            body = json.loads(self.rfile.read(length)) if length > 0 else {}
             answers = body.get("answers", {})
-            score_total = body.get("scoreTotal", 0)
+            score_total = _to_float(body.get("scoreTotal", 0))
             timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
 
+            url, key = get_supabase_credentials()
             if url and key:
                 row = {
                     "timestamp": timestamp,
@@ -41,14 +20,14 @@ class handler(BaseHTTPRequestHandler):
                 }
                 for i in range(1, 21):
                     qid = f"Q{i:02d}"
-                    row[qid] = answers.get(qid, 0)
-                
+                    row[qid] = _to_float(answers.get(qid, 0))
+
                 supabase_request("POST", "stats", data=row)
-            
+
             self._json_response(201, {"status": "ok"})
         except Exception as exc:
             self._json_response(400, {"error": str(exc)})
-            
+
     def do_OPTIONS(self):
         self.send_response(204)
         self._cors_headers()

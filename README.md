@@ -7,21 +7,20 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat-square&logo=alpinejs&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=white)
 
 ## Structure
 
 ```txt
 .
-├── app/                            # Interface web
+├── app/                            # Interface web & templates
 │   ├── index.html                  # Page principale
-│   └── assets/                     # Ressources
-│       ├── css/                    # Styles
-│       ├── js/                     # Scripts
-│       └── public/                 # Images & médias
-├── api/                            # Fonctions Serverless (Vercel)
-│   ├── stats.py
-│   └── submit.py
-├── local_server.py                 # Serveur local Python pour les tests
+│   └── assets/                     # Ressources statiques (CSS, JS, médias)
+├── core/                           # Application Django unifiée (API, ORM, modèles)
+├── api/                            # Pont Serverless Vercel
+├── manage.py                       # CLI & serveur local (`python manage.py runserver`)
+├── Procfile                        # Configuration de déploiement cloud
+├── requirements.txt                # Dépendances Python
 ├── vercel.json                     # Configuration Vercel
 ├── .gitignore
 └── README.md

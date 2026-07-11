@@ -967,8 +967,12 @@ if (typeof document !== 'undefined') {
       },
 
       async _submitAndFetchStats() {
+        const baseUrl = (typeof window !== "undefined" && window.BACKEND_API_URL)
+          ? window.BACKEND_API_URL.replace(/\/$/, "") + "/"
+          : "";
+
         try {
-          await fetch("api/submit", {
+          await fetch(baseUrl + "api/submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -979,7 +983,7 @@ if (typeof document !== 'undefined') {
         } catch (_) { /* server not running */ }
 
         try {
-          const res = await fetch("api/stats");
+          const res = await fetch(baseUrl + "api/stats");
           if (res.ok) {
             const stats = await res.json();
             if (stats.avgScore !== null) {

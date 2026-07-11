@@ -1,0 +1,1 @@
+# Vercel Serverless Python functions require no external C dependencies

@@ -1,5 +1,15 @@
 {
   "framework": null,
   "buildCommand": null,
-  "outputDirectory": "app"
+  "outputDirectory": "app",
+  "rewrites": [
+    {
+      "source": "/api/stats",
+      "destination": "/api/stats.py"
+    },
+    {
+      "source": "/api/submit",
+      "destination": "/api/submit.py"
+    }
+  ]
 }
