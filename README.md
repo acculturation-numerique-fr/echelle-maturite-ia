@@ -6,25 +6,38 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat-square&logo=alpinejs&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 
 ## Structure
 
 ```txt
 .
-├── app/                            # Interface web & templates
+├── app/                            # Site statique
 │   ├── index.html                  # Page principale
-│   └── assets/                     # Ressources statiques (CSS, JS, médias)
-├── core/                           # Application Django unifiée (API, ORM, modèles)
-├── api/                            # Pont Serverless Vercel
-├── manage.py                       # CLI & serveur local (`python manage.py runserver`)
-├── Procfile                        # Configuration de déploiement cloud
-├── requirements.txt                # Dépendances Python
-├── vercel.json                     # Configuration Vercel
+│   └── assets/                     # CSS, JS, catalogue d'outils (data/tool-ranges.json)
+├── functions/api/                  # Fonctions Spacefast en TypeScript
+│   ├── submit.ts                   # POST /api/submit : enregistre un diagnostic
+│   ├── stats.ts                    # GET /api/stats : moyennes globales et par dimension
+│   └── _lib.ts                     # Questions, dimensions et accès à la base
+├── scripts/
+│   ├── build-spacefast.mjs         # Assemble app/ et functions/ pour la publication
+│   └── visualize_tools.py          # Génère les figures du catalogue d'outils
 ├── .gitignore
 └── README.md
 ```
+
+## Hébergement
+
+Le site est hébergé sur [Spacefast](https://spacefast.com) : fichiers statiques et fonctions TypeScript, avec une base MySQL propre au Space (accessible via `env.DB`).
+
+```bash
+node scripts/build-spacefast.mjs
+npx -y spacefast@latest publish dist-spacefast --space <spaceId>
+```
+
+En local, le site s'ouvre avec n'importe quel serveur statique (par exemple `python3 -m http.server -d app`) ; sans les fonctions, la moyenne comparative n'est simplement pas affichée.
+
+La liste des questions est définie dans `app/assets/js/app.js` et reprise dans `functions/api/_lib.ts` (identifiants et dimensions). Toute modification du questionnaire doit être répercutée dans les deux fichiers, avec un nouveau nom de table si les identifiants changent.
 
 ## Fonctionnalités principales
 

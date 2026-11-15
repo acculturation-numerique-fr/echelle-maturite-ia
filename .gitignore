@@ -10,19 +10,10 @@ Thumbs.db
 .env.*
 !.env.example
 
-# Python
+# Python (scripts/visualize_tools.py)
 __pycache__/
-*.pyc
 .venv/
-*.sqlite3
-db.sqlite3
-staticfiles/
-
-
-# Data (diagnostic submissions)
-data/
-!app/assets/data/
-!app/assets/data/tool-ranges.json
+figures/
 
 # Node
 node_modules/
@@ -30,4 +21,7 @@ node_modules/
 # Editors
 .vscode/
 .idea/
+
+# Spacefast
 dist-spacefast/
+.spacefast/
