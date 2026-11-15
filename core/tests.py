@@ -17,7 +17,7 @@ class DiagnosticModelTest(TestCase):
         row_dict = submission.to_dict()
         self.assertEqual(row_dict["score_total"], 14.5)
         self.assertEqual(row_dict["Q01"], 1.0)
-        self.assertEqual(row_dict["Q20"], 0.0)
+        self.assertEqual(row_dict["Q25"], 0.0)
 
 
 class DiagnosticViewsTest(TestCase):
@@ -35,10 +35,10 @@ class DiagnosticViewsTest(TestCase):
             "scoreTotal": 16.0,
             "answers": {
                 "Q01": 1, "Q02": 1, "Q03": 1, "Q04": 1, "Q05": 1,
-                "Q06": 1, "Q07": 1, "Q08": 1, "Q09": 1,
-                "Q10": 1, "Q11": 1, "Q12": 1, "Q13": 1, "Q14": 1,
-                "Q15": 1, "Q16": 1,
-                "Q18": 0, "Q19": 0, "Q20": 0
+                "Q06": 1, "Q07": 1, "Q08": 1, "Q09": 1, "Q10": 1,
+                "Q11": 1, "Q12": 1, "Q13": 1, "Q14": 1, "Q15": 1,
+                "Q16": 1, "Q17": 1,
+                "Q21": 0, "Q22": 0, "Q23": 0, "Q24": 0, "Q25": 0
             }
         }
         response = self.client.post(

@@ -18,7 +18,7 @@ class handler(BaseHTTPRequestHandler):
                     "timestamp": timestamp,
                     "score_total": score_total
                 }
-                for i in range(1, 21):
+                for i in range(1, 26):
                     qid = f"Q{i:02d}"
                     row[qid] = _to_float(answers.get(qid, 0))
 

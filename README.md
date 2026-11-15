@@ -29,7 +29,7 @@
 ## Fonctionnalités principales
 
 ![Formulaire de diagnostic](https://raw.githubusercontent.com/wiki/acculturation-numerique-fr/echelle-maturite-ia/form.webp)
-Le questionnaire s'articule autour de **20 critères** (Q01 à Q20), répartis sur cinq dimensions : Connaissances, Prise en main, Usages, Usages avancés et Usages experts. Chaque critère est évalué selon trois seuils d'acquisition (Non acquis, Partiel, Acquis) pour établir un score global sur 20. Ce résultat permet de classifier l'utilisateur selon **5 niveaux** de maturité, du stade Novice au profil Expert.
+Le questionnaire s'articule autour de **25 critères** (Q01 à Q25), répartis à raison de cinq par dimension : Connaissances, Prise en main, Usages, Usages avancés et Usages experts. Chaque critère est évalué selon trois seuils d'acquisition (Non acquis, Partiel, Acquis) ; le total des points est ramené à un score global sur 20. Ce résultat permet de classifier l'utilisateur selon **5 niveaux** de maturité, du stade Novice au profil Expert.
 
 <br>
 

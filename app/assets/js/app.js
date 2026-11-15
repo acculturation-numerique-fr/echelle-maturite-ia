@@ -22,14 +22,6 @@ if (typeof document !== 'undefined') {
 }
 
 (function () {
-  const DIMENSIONS = [
-    { name: "Connaissances", max: 5 },
-    { name: "Prise en main", max: 4 },
-    { name: "Usages", max: 5 },
-    { name: "Usages avancés", max: 3 },
-    { name: "Usages experts", max: 3 }
-  ];
-
   const QUESTIONS = [
     {
       id: "Q01",
@@ -96,82 +88,127 @@ if (typeof document !== 'undefined') {
     },
     {
       id: "Q10",
-      category: "usages",
-      dimension: "Usages",
-      label: "J'utilise l'IA pour rédiger ou améliorer des textes.",
+      category: "prise_en_main",
+      dimension: "Prise en main",
+      label: "Je sais faire la différence entre un chatbot, un agent, un orchestrateur et un assistant.",
       points: 1
     },
     {
       id: "Q11",
       category: "usages",
       dimension: "Usages",
-      label: "J'utilise l'IA pour créer ou modifier des images.",
+      label: "J'utilise l'IA pour rédiger ou améliorer des textes.",
       points: 1
     },
     {
       id: "Q12",
       category: "usages",
       dimension: "Usages",
-      label: "J'utilise l'IA pour analyser des documents ou des données, par exemple une grille Excel.",
+      label: "J'utilise l'IA pour créer ou modifier des images.",
       points: 1
     },
     {
       id: "Q13",
       category: "usages",
       dimension: "Usages",
-      label: "Je rédige des prompts avec un cadre, par exemple RTF, RAFT ou CRAFTI.",
+      label: "J'utilise l'IA pour analyser des documents ou des données, par exemple une grille Excel.",
       points: 1
     },
     {
       id: "Q14",
       category: "usages",
       dimension: "Usages",
-      label: "J'organise et réutilise mes meilleurs prompts.",
+      label: "Je rédige des prompts avec un cadre, par exemple COFI.",
       points: 1
     },
     {
       id: "Q15",
-      category: "usages_avances",
-      dimension: "Usages avancés",
-      label: "J'ai un abonnement payant à un outil d'IA, par exemple ChatGPT, Gemini ou Copilot.",
+      category: "usages",
+      dimension: "Usages",
+      label: "J'organise et réutilise mes meilleurs prompts dans une bibliothèque de prompts.",
       points: 1
     },
     {
       id: "Q16",
       category: "usages_avances",
       dimension: "Usages avancés",
-      label: "J'ai créé mon propre chatbot, par exemple un Custom GPT ou un Gem.",
+      label: "J'ai un abonnement payant à un outil d'IA, par exemple ChatGPT, Gemini ou Copilot.",
       points: 1
     },
     {
       id: "Q17",
       category: "usages_avances",
       dimension: "Usages avancés",
-      label: "J'ai installé un logiciel d'IA sur mon ordinateur, par exemple Ollama.",
+      label: "J'ai créé mon propre chatbot personnalisé, par exemple un Custom GPT ou un Gem.",
       points: 1
     },
     {
       id: "Q18",
-      category: "usages_experts",
-      dimension: "Usages experts",
-      label: "J'utilise l'IA pour coder ou corriger du code, par exemple avec Codex, Copilot ou Cursor.",
+      category: "usages_avances",
+      dimension: "Usages avancés",
+      label: "J'ai installé un logiciel d'IA sur mon ordinateur, par exemple Ollama.",
       points: 1
     },
     {
       id: "Q19",
-      category: "usages_experts",
-      dimension: "Usages experts",
-      label: "J'ai créé un agent pour automatiser des tâches simples.",
+      category: "usages_avances",
+      dimension: "Usages avancés",
+      label: "J'ai créé mon propre skill.",
       points: 1
     },
     {
       id: "Q20",
+      category: "usages_avances",
+      dimension: "Usages avancés",
+      label: "J'ai créé mon propre plugin.",
+      points: 1
+    },
+    {
+      id: "Q21",
       category: "usages_experts",
       dimension: "Usages experts",
-      label: "J'ai créé un agent connecté à des APIs ou à des services externes.",
+      label: "J'ai créé ma première application ou mon premier site web.",
+      points: 1
+    },
+    {
+      id: "Q22",
+      category: "usages_experts",
+      dimension: "Usages experts",
+      label: "J'ai créé un agent pour automatiser des tâches simples dans un service d'IA (ex : ChatGPT Agent).",
+      points: 1
+    },
+    {
+      id: "Q23",
+      category: "usages_experts",
+      dimension: "Usages experts",
+      label: "J'ai créé un agent connecté à des APIs ou à des services externes (ex : n8n, Make...).",
+      points: 1
+    },
+    {
+      id: "Q24",
+      category: "usages_experts",
+      dimension: "Usages experts",
+      label: "J'ai créé un jeu ou un environnement 3D à l'aide d'un modèle dédié (ex : Google Genie).",
+      points: 1
+    },
+    {
+      id: "Q25",
+      category: "usages_experts",
+      dimension: "Usages experts",
+      label: "J'ai utilisé des modèles dédiés pour analyser des données (ex : TimesFM) ou pour prendre des décisions (ex : Gemini Decision 1).",
       points: 1
     }
   ];
+
+  // Score global ramené sur 20, quel que soit le nombre de questions : les niveaux et les plages d'outils restent valides.
+  const SCORE_SCALE = 20;
+
+  const DIMENSIONS = ["Connaissances", "Prise en main", "Usages", "Usages avancés", "Usages experts"].map((name) => ({
+    name,
+    max: QUESTIONS.filter((q) => q.dimension === name).reduce((sum, q) => sum + q.points, 0)
+  }));
+
+  const MAX_POINTS = QUESTIONS.reduce((sum, q) => sum + q.points, 0);
 
   const CATEGORIES = [
     {
@@ -186,7 +223,7 @@ if (typeof document !== 'undefined') {
       shortTitle: "Prise en main",
       title: "Se repérer dans les outils",
       description:
-        "Familiarité avec les chatbots et capacité à tester, comparer et affiner vos prompts."
+        "Familiarité avec les chatbots, capacité à distinguer les types d'outils (chatbot, agent, orchestrateur, assistant), à les tester, les comparer et affiner vos prompts."
     },
     {
       key: "usages",
@@ -200,14 +237,14 @@ if (typeof document !== 'undefined') {
       shortTitle: "Usages avancés",
       title: "Personnaliser son environnement IA",
       description:
-        "Niveau d'autonomie : utilisation d'abonnements Pro, de chatbots personnalisés ou d'outils installés en local."
+        "Niveau d'autonomie : utilisation d'abonnements Pro, de chatbots personnalisés, d'outils installés en local, création de skills et de plugins."
     },
     {
       key: "usages_experts",
       shortTitle: "Usages experts",
       title: "Automatiser et connecter l'IA",
       description:
-        "Usages avancés et techniques : développement assisté, agents autonomes et connexions d'APIs à des services tiers."
+        "Usages avancés et techniques : création d'applications, agents autonomes, connexions d'APIs à des services tiers et modèles spécialisés (3D, analyse de données, aide à la décision)."
     }
   ];
 
@@ -636,8 +673,12 @@ if (typeof document !== 'undefined') {
         return `Étape ${this.currentCategoryIndex + 1}/${this.categories.length}`;
       },
 
+      get rawScore() {
+        return this.questions.reduce((sum, q) => sum + Number(this.answers[q.id] || 0) * q.points, 0);
+      },
+
       get scoreTotal() {
-        return Object.values(this.answers).reduce((sum, val) => sum + Number(val), 0);
+        return Math.round((this.rawScore / MAX_POINTS) * SCORE_SCALE * 10) / 10;
       },
 
       get currentLevel() {
@@ -665,7 +706,7 @@ if (typeof document !== 'undefined') {
       },
 
       get scorePercent() {
-        return scoreToPercent(this.scoreTotal, this.questions.length);
+        return scoreToPercent(this.scoreTotal, SCORE_SCALE);
       },
 
       get scoreRingStyle() {
@@ -673,7 +714,7 @@ if (typeof document !== 'undefined') {
       },
 
       get scoreAriaLabel() {
-        return `Score global ${this.scoreTotal} sur ${this.questions.length}`;
+        return `Score global ${this.scoreTotal} sur ${SCORE_SCALE}`;
       },
 
       get categoryScores() {
@@ -735,7 +776,7 @@ if (typeof document !== 'undefined') {
 
         let avgBars = [];
         if (hasAvg) {
-          const dimNames = ["Connaissances", "Prise en main", "Usages", "Usages avancés", "Usages experts"];
+          const dimNames = this.dimensions.map((d) => d.name);
           avgBars = dimNames.map((dimName, index) => {
             const groupX = paddingX + index * (groupWidth + gap);
             const x = groupX + barWidth + subGap;

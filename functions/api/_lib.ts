@@ -21,16 +21,19 @@ export interface Context {
   params: Record<string, string>;
 }
 
-export const QUESTION_IDS = Array.from({ length: 20 }, (_, i) => `Q${String(i + 1).padStart(2, "0")}`);
+export const QUESTION_IDS = Array.from({ length: 25 }, (_, i) => `Q${String(i + 1).padStart(2, "0")}`);
+
+// Table versionnée : à renommer si la liste des questions change (Q01 à Q25 depuis la v2 du questionnaire).
+const TABLE = "submissions_v2";
 
 const COLUMNS = QUESTION_IDS.map((id) => id.toLowerCase());
 
 export const DIMENSIONS: Record<string, string[]> = {
   Connaissances: ["Q01", "Q02", "Q03", "Q04", "Q05"],
-  "Prise en main": ["Q06", "Q07", "Q08", "Q09"],
-  Usages: ["Q10", "Q11", "Q12", "Q13", "Q14"],
-  "Usages avancés": ["Q15", "Q16", "Q17"],
-  "Usages experts": ["Q18", "Q19", "Q20"],
+  "Prise en main": ["Q06", "Q07", "Q08", "Q09", "Q10"],
+  Usages: ["Q11", "Q12", "Q13", "Q14", "Q15"],
+  "Usages avancés": ["Q16", "Q17", "Q18", "Q19", "Q20"],
+  "Usages experts": ["Q21", "Q22", "Q23", "Q24", "Q25"],
 };
 
 const BASELINE = {
@@ -38,10 +41,10 @@ const BASELINE = {
   avgScore: 11.2,
   avgDimensions: {
     Connaissances: { score: 3.1, max: 5, percent: 62 },
-    "Prise en main": { score: 2.3, max: 4, percent: 58 },
+    "Prise en main": { score: 2.9, max: 5, percent: 58 },
     Usages: { score: 2.6, max: 5, percent: 52 },
-    "Usages avancés": { score: 1.6, max: 3, percent: 53 },
-    "Usages experts": { score: 1.6, max: 3, percent: 53 },
+    "Usages avancés": { score: 2.65, max: 5, percent: 53 },
+    "Usages experts": { score: 2.65, max: 5, percent: 53 },
   },
 };
 
@@ -83,7 +86,7 @@ async function setup(db: D1Database): Promise<void> {
   const questionCols = COLUMNS.map((c) => `${c} DOUBLE NOT NULL DEFAULT 0`).join(", ");
   await db
     .prepare(
-      `CREATE TABLE IF NOT EXISTS submissions (
+      `CREATE TABLE IF NOT EXISTS ${TABLE} (
         id BIGINT AUTO_INCREMENT PRIMARY KEY,
         timestamp VARCHAR(32) NOT NULL,
         score_total DOUBLE NOT NULL DEFAULT 0,
@@ -96,7 +99,7 @@ async function setup(db: D1Database): Promise<void> {
 export async function insertSubmission(db: D1Database, answers: Record<string, unknown>, scoreTotal: number) {
   await db
     .prepare(
-      `INSERT INTO submissions (timestamp, score_total, ${COLUMNS.join(", ")}) VALUES (?, ?, ${COLUMNS.map(() => "?").join(", ")})`,
+      `INSERT INTO ${TABLE} (timestamp, score_total, ${COLUMNS.join(", ")}) VALUES (?, ?, ${COLUMNS.map(() => "?").join(", ")})`,
     )
     .bind(timestampNow(), scoreTotal, ...QUESTION_IDS.map((id) => toFloat(answers[id])))
     .run();
@@ -107,7 +110,7 @@ export async function computeStats(db: D1Database) {
     .map(([, ids], i) => `AVG(${ids.map((id) => id.toLowerCase()).join(" + ")}) AS d${i}`)
     .join(", ");
   const { results } = await db
-    .prepare(`SELECT COUNT(*) AS n, AVG(score_total) AS avg_score, ${dimensionSelects} FROM submissions`)
+    .prepare(`SELECT COUNT(*) AS n, AVG(score_total) AS avg_score, ${dimensionSelects} FROM ${TABLE}`)
     .all<Record<string, number | string | null>>();
   const row = results?.[0];
   const count = toFloat(row?.n);

@@ -2,22 +2,22 @@ import json
 import os
 import urllib.request
 
-QUESTION_IDS = [f"Q{i:02d}" for i in range(1, 21)]
+QUESTION_IDS = [f"Q{i:02d}" for i in range(1, 26)]
 
 DIMENSIONS = {
     "Connaissances": ["Q01", "Q02", "Q03", "Q04", "Q05"],
-    "Prise en main": ["Q06", "Q07", "Q08", "Q09"],
-    "Usages": ["Q10", "Q11", "Q12", "Q13", "Q14"],
-    "Usages avancés": ["Q15", "Q16", "Q17"],
-    "Usages experts": ["Q18", "Q19", "Q20"],
+    "Prise en main": ["Q06", "Q07", "Q08", "Q09", "Q10"],
+    "Usages": ["Q11", "Q12", "Q13", "Q14", "Q15"],
+    "Usages avancés": ["Q16", "Q17", "Q18", "Q19", "Q20"],
+    "Usages experts": ["Q21", "Q22", "Q23", "Q24", "Q25"],
 }
 
 BASELINE_DIMENSIONS = {
     "Connaissances": {"score": 3.1, "max": 5, "percent": 62},
-    "Prise en main": {"score": 2.3, "max": 4, "percent": 58},
+    "Prise en main": {"score": 2.9, "max": 5, "percent": 58},
     "Usages": {"score": 2.6, "max": 5, "percent": 52},
-    "Usages avancés": {"score": 1.6, "max": 3, "percent": 53},
-    "Usages experts": {"score": 1.6, "max": 3, "percent": 53},
+    "Usages avancés": {"score": 2.65, "max": 5, "percent": 53},
+    "Usages experts": {"score": 2.65, "max": 5, "percent": 53},
 }
 
 

@@ -19,7 +19,7 @@ class DiagnosticSubmission(models.Model):
             "timestamp": self.timestamp.strftime("%Y-%m-%d-%H-%M"),
             "score_total": float(self.score_total),
         }
-        for i in range(1, 21):
+        for i in range(1, 26):
             qid = f"Q{i:02d}"
             row[qid] = float(self.answers.get(qid, 0)) if isinstance(self.answers, dict) else 0.0
         return row
