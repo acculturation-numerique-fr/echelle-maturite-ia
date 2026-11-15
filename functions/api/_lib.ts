@@ -1,5 +1,3 @@
-import { SEED_ROWS } from "./_seed";
-
 export interface D1Result<T = Record<string, unknown>> {
   results?: T[];
 }
@@ -87,43 +85,12 @@ async function setup(db: D1Database): Promise<void> {
     .prepare(
       `CREATE TABLE IF NOT EXISTS submissions (
         id BIGINT AUTO_INCREMENT PRIMARY KEY,
-        source VARCHAR(16) NOT NULL DEFAULT 'spacefast',
-        source_id VARCHAR(191) NULL,
         timestamp VARCHAR(32) NOT NULL,
         score_total DOUBLE NOT NULL DEFAULT 0,
-        ${questionCols},
-        UNIQUE KEY uniq_source (source, source_id)
+        ${questionCols}
       )`,
     )
     .run();
-  await importSeed(db);
-}
-
-async function importSeed(db: D1Database): Promise<void> {
-  if (SEED_ROWS.length === 0) return;
-  const { results } = await db
-    .prepare("SELECT COUNT(*) AS n FROM submissions WHERE source = 'supabase'")
-    .all<{ n: number }>();
-  if (toFloat(results?.[0]?.n) >= SEED_ROWS.length) return;
-
-  const chunkSize = 50;
-  for (let i = 0; i < SEED_ROWS.length; i += chunkSize) {
-    const chunk = SEED_ROWS.slice(i, i + chunkSize);
-    const placeholders = chunk.map(() => `(?, ?, ?, ?, ${COLUMNS.map(() => "?").join(", ")})`).join(", ");
-    const values = chunk.flatMap((row) => [
-      "supabase",
-      row.sourceId,
-      row.timestamp,
-      row.scoreTotal,
-      ...row.answers,
-    ]);
-    await db
-      .prepare(
-        `INSERT IGNORE INTO submissions (source, source_id, timestamp, score_total, ${COLUMNS.join(", ")}) VALUES ${placeholders}`,
-      )
-      .bind(...values)
-      .run();
-  }
 }
 
 export async function insertSubmission(db: D1Database, answers: Record<string, unknown>, scoreTotal: number) {
