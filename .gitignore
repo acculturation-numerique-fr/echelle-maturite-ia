@@ -30,3 +30,4 @@ node_modules/
 # Editors
 .vscode/
 .idea/
+dist-spacefast/
