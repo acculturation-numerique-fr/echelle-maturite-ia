@@ -21,7 +21,8 @@
 │   └── _lib.ts                     # Questions, dimensions et accès à la base
 ├── scripts/
 │   ├── build-spacefast.mjs         # Assemble app/ et functions/ pour la publication
-│   └── visualize_tools.py          # Génère les figures du catalogue d'outils
+│   └── visualize-tools.ts          # Génère les figures du catalogue d'outils (ECharts)
+├── package.json                    # Scripts npm (build, figures)
 ├── .gitignore
 └── README.md
 ```
@@ -31,11 +32,11 @@
 Le site est hébergé sur [Spacefast](https://spacefast.com) : fichiers statiques et fonctions TypeScript, avec une base MySQL propre au Space (accessible via `env.DB`).
 
 ```bash
-node scripts/build-spacefast.mjs
+npm run build
 npx -y spacefast@latest publish dist-spacefast --space <spaceId>
 ```
 
-En local, le site s'ouvre avec n'importe quel serveur statique (par exemple `python3 -m http.server -d app`) ; sans les fonctions, la moyenne comparative n'est simplement pas affichée.
+En local, le site s'ouvre avec n'importe quel serveur statique (par exemple `npx serve app`) ; sans les fonctions, la moyenne comparative n'est simplement pas affichée.
 
 La liste des questions est définie dans `app/assets/js/app.js` et reprise dans `functions/api/_lib.ts` (identifiants et dimensions). Toute modification du questionnaire doit être répercutée dans les deux fichiers, avec un nouveau nom de table si les identifiants changent.
 
@@ -52,6 +53,13 @@ Le questionnaire s'articule autour de **25 critères** (Q01 à Q25), répartis �
 ### Répartition des outils IA par score
 
 Les 42 outils du catalogue sont affectés chacun à une plage de score `[min, max]`. L'algorithme de recommandation sélectionne les 9 outils les plus pertinents pour le score obtenu. Vous pouvez consulter le [catalogue complet des applications et outils](https://github.com/acculturation-numerique-fr/echelle-maturite-ia/wiki) pour voir la liste détaillée (liens, icônes, plages de score et descriptions).
+
+Les figures ci-dessous se régénèrent après chaque modification de `app/assets/data/tool-ranges.json` :
+
+```bash
+npm install
+npm run figures
+```
 
 #### Plage de score de chaque outil
 

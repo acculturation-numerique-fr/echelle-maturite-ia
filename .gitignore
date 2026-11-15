@@ -10,9 +10,7 @@ Thumbs.db
 .env.*
 !.env.example
 
-# Python (scripts/visualize_tools.py)
-__pycache__/
-.venv/
+# Figures générées (npm run figures)
 figures/
 
 # Node

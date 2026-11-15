@@ -1,0 +1,14 @@
+{
+  "name": "echelle-maturite-ia",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-spacefast.mjs",
+    "figures": "tsx scripts/visualize-tools.ts"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "2.6.2",
+    "echarts": "6.1.0",
+    "tsx": "4.23.15"
+  }
+}
